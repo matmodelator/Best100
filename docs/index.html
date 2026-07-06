@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Рифмы века — 100 лучших стихов</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  background: #f4efe7;
+  color: #1f1f1f;
+}
+
+header {
+  background: #1f2933;
+  color: white;
+  padding: 24px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 42px;
+  letter-spacing: 1px;
+}
+
+header p {
+  margin: 10px 0 0;
+  color: #d1d5db;
+  font-size: 18px;
+}
+
+nav {
+  background: #111827;
+  padding: 12px;
+  text-align: center;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 14px;
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 0 18px;
+}
+
+.hero {
+  background: white;
+  padding: 34px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+.hero h2 {
+  font-size: 34px;
+  margin: 0 0 12px;
+}
+
+.hero p {
+  font-size: 19px;
+  line-height: 1.5;
+}
+
+.hero button {
+  padding: 14px 24px;
+  font-size: 17px;
+  border: none;
+  border-radius: 10px;
+  background: #7c2d12;
+  color: white;
+  cursor: pointer;
+}
+
+.section-title {
+  margin-top: 38px;
+  font-size: 28px;
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.controls input,
+.controls select {
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #c7c7c7;
+  border-radius: 8px;
+  flex: 1;
+  min-width: 220px;
+}
+
+.poems-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+.poem-card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.poem-card:hover {
+  transform: translateY(-3px);
+}
+
+.poem-card h3 {
+  margin: 0 0 8px;
+  font-size: 22px;
+}
+
+.author {
+  color: #7c2d12;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.excerpt {
+  color: #444;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+.meta {
+  margin-top: 14px;
+  font-size: 14px;
+  color: #777;
+  font-family: Arial, sans-serif;
+}
+
+footer {
+  margin-top: 50px;
+  background: #1f2933;
+  color: #d1d5db;
+  text-align: center;
+  padding: 22px;
+  font-family: Arial, sans-serif;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+  <h1>Рифмы века</h1>
+  <p>100 лучших стихов русской поэзии</p>
+</header>
+
+<nav>
+  <a href="#">Главная</a>
+  <a href="#poems">Стихи</a>
+  <a href="#">Авторы</a>
+  <a href="#">О проекте</a>
+</nav>
+
+<div class="container">
+
+  <section class="hero">
+    <h2>Антология стихов, которые пережили время</h2>
+    <p>
+      «Рифмы века» — это собрание ста стихотворений,
+      без которых невозможно представить русскую поэзию.
+    </p>
+    <button onclick="scrollToPoems()">Читать стихи</button>
+  </section>
+
+  <h2 class="section-title" id="poems">Список стихов</h2>
+
+  <div class="controls">
+    <input type="text" id="searchInput" placeholder="Поиск по названию или автору..." oninput="renderPoems()">
+
+    <select id="authorFilter" onchange="renderPoems()">
+      <option value="">Все авторы</option>
+      <option value="Пушкин">Пушкин</option>
+      <option value="Лермонтов">Лермонтов</option>
+      <option value="Блок">Блок</option>
+      <option value="Есенин">Есенин</option>
+      <option value="Маяковский">Маяковский</option>
+    </select>
+  </div>
+
+  <div class="poems-grid" id="poemsGrid"></div>
+
+</div>
+
+<footer>
+  Рифмы века © 2026
+</footer>
+
+<script>
+const poems = [
+  {
+    title: "Я помню чудное мгновенье",
+    author: "Пушкин",
+    year: "1825",
+    excerpt: "Я помню чудное мгновенье:\nПередо мной явилась ты..."
+  },
+  {
+    title: "Парус",
+    author: "Лермонтов",
+    year: "1832",
+    excerpt: "Белеет парус одинокий\nВ тумане моря голубом..."
+  },
+  {
+    title: "Ночь, улица, фонарь, аптека",
+    author: "Блок",
+    year: "1912",
+    excerpt: "Ночь, улица, фонарь, аптека,\nБессмысленный и тусклый свет..."
+  },
+  {
+    title: "Не жалею, не зову, не плачу",
+    author: "Есенин",
+    year: "1921",
+    excerpt: "Не жалею, не зову, не плачу,\nВсё пройдёт, как с белых яблонь дым..."
+  },
+  {
+    title: "Послушайте!",
+    author: "Маяковский",
+    year: "1914",
+    excerpt: "Послушайте!\nВедь, если звёзды зажигают..."
+  }
+];
+
+function renderPoems() {
+  const grid = document.getElementById("poemsGrid");
+  const search = document.getElementById("searchInput").value.toLowerCase();
+  const author = document.getElementById("authorFilter").value;
+
+  grid.innerHTML = "";
+
+  const filtered = poems.filter(poem => {
+    const matchesSearch =
+      poem.title.toLowerCase().includes(search) ||
+      poem.author.toLowerCase().includes(search);
+
+    const matchesAuthor =
+      author === "" || poem.author === author;
+
+    return matchesSearch && matchesAuthor;
+  });
+
+  filtered.forEach(poem => {
+    const card = document.createElement("div");
+    card.className = "poem-card";
+
+    card.innerHTML = `
+      <h3>${poem.title}</h3>
+      <div class="author">${poem.author}</div>
+      <div class="excerpt">${poem.excerpt}</div>
+      <div class="meta">${poem.year}</div>
+    `;
+
+    grid.appendChild(card);
+  });
+}
+
+function scrollToPoems() {
+  document.getElementById("poems").scrollIntoView({
+    behavior: "smooth"
+  });
+}
+
+renderPoems();
+</script>
+
+
+
+<!-- ========================================
+     SERVICE CONSOLE
+======================================== -->
+
+<div id="service-console">
+GPT   | v1.0.0
+</div>
+
+<div class="row" id="build-down">
+deploy: --
+</div>
+
+<script>
+(function () {
+  const now = new Date();
+
+  const pad = n =>
+    String(n).padStart(2, "0");
+
+  const date =
+      pad(now.getDate())
+    + "."
+    + pad(now.getMonth() + 1)
+    + "."
+    + now.getFullYear();
+
+  const time =
+      pad(now.getHours())
+    + ":"
+    + pad(now.getMinutes());
+
+  document
+    .getElementById("build-down")
+    .textContent =
+      "deploy: "
+      + date
+      + " "
+      + time;
+})();
+</script>
+
+
+</body>
+</html>
+  
