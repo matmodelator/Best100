@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Рифмы века — 100 лучших стихов</title>
+<title>Рифмы века — 100 лучших стихов XXI века</title>
 
 <style>
 * {
@@ -22,14 +22,13 @@ body {
 header {
   background: #1f2933;
   color: white;
-  padding: 24px;
+  padding: 26px;
   text-align: center;
 }
 
 header h1 {
   margin: 0;
   font-size: 42px;
-  letter-spacing: 1px;
 }
 
 header p {
@@ -49,18 +48,17 @@ nav a {
   text-decoration: none;
   margin: 0 14px;
   font-family: Arial, sans-serif;
-  font-size: 15px;
 }
 
 .container {
-  max-width: 1100px;
+  max-width: 1160px;
   margin: 30px auto;
   padding: 0 18px;
 }
 
 .hero {
   background: white;
-  padding: 34px;
+  padding: 36px;
   border-radius: 16px;
   text-align: center;
   box-shadow: 0 4px 14px rgba(0,0,0,0.08);
@@ -87,9 +85,82 @@ nav a {
 }
 
 .section-title {
-  margin-top: 38px;
-  font-size: 28px;
+  margin-top: 40px;
+  font-size: 30px;
 }
+
+/* ================================
+   ТОП-10
+================================ */
+
+.top-one {
+  background: #fff;
+  border-radius: 18px;
+  padding: 32px;
+  margin-bottom: 20px;
+  box-shadow: 0 5px 18px rgba(0,0,0,0.12);
+  border-left: 8px solid #7c2d12;
+}
+
+.place {
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  color: #7c2d12;
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.top-one h3 {
+  margin: 0;
+  font-size: 34px;
+}
+
+.author {
+  color: #7c2d12;
+  font-weight: bold;
+  margin: 10px 0 14px;
+}
+
+.excerpt {
+  color: #444;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+.meta {
+  margin-top: 14px;
+  font-size: 14px;
+  color: #777;
+  font-family: Arial, sans-serif;
+}
+
+.top-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.poem-card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.poem-card:hover {
+  transform: translateY(-3px);
+}
+
+.poem-card h3 {
+  margin: 0 0 8px;
+  font-size: 22px;
+}
+
+/* ================================
+   ОБЩИЙ СПИСОК
+================================ */
 
 .controls {
   display: flex;
@@ -114,43 +185,6 @@ nav a {
   gap: 18px;
 }
 
-.poem-card {
-  background: white;
-  padding: 20px;
-  border-radius: 14px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.poem-card:hover {
-  transform: translateY(-3px);
-}
-
-.poem-card h3 {
-  margin: 0 0 8px;
-  font-size: 22px;
-}
-
-.author {
-  color: #7c2d12;
-  font-weight: bold;
-  margin-bottom: 12px;
-}
-
-.excerpt {
-  color: #444;
-  line-height: 1.5;
-  white-space: pre-line;
-}
-
-.meta {
-  margin-top: 14px;
-  font-size: 14px;
-  color: #777;
-  font-family: Arial, sans-serif;
-}
-
 footer {
   margin-top: 50px;
   background: #1f2933;
@@ -158,6 +192,20 @@ footer {
   text-align: center;
   padding: 22px;
   font-family: Arial, sans-serif;
+}
+
+@media (max-width: 800px) {
+  .top-grid {
+    grid-template-columns: 1fr;
+  }
+
+  header h1 {
+    font-size: 34px;
+  }
+
+  .top-one h3 {
+    font-size: 28px;
+  }
 }
 </style>
 
@@ -167,12 +215,13 @@ footer {
 
 <header>
   <h1>Рифмы века</h1>
-  <p>100 лучших стихов русской поэзии</p>
+  <p>100 лучших стихов русскоязычной поэзии XXI века</p>
 </header>
 
 <nav>
   <a href="#">Главная</a>
-  <a href="#poems">Стихи</a>
+  <a href="#top10">Первая десятка</a>
+  <a href="#poems">Все стихи</a>
   <a href="#">Авторы</a>
   <a href="#">О проекте</a>
 </nav>
@@ -180,26 +229,27 @@ footer {
 <div class="container">
 
   <section class="hero">
-    <h2>Антология стихов, которые пережили время</h2>
+    <h2>РИФМЫ ВЕКА</h2>
     <p>
-      «Рифмы века» — это собрание ста стихотворений,
-      без которых невозможно представить русскую поэзию.
+      Антология ста лучших стихотворений,
+      написанных на русском языке в третьем тысячелетии.
     </p>
-    <button onclick="scrollToPoems()">Читать стихи</button>
+    <button onclick="scrollToPoems()">Смотреть список</button>
   </section>
 
-  <h2 class="section-title" id="poems">Список стихов</h2>
+  <h2 class="section-title" id="top10">Первая десятка</h2>
+
+  <div id="topOne"></div>
+
+  <div class="top-grid" id="topGrid"></div>
+
+  <h2 class="section-title" id="poems">Все 100 стихов</h2>
 
   <div class="controls">
     <input type="text" id="searchInput" placeholder="Поиск по названию или автору..." oninput="renderPoems()">
 
     <select id="authorFilter" onchange="renderPoems()">
       <option value="">Все авторы</option>
-      <option value="Пушкин">Пушкин</option>
-      <option value="Лермонтов">Лермонтов</option>
-      <option value="Блок">Блок</option>
-      <option value="Есенин">Есенин</option>
-      <option value="Маяковский">Маяковский</option>
     </select>
   </div>
 
@@ -214,36 +264,117 @@ footer {
 <script>
 const poems = [
   {
-    title: "Я помню чудное мгновенье",
-    author: "Пушкин",
-    year: "1825",
-    excerpt: "Я помню чудное мгновенье:\nПередо мной явилась ты..."
+    place: 1,
+    title: "Название стихотворения №1",
+    author: "Автор 1",
+    year: "2001",
+    excerpt: "Первая строка стихотворения...\nВторая строка стихотворения..."
   },
   {
-    title: "Парус",
-    author: "Лермонтов",
-    year: "1832",
-    excerpt: "Белеет парус одинокий\nВ тумане моря голубом..."
+    place: 2,
+    title: "Название стихотворения №2",
+    author: "Автор 2",
+    year: "2003",
+    excerpt: "Короткий фрагмент стихотворения..."
   },
   {
-    title: "Ночь, улица, фонарь, аптека",
-    author: "Блок",
-    year: "1912",
-    excerpt: "Ночь, улица, фонарь, аптека,\nБессмысленный и тусклый свет..."
+    place: 3,
+    title: "Название стихотворения №3",
+    author: "Автор 3",
+    year: "2005",
+    excerpt: "Короткий фрагмент стихотворения..."
   },
   {
-    title: "Не жалею, не зову, не плачу",
-    author: "Есенин",
-    year: "1921",
-    excerpt: "Не жалею, не зову, не плачу,\nВсё пройдёт, как с белых яблонь дым..."
+    place: 4,
+    title: "Название стихотворения №4",
+    author: "Автор 4",
+    year: "2007",
+    excerpt: "Короткий фрагмент стихотворения..."
   },
   {
-    title: "Послушайте!",
-    author: "Маяковский",
-    year: "1914",
-    excerpt: "Послушайте!\nВедь, если звёзды зажигают..."
+    place: 5,
+    title: "Название стихотворения №5",
+    author: "Автор 5",
+    year: "2009",
+    excerpt: "Короткий фрагмент стихотворения..."
+  },
+  {
+    place: 6,
+    title: "Название стихотворения №6",
+    author: "Автор 6",
+    year: "2011",
+    excerpt: "Короткий фрагмент стихотворения..."
+  },
+  {
+    place: 7,
+    title: "Название стихотворения №7",
+    author: "Автор 7",
+    year: "2014",
+    excerpt: "Короткий фрагмент стихотворения..."
+  },
+  {
+    place: 8,
+    title: "Название стихотворения №8",
+    author: "Автор 8",
+    year: "2017",
+    excerpt: "Короткий фрагмент стихотворения..."
+  },
+  {
+    place: 9,
+    title: "Название стихотворения №9",
+    author: "Автор 9",
+    year: "2020",
+    excerpt: "Короткий фрагмент стихотворения..."
+  },
+  {
+    place: 10,
+    title: "Название стихотворения №10",
+    author: "Автор 10",
+    year: "2023",
+    excerpt: "Короткий фрагмент стихотворения..."
   }
 ];
+
+function createCard(poem) {
+  const card = document.createElement("div");
+  card.className = "poem-card";
+
+  card.innerHTML = `
+    <div class="place">№ ${poem.place}</div>
+    <h3>${poem.title}</h3>
+    <div class="author">${poem.author}</div>
+    <div class="excerpt">${poem.excerpt}</div>
+    <div class="meta">${poem.year}</div>
+  `;
+
+  return card;
+}
+
+function renderTop10() {
+  const topOne = document.getElementById("topOne");
+  const topGrid = document.getElementById("topGrid");
+
+  topOne.innerHTML = "";
+  topGrid.innerHTML = "";
+
+  const first = poems.find(poem => poem.place === 1);
+
+  topOne.innerHTML = `
+    <div class="top-one">
+      <div class="place">№ 1</div>
+      <h3>${first.title}</h3>
+      <div class="author">${first.author}</div>
+      <div class="excerpt">${first.excerpt}</div>
+      <div class="meta">${first.year}</div>
+    </div>
+  `;
+
+  poems
+    .filter(poem => poem.place >= 2 && poem.place <= 10)
+    .forEach(poem => {
+      topGrid.appendChild(createCard(poem));
+    });
+}
 
 function renderPoems() {
   const grid = document.getElementById("poemsGrid");
@@ -264,17 +395,20 @@ function renderPoems() {
   });
 
   filtered.forEach(poem => {
-    const card = document.createElement("div");
-    card.className = "poem-card";
+    grid.appendChild(createCard(poem));
+  });
+}
 
-    card.innerHTML = `
-      <h3>${poem.title}</h3>
-      <div class="author">${poem.author}</div>
-      <div class="excerpt">${poem.excerpt}</div>
-      <div class="meta">${poem.year}</div>
-    `;
+function renderAuthorFilter() {
+  const select = document.getElementById("authorFilter");
 
-    grid.appendChild(card);
+  const authors = [...new Set(poems.map(poem => poem.author))];
+
+  authors.forEach(author => {
+    const option = document.createElement("option");
+    option.value = author;
+    option.textContent = author;
+    select.appendChild(option);
   });
 }
 
@@ -284,8 +418,11 @@ function scrollToPoems() {
   });
 }
 
+renderAuthorFilter();
+renderTop10();
 renderPoems();
 </script>
+
 
 
 
@@ -294,7 +431,7 @@ renderPoems();
 ======================================== -->
 
 <div id="service-console">
-GPT   | v1.0.0
+название, субтитр, десятка  | v1.0.1
 </div>
 
 <div class="row" id="build-down">
