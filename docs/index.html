@@ -95,6 +95,18 @@ nav a {
   color: #777;
 }
 
+.controls {
+  display: flex;
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.poems-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+  
 @media (max-width: 800px) {
   .top-grid {
     grid-template-columns: 1fr;
@@ -123,6 +135,12 @@ nav a {
   <a href="#">О проекте</a>
 </nav>
 
+<div class="container">
+
+  <h2 class="section-title" id="top21">Антология 21</h2>
+
+  <div class="top-grid" id="topGrid"></div>
+  
   <div class="controls">
     <input type="text" id="searchInput" placeholder="Поиск по названию или автору..." oninput="renderPoems()">
 
@@ -351,7 +369,7 @@ renderPoems();
 ======================================== -->
 
 <div id="service-console">
-fix top21  | v1.1.1
+add top21  | v1.1.2
 </div>
 
 <div class="row" id="build-down">
