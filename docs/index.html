@@ -54,6 +54,7 @@ nav a {
   max-width: 1160px;
   margin: 24px auto;
   padding: 0 18px;
+  height: calc(100vh - 180px);
 }
 
 .section-title {
@@ -76,7 +77,9 @@ nav a {
 .top-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   gap: 6px;
+  height: 100%;
 }
 
 .poem-card {
@@ -84,6 +87,8 @@ nav a {
   padding: 6px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0,0,0,.08);
+  display: flex;
+  flex-direction: column;
 }
 
 .poem-card h3 {
@@ -162,7 +167,7 @@ footer {
 
 <nav>
   <a href="#">Главная</a>
-  <a href="#top21">Антология 21</a>
+  <a href="#top21">Антология XXI</a>
   <a href="#">Авторы</a>
   <a href="#">О проекте</a>
 </nav>
@@ -191,10 +196,13 @@ footer {
 <script>
 const poems = [
   {
-    title: "Название стихотворения №1",
-    author: "Автор 1",
-    year: "20..",
-    excerpt: "Первая строка стихотворения...\nВторая строка стихотворения..."
+    title: "В СТАРОМ ЗАЛЕ",
+    author: "Евгений РЕЙН",
+    year: "1987",
+    excerpt: "В старом зале, в старом зале, над Михайловской и Невским, 
+              где когда-то мы сидели, то втроем, то впятером, 
+              мне сегодня в темный полдень поболтать и выпить не с кем - 
+              так и надо, так и надо и, по сути, поделом."
   },
   {
     title: "Название стихотворения №2",
@@ -358,7 +366,7 @@ renderTop21();
 ======================================== -->
 
 <div id="service-console">
-убираем все лишнее  | v2.0.0
+fix css height  | v2.0.1
 </div>
 
 <div class="row" id="build-down">
