@@ -140,6 +140,35 @@ footer {
   font-family: Arial, sans-serif;
 }
 
+.user-status-bar {
+  background: #efe5d6;
+  padding: 8px 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+.status {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: white;
+  border: 1px solid #d6c7b2;
+}
+
+.status.active {
+  background: #7c2d12;
+  color: white;
+  border-color: #7c2d12;
+}
+
+.author-status {
+  margin-left: 18px;
+  border-color: #7c2d12;
+}
+  
 @media (max-width: 1024px) {
   .top-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -188,6 +217,18 @@ footer {
   <a href="#">О проекте</a>
 </nav>
 
+<div class="user-status-bar">
+  <span class="status" data-status="Гость">Гость</span>
+  <span>↓</span>
+  <span class="status" data-status="Читатель">Читатель</span>
+  <span>↓</span>
+  <span class="status" data-status="Критик">Критик</span>
+  <span>↓</span>
+  <span class="status" data-status="Эксперт">Эксперт</span>
+
+  <span class="status author-status" data-status="Автор">Автор</span>
+</div>
+  
 <div class="container">
 
   <h2 class="section-title" id="top21">Антология 21</h2>
@@ -372,14 +413,48 @@ function renderTop21() {
 renderTop21();
 </script>
 
+<script>
 
+const user = {
+  votes: 0,
+  reviews: 0,
+  expertReviews: 0,
+  isAuthor: false
+};
+
+function getUserStatus() {
+  if (user.expertReviews >= 21) return "Эксперт";
+  if (user.reviews >= 1) return "Критик";
+  if (user.votes >= 1) return "Читатель";
+  return "Гость";
+}
+
+function renderUserStatus() {
+  const currentStatus = getUserStatus();
+
+  document.querySelectorAll(".status").forEach(item => {
+    item.classList.remove("active");
+
+    if (item.dataset.status === currentStatus) {
+      item.classList.add("active");
+    }
+
+    if (item.dataset.status === "Автор" && user.isAuthor) {
+      item.classList.add("active");
+    }
+  });
+}
+
+renderUserStatus();
+
+</script>
 
 <!-- ========================================
      SERVICE CONSOLE
 ======================================== -->
 
 <div id="service-console">
-fix css flex  | v2.0.3
+block user  | v3.0.0
 </div>
 
 <div class="row" id="build-down">
