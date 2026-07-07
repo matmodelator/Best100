@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Рифмы века — 100 лучших стихов XXI века</title>
+<title>Рифмы века — Top21</title>
 
 <style>
 * {
@@ -61,40 +61,38 @@ nav a {
   font-size: 30px;
 }
 
-/* ================================
-   ОБЩИЙ СПИСОК
-================================ */
-
-.controls {
-  display: flex;
-  gap: 12px;
-  margin: 20px 0;
-  flex-wrap: wrap;
-}
-
-.controls input,
-.controls select {
-  padding: 12px;
-  font-size: 16px;
-  border: 1px solid #c7c7c7;
-  border-radius: 8px;
-  flex: 1;
-  min-width: 220px;
-}
-
-.poems-grid {
+.top-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 18px;
 }
 
-footer {
-  margin-top: 50px;
-  background: #1f2933;
-  color: #d1d5db;
-  text-align: center;
-  padding: 22px;
-  font-family: Arial, sans-serif;
+.poem-card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 3px 10px rgba(0,0,0,.08);
+}
+
+.poem-card h3 {
+  margin: 0 0 8px;
+  font-size: 22px;
+}
+
+.author {
+  color: #7c2d12;
+  font-weight: bold;
+  margin: 8px 0;
+}
+
+.excerpt {
+  white-space: pre-line;
+  line-height: 1.5;
+}
+
+.meta {
+  margin-top: 10px;
+  color: #777;
 }
 
 @media (max-width: 800px) {
@@ -104,10 +102,6 @@ footer {
 
   header h1 {
     font-size: 34px;
-  }
-
-  .top-one h3 {
-    font-size: 28px;
   }
 }
 </style>
@@ -123,19 +117,11 @@ footer {
 
 <nav>
   <a href="#">Главная</a>
-  <a href="#top10">Первая десятка</a>
+  <a href="#top21">Антология 21</a>
   <a href="#poems">Все стихи</a>
   <a href="#">Авторы</a>
   <a href="#">О проекте</a>
 </nav>
-
-<div class="container">
-
- <h2 class="section-title" id="top21">Антология 21</h2>
-
-<div class="top-grid" id="topGrid"></div>
-
-  <h2 class="section-title" id="poems">Все 100 стихов</h2>
 
   <div class="controls">
     <input type="text" id="searchInput" placeholder="Поиск по названию или автору..." oninput="renderPoems()">
@@ -156,152 +142,131 @@ footer {
 <script>
 const poems = [
   {
-    place: 1,
     title: "Название стихотворения №1",
     author: "Автор 1",
-    year: "2001",
+    year: "20..",
     excerpt: "Первая строка стихотворения...\nВторая строка стихотворения..."
   },
   {
-    place: 2,
     title: "Название стихотворения №2",
     author: "Автор 2",
-    year: "2003",
+    year: "20..",
     excerpt: "Короткий фрагмент стихотворения..."
   },
   {
-    place: 3,
     title: "Название стихотворения №3",
     author: "Автор 3",
-    year: "2005",
+    year: "20..",
     excerpt: "Короткий фрагмент стихотворения..."
   },
   {
-    place: 4,
     title: "Название стихотворения №4",
     author: "Автор 4",
-    year: "2007",
+    year: "20..",
     excerpt: "Короткий фрагмент стихотворения..."
   },
   {
-    place: 5,
     title: "Название стихотворения №5",
     author: "Автор 5",
-    year: "2009",
+    year: "20..",
     excerpt: "Короткий фрагмент стихотворения..."
   },
   {
-    place: 6,
     title: "Название стихотворения №6",
     author: "Автор 6",
-    year: "2011",
+    year: "20..",
     excerpt: "Короткий фрагмент стихотворения..."
   },
   {
-    place: 7,
     title: "Название стихотворения №7",
     author: "Автор 7",
-    year: "2014",
+    year: "20..",
     excerpt: "Короткий фрагмент стихотворения..."
   },
   {
-    place: 8,
     title: "Название стихотворения №8",
     author: "Автор 8",
-    year: "2017",
+    year: "20..",
     excerpt: "Короткий фрагмент стихотворения..."
   },
   {
-    place: 9,
     title: "Название стихотворения №9",
     author: "Автор 9",
-    year: "2020",
+    year: "20..",
     excerpt: "Короткий фрагмент стихотворения..."
   },
   {
-    place: 10,
     title: "Название стихотворения №10",
     author: "Автор 10",
-    year: "2023",
+    year: "20..",
+    excerpt: "Короткий фрагмент стихотворения..."
+  },
+  {
+    title: "Название стихотворения №11",
+    author: "Автор 11",
+    year: "20..",
+    excerpt: "Короткий фрагмент стихотворения..."
+  },
+  {
+    title: "Название стихотворения №12",
+    author: "Автор 12",
+    year: "20..",
+    excerpt: "Короткий фрагмент стихотворения..."
+  },
+  {
+    title: "Название стихотворения №13",
+    author: "Автор 13",
+    year: "20..",
+    excerpt: "Короткий фрагмент стихотворения..."
+  },
+  {
+    title: "Название стихотворения №14",
+    author: "Автор 14",
+    year: "20..",
+    excerpt: "Короткий фрагмент стихотворения..."
+  },
+  {
+    title: "Название стихотворения №15",
+    author: "Автор 15",
+    year: "20..",
+    excerpt: "Короткий фрагмент стихотворения..."
+  },
+  {
+    title: "Название стихотворения №16",
+    author: "Автор 16",
+    year: "20..",
+    excerpt: "Короткий фрагмент стихотворения..."
+  },
+  {
+    title: "Название стихотворения №17",
+    author: "Автор 17",
+    year: "20..",
+    excerpt: "Короткий фрагмент стихотворения..."
+  },
+  {
+    title: "Название стихотворения №18",
+    author: "Автор 18",
+    year: "20..",
+    excerpt: "Короткий фрагмент стихотворения..."
+  },
+  {
+    title: "Название стихотворения №19",
+    author: "Автор 19",
+    year: "20..",
+    excerpt: "Короткий фрагмент стихотворения..."
+  },
+  {
+    title: "Название стихотворения №20",
+    author: "Автор 20",
+    year: "20..",
+    excerpt: "Короткий фрагмент стихотворения..."
+  },
+  {
+    title: "Название стихотворения №21",
+    author: "Автор 21",
+    year: "20..",
     excerpt: "Короткий фрагмент стихотворения..."
   }
-  {
-  place: 11,
-  title: "Название стихотворения №11",
-  author: "Автор 11",
-  year: "2004",
-  excerpt: "Короткий фрагмент стихотворения..."
-},
-{
-  place: 12,
-  title: "Название стихотворения №12",
-  author: "Автор 12",
-  year: "2006",
-  excerpt: "Короткий фрагмент стихотворения..."
-},
-{
-  place: 13,
-  title: "Название стихотворения №13",
-  author: "Автор 13",
-  year: "2008",
-  excerpt: "Короткий фрагмент стихотворения..."
-},
-{
-  place: 14,
-  title: "Название стихотворения №14",
-  author: "Автор 14",
-  year: "2010",
-  excerpt: "Короткий фрагмент стихотворения..."
-},
-{
-  place: 15,
-  title: "Название стихотворения №15",
-  author: "Автор 15",
-  year: "2012",
-  excerpt: "Короткий фрагмент стихотворения..."
-},
-{
-  place: 16,
-  title: "Название стихотворения №16",
-  author: "Автор 16",
-  year: "2013",
-  excerpt: "Короткий фрагмент стихотворения..."
-},
-{
-  place: 17,
-  title: "Название стихотворения №17",
-  author: "Автор 17",
-  year: "2015",
-  excerpt: "Короткий фрагмент стихотворения..."
-},
-{
-  place: 18,
-  title: "Название стихотворения №18",
-  author: "Автор 18",
-  year: "2016",
-  excerpt: "Короткий фрагмент стихотворения..."
-},
-{
-  place: 19,
-  title: "Название стихотворения №19",
-  author: "Автор 19",
-  year: "2018",
-  excerpt: "Короткий фрагмент стихотворения..."
-},
-{
-  place: 20,
-  title: "Название стихотворения №20",
-  author: "Автор 20",
-  year: "2021",
-  excerpt: "Короткий фрагмент стихотворения..."
-},
-{
-  place: 21,
-  title: "Название стихотворения №21",
-  author: "Автор 21",
-  year: "2024",
-  excerpt: "Короткий фрагмент стихотворения..."
-}
 ];
 
 function createCard(poem) {
@@ -309,7 +274,7 @@ function createCard(poem) {
   card.className = "poem-card";
 
   card.innerHTML = `
-    <div class="place">№ ${poem.place}</div>
+   
     <h3>${poem.title}</h3>
     <div class="author">${poem.author}</div>
     <div class="excerpt">${poem.excerpt}</div>
@@ -386,7 +351,7 @@ renderPoems();
 ======================================== -->
 
 <div id="service-console">
-top21  | v1.1.0
+fix top21  | v1.1.1
 </div>
 
 <div class="row" id="build-down">
