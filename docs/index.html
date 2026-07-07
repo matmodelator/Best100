@@ -52,13 +52,31 @@ nav a {
 
 .container {
   max-width: 1160px;
-  margin: 30px auto;
+  margin: 24px auto;
   padding: 0 18px;
 }
 
 .section-title {
-  margin-top: 40px;
+  margin: 0 0 14px;
   font-size: 30px;
+}
+
+.controls {
+  margin-bottom: 14px;
+}
+
+.controls input {
+  width: 100%;
+  padding: 10px;
+  font-size: 15px;
+  border: 1px solid #c7c7c7;
+  border-radius: 8px;
+}
+
+.top-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
 }
 
 .poem-card {
@@ -66,7 +84,6 @@ nav a {
   padding: 6px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0,0,0,.08);
-  min-height: 0;
 }
 
 .poem-card h3 {
@@ -94,28 +111,22 @@ nav a {
   color: #777;
 }
 
-.top-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
+footer {
+  margin-top: 30px;
+  background: #1f2933;
+  color: #d1d5db;
+  text-align: center;
+  padding: 18px;
+  font-family: Arial, sans-serif;
 }
 
-.controls {
-  display: flex;
-  gap: 12px;
-  margin: 24px 0;
-}
-
-.poems-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}
-  
 @media (max-width: 1024px) {
   .top-grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
+  }
+
+  header h1 {
+    font-size: 34px;
   }
 
   .poem-card {
@@ -137,10 +148,6 @@ nav a {
   .meta {
     font-size: 9px;
   }
-
-  header h1 {
-    font-size: 34px;
-  }
 }
 </style>
 
@@ -156,7 +163,6 @@ nav a {
 <nav>
   <a href="#">Главная</a>
   <a href="#top21">Антология 21</a>
-  <a href="#poems">Все стихи</a>
   <a href="#">Авторы</a>
   <a href="#">О проекте</a>
 </nav>
@@ -165,17 +171,16 @@ nav a {
 
   <h2 class="section-title" id="top21">Антология 21</h2>
 
-  <div class="top-grid" id="topGrid"></div>
-  
   <div class="controls">
-    <input type="text" id="searchInput" placeholder="Поиск по названию или автору..." oninput="renderPoems()">
-
-    <select id="authorFilter" onchange="renderPoems()">
-      <option value="">Все авторы</option>
-    </select>
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Поиск по названию или автору..."
+      oninput="renderTop21()"
+    >
   </div>
 
-  <div class="poems-grid" id="poemsGrid"></div>
+  <div class="top-grid" id="topGrid"></div>
 
 </div>
 
@@ -318,7 +323,6 @@ function createCard(poem) {
   card.className = "poem-card";
 
   card.innerHTML = `
-   
     <h3>${poem.title}</h3>
     <div class="author">${poem.author}</div>
     <div class="excerpt">${poem.excerpt}</div>
@@ -330,63 +334,22 @@ function createCard(poem) {
 
 function renderTop21() {
   const topGrid = document.getElementById("topGrid");
+  const search = document.getElementById("searchInput").value.toLowerCase();
 
   topGrid.innerHTML = "";
 
   poems
-    .slice(0, 21)
+    .filter(poem =>
+      poem.title.toLowerCase().includes(search) ||
+      poem.author.toLowerCase().includes(search)
+    )
     .forEach(poem => {
       topGrid.appendChild(createCard(poem));
     });
 }
 
-function renderPoems() {
-  const grid = document.getElementById("poemsGrid");
-  const search = document.getElementById("searchInput").value.toLowerCase();
-  const author = document.getElementById("authorFilter").value;
-
-  grid.innerHTML = "";
-
-  const filtered = poems.filter(poem => {
-    const matchesSearch =
-      poem.title.toLowerCase().includes(search) ||
-      poem.author.toLowerCase().includes(search);
-
-    const matchesAuthor =
-      author === "" || poem.author === author;
-
-    return matchesSearch && matchesAuthor;
-  });
-
-  filtered.forEach(poem => {
-    grid.appendChild(createCard(poem));
-  });
-}
-
-function renderAuthorFilter() {
-  const select = document.getElementById("authorFilter");
-
-  const authors = [...new Set(poems.map(poem => poem.author))];
-
-  authors.forEach(author => {
-    const option = document.createElement("option");
-    option.value = author;
-    option.textContent = author;
-    select.appendChild(option);
-  });
-}
-
-function scrollToPoems() {
-  document.getElementById("poems").scrollIntoView({
-    behavior: "smooth"
-  });
-}
-
-renderAuthorFilter();
 renderTop21();
-renderPoems();
 </script>
-
 
 
 
@@ -395,7 +358,7 @@ renderPoems();
 ======================================== -->
 
 <div id="service-console">
-css top21  | v1.1.3
+убираем все лишнее  | v2.0.0
 </div>
 
 <div class="row" id="build-down">
