@@ -56,106 +56,9 @@ nav a {
   padding: 0 18px;
 }
 
-.hero {
-  background: white;
-  padding: 36px;
-  border-radius: 16px;
-  text-align: center;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-}
-
-.hero h2 {
-  font-size: 34px;
-  margin: 0 0 12px;
-}
-
-.hero p {
-  font-size: 19px;
-  line-height: 1.5;
-}
-
-.hero button {
-  padding: 14px 24px;
-  font-size: 17px;
-  border: none;
-  border-radius: 10px;
-  background: #7c2d12;
-  color: white;
-  cursor: pointer;
-}
-
 .section-title {
   margin-top: 40px;
   font-size: 30px;
-}
-
-/* ================================
-   ТОП-10
-================================ */
-
-.top-one {
-  background: #fff;
-  border-radius: 18px;
-  padding: 32px;
-  margin-bottom: 20px;
-  box-shadow: 0 5px 18px rgba(0,0,0,0.12);
-  border-left: 8px solid #7c2d12;
-}
-
-.place {
-  font-family: Arial, sans-serif;
-  font-weight: bold;
-  color: #7c2d12;
-  font-size: 15px;
-  margin-bottom: 10px;
-}
-
-.top-one h3 {
-  margin: 0;
-  font-size: 34px;
-}
-
-.author {
-  color: #7c2d12;
-  font-weight: bold;
-  margin: 10px 0 14px;
-}
-
-.excerpt {
-  color: #444;
-  line-height: 1.5;
-  white-space: pre-line;
-}
-
-.meta {
-  margin-top: 14px;
-  font-size: 14px;
-  color: #777;
-  font-family: Arial, sans-serif;
-}
-
-.top-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}
-
-.poem-card {
-  background: white;
-  padding: 20px;
-  border-radius: 14px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.poem-card:hover {
-  transform: translateY(-3px);
-}
-
-.poem-card h3 {
-  margin: 0 0 8px;
-  font-size: 22px;
 }
 
 /* ================================
@@ -215,7 +118,7 @@ footer {
 
 <header>
   <h1>Рифмы века</h1>
-  <p>100 лучших стихов русскоязычной поэзии XXI века</p>
+  <p>21 стихотворение русскоязычной поэзии третьего тысячелетия</p>
 </header>
 
 <nav>
@@ -228,20 +131,9 @@ footer {
 
 <div class="container">
 
-  <section class="hero">
-    <h2>РИФМЫ ВЕКА</h2>
-    <p>
-      Антология ста лучших стихотворений,
-      написанных на русском языке в третьем тысячелетии.
-    </p>
-    <button onclick="scrollToPoems()">Смотреть список</button>
-  </section>
+ <h2 class="section-title" id="top21">Антология 21</h2>
 
-  <h2 class="section-title" id="top10">Первая десятка</h2>
-
-  <div id="topOne"></div>
-
-  <div class="top-grid" id="topGrid"></div>
+<div class="top-grid" id="topGrid"></div>
 
   <h2 class="section-title" id="poems">Все 100 стихов</h2>
 
@@ -333,6 +225,83 @@ const poems = [
     year: "2023",
     excerpt: "Короткий фрагмент стихотворения..."
   }
+  {
+  place: 11,
+  title: "Название стихотворения №11",
+  author: "Автор 11",
+  year: "2004",
+  excerpt: "Короткий фрагмент стихотворения..."
+},
+{
+  place: 12,
+  title: "Название стихотворения №12",
+  author: "Автор 12",
+  year: "2006",
+  excerpt: "Короткий фрагмент стихотворения..."
+},
+{
+  place: 13,
+  title: "Название стихотворения №13",
+  author: "Автор 13",
+  year: "2008",
+  excerpt: "Короткий фрагмент стихотворения..."
+},
+{
+  place: 14,
+  title: "Название стихотворения №14",
+  author: "Автор 14",
+  year: "2010",
+  excerpt: "Короткий фрагмент стихотворения..."
+},
+{
+  place: 15,
+  title: "Название стихотворения №15",
+  author: "Автор 15",
+  year: "2012",
+  excerpt: "Короткий фрагмент стихотворения..."
+},
+{
+  place: 16,
+  title: "Название стихотворения №16",
+  author: "Автор 16",
+  year: "2013",
+  excerpt: "Короткий фрагмент стихотворения..."
+},
+{
+  place: 17,
+  title: "Название стихотворения №17",
+  author: "Автор 17",
+  year: "2015",
+  excerpt: "Короткий фрагмент стихотворения..."
+},
+{
+  place: 18,
+  title: "Название стихотворения №18",
+  author: "Автор 18",
+  year: "2016",
+  excerpt: "Короткий фрагмент стихотворения..."
+},
+{
+  place: 19,
+  title: "Название стихотворения №19",
+  author: "Автор 19",
+  year: "2018",
+  excerpt: "Короткий фрагмент стихотворения..."
+},
+{
+  place: 20,
+  title: "Название стихотворения №20",
+  author: "Автор 20",
+  year: "2021",
+  excerpt: "Короткий фрагмент стихотворения..."
+},
+{
+  place: 21,
+  title: "Название стихотворения №21",
+  author: "Автор 21",
+  year: "2024",
+  excerpt: "Короткий фрагмент стихотворения..."
+}
 ];
 
 function createCard(poem) {
@@ -350,27 +319,13 @@ function createCard(poem) {
   return card;
 }
 
-function renderTop10() {
-  const topOne = document.getElementById("topOne");
+function renderTop21() {
   const topGrid = document.getElementById("topGrid");
 
-  topOne.innerHTML = "";
   topGrid.innerHTML = "";
 
-  const first = poems.find(poem => poem.place === 1);
-
-  topOne.innerHTML = `
-    <div class="top-one">
-      <div class="place">№ 1</div>
-      <h3>${first.title}</h3>
-      <div class="author">${first.author}</div>
-      <div class="excerpt">${first.excerpt}</div>
-      <div class="meta">${first.year}</div>
-    </div>
-  `;
-
   poems
-    .filter(poem => poem.place >= 2 && poem.place <= 10)
+    .slice(0, 21)
     .forEach(poem => {
       topGrid.appendChild(createCard(poem));
     });
@@ -419,7 +374,7 @@ function scrollToPoems() {
 }
 
 renderAuthorFilter();
-renderTop10();
+renderTop21();
 renderPoems();
 </script>
 
@@ -431,7 +386,7 @@ renderPoems();
 ======================================== -->
 
 <div id="service-console">
-название, субтитр, десятка  | v1.0.1
+top21  | v1.1.0
 </div>
 
 <div class="row" id="build-down">
