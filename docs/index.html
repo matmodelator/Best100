@@ -12,8 +12,16 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  min-height: 100%;
+}
+
 body {
   margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   font-family: Georgia, "Times New Roman", serif;
   background: #f4efe7;
   color: #1f1f1f;
@@ -22,24 +30,24 @@ body {
 header {
   background: #1f2933;
   color: white;
-  padding: 26px;
+  padding: 18px;
   text-align: center;
 }
 
 header h1 {
   margin: 0;
-  font-size: 42px;
+  font-size: 36px;
 }
 
 header p {
-  margin: 10px 0 0;
+  margin: 6px 0 0;
   color: #d1d5db;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 nav {
   background: #111827;
-  padding: 12px;
+  padding: 10px;
   text-align: center;
 }
 
@@ -52,24 +60,28 @@ nav a {
 
 .container {
   max-width: 1160px;
-  margin: 24px auto;
-  padding: 0 18px;
-  height: calc(100vh - 180px);
+  width: 100%;
+  margin: 0 auto;
+  padding: 10px 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .section-title {
-  margin: 0 0 14px;
-  font-size: 30px;
+  margin: 0 0 8px;
+  font-size: 26px;
 }
 
 .controls {
-  margin-bottom: 14px;
+  margin-bottom: 8px;
 }
 
 .controls input {
   width: 100%;
-  padding: 10px;
-  font-size: 15px;
+  padding: 8px;
+  font-size: 14px;
   border: 1px solid #c7c7c7;
   border-radius: 8px;
 }
@@ -79,7 +91,8 @@ nav a {
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(3, 1fr);
   gap: 6px;
-  height: 100%;
+  flex: 1;
+  min-height: 0;
 }
 
 .poem-card {
@@ -89,6 +102,7 @@ nav a {
   box-shadow: 0 2px 5px rgba(0,0,0,.08);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .poem-card h3 {
@@ -108,26 +122,28 @@ nav a {
   font-size: 11px;
   line-height: 1.15;
   white-space: pre-line;
+  overflow: hidden;
 }
 
 .meta {
-  margin-top: 4px;
+  margin-top: auto;
   font-size: 10px;
   color: #777;
 }
 
 footer {
-  margin-top: 30px;
+  margin-top: 0;
   background: #1f2933;
   color: #d1d5db;
   text-align: center;
-  padding: 18px;
+  padding: 12px;
   font-family: Arial, sans-serif;
 }
 
 @media (max-width: 1024px) {
   .top-grid {
     grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(7, 1fr);
   }
 
   header h1 {
@@ -363,7 +379,7 @@ renderTop21();
 ======================================== -->
 
 <div id="service-console">
-fix перенос  | v2.0.2
+fix css flex  | v2.0.3
 </div>
 
 <div class="row" id="build-down">
