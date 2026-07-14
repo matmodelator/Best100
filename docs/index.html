@@ -46,38 +46,31 @@ header p {
 }
 
 nav {
+  position: relative;
   background: #111827;
   padding: 10px 16px;
-
-  display: flex;
-  align-items: center;          
+  text-align: center;
 }
 
 nav .links {
-  display: flex;
+  display: inline-flex;
   gap: 28px;
 }
 
-nav .links a {
-  color: white;
-  text-decoration: none;
-  font-family: Arial, sans-serif;
-}
-
 .user-btn {
-  margin-left: auto;
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
 
   padding: 5px 12px;
-
   background: #374151;
   color: white;
-
   border: 1px solid #6b7280;
   border-radius: 6px;
-
   cursor: pointer;
 }
-
+  
 .container {
   max-width: 1160px;
   width: 100%;
@@ -166,13 +159,6 @@ footer {
   text-align: center;
   padding: 12px;
   font-family: Arial, sans-serif;
-}
-
-.user-btn {
-  position: fixed;
-  top: 16px;
-  right: 16px;
-  z-index: 20;
 }
 
 .user-panel {
@@ -456,7 +442,7 @@ renderUserStatus();
 ======================================== -->
 
 <div id="service-console">
-fix user menu   | v3.5.0
+fix user menu css  | v3.5.1
 </div>
 
 <div class="row" id="build-down">
