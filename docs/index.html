@@ -124,6 +124,14 @@ nav .links {
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
+
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.poem-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,.18);
 }
 
 .poem-card h3 {
@@ -462,7 +470,7 @@ renderUserStatus();
 ======================================== -->
 
 <div id="service-console">
-fix foto size  | v3.5.4
+fix card click  | v3.5.5
 </div>
 
 <div class="row" id="build-down">
