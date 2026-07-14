@@ -47,15 +47,35 @@ header p {
 
 nav {
   background: #111827;
-  padding: 10px;
-  text-align: center;
+  padding: 10px 16px;
+
+  display: flex;
+  align-items: center;          
 }
 
-nav a {
+nav .links {
+  display: flex;
+  gap: 28px;
+}
+
+nav .links a {
   color: white;
   text-decoration: none;
-  margin: 0 14px;
   font-family: Arial, sans-serif;
+}
+
+.user-btn {
+  margin-left: auto;
+
+  padding: 5px 12px;
+
+  background: #374151;
+  color: white;
+
+  border: 1px solid #6b7280;
+  border-radius: 6px;
+
+  cursor: pointer;
 }
 
 .container {
@@ -107,7 +127,7 @@ nav a {
 
 .poem-card h3 {
   margin: 0 0 3px;
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1.1;
 }
 
@@ -199,9 +219,20 @@ footer {
     grid-template-rows: repeat(7, 1fr);
   }
 
-  header h1 {
-    font-size: 34px;
-  }
+ header {
+  padding: 4px 10px;
+}
+
+header h1 {
+  font-size: 22px;
+  line-height: 1;
+}
+
+header p {
+  margin-top: 2px;
+  font-size: 11px;
+  line-height: 1.1;
+}
 
   .poem-card {
     padding: 5px;
@@ -211,6 +242,10 @@ footer {
     font-size: 12px;
   }
 
+  .poem-photo {
+    height: 40px;
+  }
+  
   .author {
     font-size: 11px;
   }
@@ -235,13 +270,19 @@ footer {
 </header>
 
 <nav>
-  <a href="#">Главная</a>
-  <a href="#top21">Антология XXI</a>
-  <a href="#">Авторы</a>
-  <a href="#">О проекте</a>
-</nav>
 
-<button class="user-btn" onclick="toggleUserPanel()">User</button>
+  <div class="links">
+    <a href="#">Главная</a>
+    <a href="#top21">Антология XXI</a>
+    <a href="#">Авторы</a>
+    <a href="#">О проекте</a>
+  </div>
+
+  <button class="user-btn" onclick="toggleUserPanel()">
+    Меню
+  </button>
+
+</nav>
 
 <aside class="user-panel" id="userPanel">
   <button class="close-btn" onclick="toggleUserPanel()">×</button>
@@ -415,7 +456,7 @@ renderUserStatus();
 ======================================== -->
 
 <div id="service-console">
-fix loadPoem   | v3.4.1
+fix user menu   | v3.5.0
 </div>
 
 <div class="row" id="build-down">
