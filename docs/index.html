@@ -310,13 +310,20 @@ async function loadPoem(page) {
 
   const doc = new DOMParser().parseFromString(html, "text/html");
 
+  const imageElement = doc.querySelector(".photo img");
+  const imageSrc = imageElement?.getAttribute("src") || "";
+
+  const image = imageSrc
+    ? new URL(imageSrc, new URL(page, location.href)).href
+    : "";
+
   return {
     page,
     title: doc.querySelector(".title")?.textContent.trim() || "",
     author: doc.querySelector(".author")?.textContent.trim() || "",
     year: doc.querySelector(".year")?.textContent.trim() || "",
     excerpt: doc.querySelector(".excerpt")?.textContent.trim() || "",
-    image: doc.querySelector(".photo img")?.getAttribute("src") || ""
+    image
   };
 }
   
@@ -325,7 +332,10 @@ function createCard(poem) {
   card.className = "poem-card";
 
   card.innerHTML = `
-  <img class="poem-photo" src="${poem.image || 'images/no-photo.jpg'}" alt="${poem.author}">
+  ${poem.image
+  ? `<img class="poem-photo" src="${poem.image}" alt="">`
+  : ""
+}
   <h3>${poem.title}</h3>
   <div class="author">${poem.author}</div>
   <div class="excerpt">${poem.excerpt}</div>
@@ -405,7 +415,7 @@ renderUserStatus();
 ======================================== -->
 
 <div id="service-console">
-const poems/ loadPoem   | v3.4.0
+fix loadPoem   | v3.4.1
 </div>
 
 <div class="row" id="build-down">
