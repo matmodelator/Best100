@@ -380,7 +380,7 @@ async function loadPoem(page) {
 function createCard(poem) {
   const card = document.createElement("div");
   card.className = "poem-card";
-
+  card.title = "Войди, чтобы прочитать и проголосовать";
   card.innerHTML = `
     ${
       poem.image
@@ -470,7 +470,7 @@ renderUserStatus();
 ======================================== -->
 
 <div id="service-console">
-fix card click  | v3.5.5
+подсказка  | v3.5.6
 </div>
 
 <div class="row" id="build-down">
