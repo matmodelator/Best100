@@ -225,15 +225,15 @@
 
   <!-- Большая кнопка открытия голосования -->
 
-  <button
-    id="openVoteButton"
-    class="vote-start"
-    type="button"
-    onclick="toggleVotePanel()"
-  >
-    ГОЛОСОВАТЬ
-  </button>
-
+ <button
+  id="openVoteButton"
+  class="vote-start"
+  type="button"
+  onclick="toggleVotePanel()"
+  disabled
+>
+  ГОЛОСОВАНИЕ откроется через 3:00. Прочитайте до КОНЦА
+</button>
 
   <!--
   Этот блок изначально скрыт.
@@ -312,21 +312,264 @@
 
 <script>
 
+/*
+========================================
+УСЛОВИЯ ДОСТУПА К ГОЛОСОВАНИЮ
+
+Менять время здесь:
+
+3 * 60 = 3 минуты
+========================================
+*/
+
+const VOTE_DELAY_SECONDS = 3 * 60;
+
+
+/*
+Текущее оставшееся время.
+*/
+
+let voteSecondsLeft =
+  VOTE_DELAY_SECONDS;
+
+
+/*
+Отдельно запоминаем выполнение
+каждого из двух условий.
+*/
+
+let voteTimerFinished = false;
+let pageScrolledToEnd = false;
+
+
+/*
+Получаем элементы страницы.
+*/
+
+const openVoteButton =
+  document.getElementById("openVoteButton");
+
+const voteDetails =
+  document.getElementById("voteDetails");
+
+
+/*
+========================================
+ПРОВЕРКА ОБОИХ УСЛОВИЙ
+========================================
+*/
+
+function updateVoteAvailability() {
+
+  /*
+  Голосование доступно только тогда,
+  когда закончился таймер И пользователь
+  прокрутил страницу до самого конца.
+  */
+
+  if (
+    voteTimerFinished &&
+    pageScrolledToEnd
+  ) {
+
+    openVoteButton.disabled = false;
+
+    openVoteButton.textContent =
+      "ГОЛОСОВАТЬ";
+
+    return;
+  }
+
+
+  /*
+  Таймер закончился, но пользователь
+  ещё не дошёл до конца страницы.
+  */
+
+  if (
+    voteTimerFinished &&
+    !pageScrolledToEnd
+  ) {
+
+    openVoteButton.textContent =
+      "ДОЙДИТЕ ДО КОНЦА ТЕКСТА";
+
+    return;
+  }
+
+
+  /*
+  Пользователь дошёл до конца,
+  но три минуты ещё не прошли.
+  */
+
+  if (
+    !voteTimerFinished &&
+    pageScrolledToEnd
+  ) {
+
+    openVoteButton.textContent =
+      "ОЖИДАЙТЕ ОКОНЧАНИЯ ТАЙМЕРА";
+
+  }
+
+}
+
+
+/*
+========================================
+ТАЙМЕР 3 МИНУТЫ
+
+Он запускается сразу после загрузки страницы,
+а не после прокрутки.
+========================================
+*/
+
+function updateVoteTimerText() {
+
+  const minutes =
+    Math.floor(voteSecondsLeft / 60);
+
+  const seconds =
+    String(voteSecondsLeft % 60)
+      .padStart(2, "0");
+
+  openVoteButton.textContent =
+    "ГОЛОСОВАНИЕ ЧЕРЕЗ "
+    + minutes
+    + ":"
+    + seconds;
+
+}
+
+
+updateVoteTimerText();
+
+
+const voteTimer =
+  setInterval(function () {
+
+    voteSecondsLeft--;
+
+
+    /*
+    Таймер завершён.
+    */
+
+    if (voteSecondsLeft <= 0) {
+
+      voteSecondsLeft = 0;
+      voteTimerFinished = true;
+
+      clearInterval(voteTimer);
+
+      updateVoteAvailability();
+
+      return;
+    }
+
+
+    /*
+    Пока таймер идёт, показываем
+    оставшееся время.
+    */
+
+    updateVoteTimerText();
+
+  }, 1000);
+
+
+/*
+========================================
+ПРОВЕРКА ПРОКРУТКИ ДО КОНЦА
+
+Допуск 10 пикселей нужен из-за округлений
+высоты страницы браузером.
+========================================
+*/
+
+function checkPageScroll() {
+
+  const currentBottom =
+    window.scrollY
+    + window.innerHeight;
+
+  const pageHeight =
+    document.documentElement.scrollHeight;
+
+
+  if (
+    currentBottom >= pageHeight - 10
+  ) {
+
+    pageScrolledToEnd = true;
+
+    /*
+    После первого достижения конца страницы
+    условие остаётся выполненным.
+    Назад прокручивать можно.
+    */
+
+    window.removeEventListener(
+      "scroll",
+      checkPageScroll
+    );
+
+    updateVoteAvailability();
+
+  }
+
+}
+
+
+window.addEventListener(
+  "scroll",
+  checkPageScroll
+);
+
+
+/*
+Проверяем сразу после загрузки.
+
+Это нужно для очень коротких страниц,
+которые целиком помещаются на одном экране.
+*/
+
+checkPageScroll();
+
+
+/*
+========================================
+ОТКРЫТИЕ ПАНЕЛИ ГОЛОСОВАНИЯ
+========================================
+*/
+
 function toggleVotePanel() {
 
-  const voteDetails =
-    document.getElementById("voteDetails");
+  /*
+  Дополнительная защита:
+  панель не откроется раньше выполнения
+  обоих условий.
+  */
 
-  const openVoteButton =
-    document.getElementById("openVoteButton");
+  if (
+    !voteTimerFinished ||
+    !pageScrolledToEnd
+  ) {
+
+    return;
+  }
+
 
   const isOpen =
     voteDetails.classList.toggle("open");
+
 
   openVoteButton.textContent =
     isOpen
       ? "СКРЫТЬ ГОЛОСОВАНИЕ"
       : "ГОЛОСОВАТЬ";
+
 }
 
 </script>
@@ -365,7 +608,7 @@ function toggleVotePanel() {
 ======================================== -->
 
 <div id="service-console">
-  small photo + compact poem + vote panel | v1.4.0
+  ГОЛОСОВАЛКА ТАймер\скролл | v1.5.0
 </div>
 
 <div
