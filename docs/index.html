@@ -195,6 +195,8 @@ footer {
   padding: 20px;
   z-index: 30;
   transition: right .25s;
+  display: flex;
+  flex-direction: column;
 }
 
 .user-panel.open {
@@ -212,14 +214,91 @@ footer {
 }
 
 .status {
+  position: relative;
   padding: 8px 12px;
   border-radius: 8px;
   background: #f4efe7;
+  cursor: help;
 }
 
 .status.active {
   background: #7c2d12;
   color: white;
+}
+
+/* Окно подсказки */
+
+.status::after {
+  content: attr(data-tooltip);
+
+  position: absolute;
+  left: 0;
+  top: calc(100% + 6px);
+
+  width: 220px;
+  padding: 10px 12px;
+
+  background: #111827;
+  color: white;
+
+  border-radius: 7px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.2);
+
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.35;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  z-index: 50;
+  transition: opacity .15s;
+}
+
+.status:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Кнопки внизу панели */
+
+.user-actions {
+  margin-top: auto;
+  padding-top: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.login-btn,
+.register-btn {
+  width: 100%;
+  padding: 13px 16px;
+
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.login-btn {
+  background: #1f2933;
+  color: white;
+  border: 1px solid #1f2933;
+}
+
+.register-btn {
+  background: #7c2d12;
+  color: white;
+  border: 1px solid #7c2d12;
+}
+
+.login-btn:hover,
+.register-btn:hover {
+  filter: brightness(1.12);
 }
   
 @media (max-width: 1024px) {
@@ -294,17 +373,62 @@ header p {
 </nav>
 
 <aside class="user-panel" id="userPanel">
+
   <button class="close-btn" onclick="toggleUserPanel()">×</button>
 
   <h3>Статус пользователя</h3>
 
- <div class="status-list">
-  <div class="status active" data-status="Гость">Гость</div>
-  <div class="status" data-status="Читатель">Читатель</div>
-  <div class="status" data-status="Критик">Критик</div>
-  <div class="status" data-status="Эксперт">Эксперт</div>
-  <div class="status author-status" data-status="Автор">Автор</div>
-</div>
+  <div class="status-list">
+
+    <div
+      class="status active"
+      data-status="Гость"
+      data-tooltip="Посетитель без регистрации. Может читать и голосовать. Чтобы повысить статус, зарегистрируйтесь ниже">
+      Гость
+    </div>
+
+    <div
+      class="status"
+      data-status="Читатель"
+      data-tooltip="Пользователь, который проголосовал хотя бы за одно стихотворение.">
+      Читатель
+    </div>
+
+    <div
+      class="status"
+      data-status="Критик"
+      data-tooltip="Зарегистрированный пользователь, оставивший содержательный отзыв.">
+      Критик
+    </div>
+
+    <div
+      class="status"
+      data-status="Эксперт"
+      data-tooltip="Пользователь, получивший право расширенной оценки стихотворений.">
+      Эксперт
+    </div>
+
+    <div
+      class="status author-status"
+      data-status="Автор"
+      data-tooltip="Поэт, чье стихотворение включено в Антологию XXI и одобрено редакцией.">
+      Автор
+    </div>
+
+  </div>
+
+  <div class="user-actions">
+
+    <button class="login-btn" type="button">
+      Вход
+    </button>
+
+    <button class="register-btn" type="button">
+      Регистрация
+    </button>
+
+  </div>
+
 </aside>
   
 <div class="container">
@@ -470,7 +594,7 @@ renderUserStatus();
 ======================================== -->
 
 <div id="service-console">
-подсказка  | v3.5.6
+log&reg  | v3.6.0
 </div>
 
 <div class="row" id="build-down">
