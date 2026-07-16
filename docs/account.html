@@ -313,14 +313,11 @@ async function loadProfile() {
 
   const { data, error, status } =
     await supabase
-      .from('accounts')
+      .from('top21_accounts')
       .select(
         'name, gender, birthday'
       )
-      .eq(
-        'id',
-        currentUser.id
-      )
+      .eq('user_id', currentUser.id)
       .single()
 
   if (error && status !== 406) {
@@ -367,10 +364,10 @@ async function saveProfile() {
 
   const { error } =
     await supabase
-      .from('accounts')
+      .from('top21_accounts')
       .upsert({
 
-        id:
+        user_id:
           currentUser.id,
 
         email:
@@ -411,17 +408,6 @@ async function saveProfile() {
 
 }
 
-async function logout() {
-
-  await supabase
-    .auth
-    .signOut()
-
-  window.location.href =
-    'index.html'
-
-}
-
 function goMain() {
 
   window.location.href =
@@ -432,16 +418,10 @@ function goMain() {
 window.saveProfile =
   saveProfile
 
-window.logout =
-  logout
-
 window.goMain =
   goMain
 
 loadAccount()
-
-</script>
-
 
 
 
@@ -450,7 +430,7 @@ loadAccount()
 ======================================== -->
 
 <div id="service-console">
-minus main | v1.0.1
+user_id | v1.0.2
 </div>
 
 <div class="row" id="build-down">
