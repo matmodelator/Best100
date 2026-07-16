@@ -1,90 +1,698 @@
 /*
 ========================================
-foto   | v1.1.0
+Уменьшение и готосовалка | v1.1.1
 ========================================
 */
 
 
+/*
+========================================
+ОБЩИЕ ПАРАМЕТРЫ
+========================================
+*/
 
-*{
-  box-sizing:border-box;
+* {
+  box-sizing: border-box;
 }
 
-body{
-  margin:0;
-  font-family:Georgia,"Times New Roman",serif;
-  background:#f4efe7;
-  color:#1f1f1f;
+html,
+body {
+  min-height: 100%;
 }
 
-header{
-  background:#1f2933;
-  color:#fff;
-  padding:24px;
-  text-align:center;
+body {
+  margin: 0;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  background: #f4efe7;
+  color: #1f1f1f;
 }
 
-nav{
-  background:#111827;
-  padding:12px;
-  text-align:center;
+
+/*
+========================================
+ВЕРХНЯЯ ШАПКА
+
+МЕНЯТЬ ВЫСОТУ ШАПКИ ЗДЕСЬ:
+
+padding: 5px 10px;
+
+МЕНЯТЬ РАЗМЕР «РИФМЫ ВЕКА»:
+
+font-size: 21px;
+========================================
+*/
+
+header {
+  background: #1f2933;
+  color: white;
+
+  padding: 5px 10px;
+
+  text-align: center;
 }
 
-nav a{
-  color:#fff;
-  text-decoration:none;
-  font-family:Arial,sans-serif;
+header h1 {
+  margin: 0;
+
+  font-size: 21px;
+  line-height: 1.05;
 }
 
-.container{
-  max-width:900px;
-  margin:30px auto;
-  padding:0 20px;
+
+/*
+========================================
+СТРЕЛКА ВОЗВРАТА
+
+МЕНЯТЬ РАЗМЕР СТРЕЛКИ:
+
+font-size: 24px;
+========================================
+*/
+
+.back-link {
+  display: inline-block;
+
+  margin: 5px 0 0 12px;
+
+  color: #1f2933;
+  text-decoration: none;
+
+  font-family: Arial, sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+
+  line-height: 1;
 }
 
-.title{
-  font-size:38px;
-  margin:0;
+.back-link:hover {
+  color: #7c2d12;
 }
 
-.author{
-  margin-top:10px;
-  color:#7c2d12;
-  font-size:22px;
-  font-weight:bold;
+
+/*
+========================================
+ОСНОВНОЙ КОНТЕЙНЕР
+
+МЕНЯТЬ ШИРИНУ ТЕКСТА ЗДЕСЬ:
+
+max-width: 680px;
+
+МЕНЯТЬ ВНЕШНИЕ ОТСТУПЫ:
+
+margin: 2px auto 0;
+
+МЕНЯТЬ ОТСТУПЫ ОТ КРАЁВ ЭКРАНА:
+
+padding: 0 12px;
+========================================
+*/
+
+.container {
+  width: 100%;
+  max-width: 680px;
+
+  margin: 2px auto 0;
+  padding: 0 12px;
 }
 
-.year{
-  margin-top:6px;
-  color:#777;
+
+/*
+========================================
+ВЕРХНИЙ БЛОК
+
+Название слева.
+Фото справа.
+
+МЕНЯТЬ РАССТОЯНИЕ МЕЖДУ НАЗВАНИЕМ
+И ФОТОГРАФИЕЙ:
+
+gap: 8px;
+========================================
+*/
+
+.poem-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 8px;
+
+  margin-bottom: 5px;
 }
+
+.poem-heading {
+  flex: 1;
+  min-width: 0;
+}
+
+
+/*
+========================================
+НАЗВАНИЕ
+
+МЕНЯТЬ РАЗМЕР НАЗВАНИЯ:
+
+font-size: 18px;
+========================================
+*/
+
+.title {
+  margin: 0;
+
+  font-size: 18px;
+  line-height: 1.05;
+}
+
+
+/*
+========================================
+АВТОР
+
+МЕНЯТЬ РАЗМЕР АВТОРА:
+
+font-size: 12px;
+========================================
+*/
+
+.author {
+  margin-top: 3px;
+
+  color: #7c2d12;
+
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1.1;
+}
+
+
+/*
+========================================
+ГОД
+
+МЕНЯТЬ РАЗМЕР ГОДА:
+
+font-size: 10px;
+========================================
+*/
+
+.year {
+  margin-top: 2px;
+
+  color: #777;
+
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  line-height: 1;
+}
+
+
+/*
+========================================
+ФОТОГРАФИЯ
+
+ГЛАВНЫЕ ПАРАМЕТРЫ РАЗМЕРА ФОТО:
+
+width: 42px;
+height: 42px;
+
+Чтобы сделать фото больше:
+например 60px × 60px.
+
+Чтобы сделать ещё меньше:
+например 32px × 32px.
+========================================
+*/
 
 .photo {
-  margin: 24px 0;
-  text-align: center;
+  flex: 0 0 42px;
 }
 
 .photo img {
   display: block;
-  width: 100%;
-  max-width: 700px;
-  margin: 0 auto;
+
+  width: 42px;
+  height: 42px;
+
+  object-fit: contain;
+  object-position: center;
+
+  border-radius: 4px;
+}
+
+
+/*
+========================================
+ФРАГМЕНТ ДЛЯ ГЛАВНОЙ СТРАНИЦЫ
+
+На самой странице стихотворения
+фрагмент можно скрыть.
+
+Он всё равно остаётся в HTML,
+и index.html сможет его считать.
+
+display: none;
+========================================
+*/
+
+.excerpt {
+  display: none;
+}
+
+
+/*
+========================================
+ПОЛНЫЙ ТЕКСТ СТИХОТВОРЕНИЯ
+
+ГЛАВНЫЕ ПАРАМЕТРЫ:
+
+font-size: 11px;
+line-height: 1.16;
+
+Чтобы сделать текст крупнее:
+font-size: 12px или 13px.
+
+Чтобы строки были дальше друг от друга:
+line-height: 1.25 или 1.3.
+========================================
+*/
+
+.poem {
+  margin-top: 2px;
+
+  white-space: pre-wrap;
+
+  font-size: 11px;
+  line-height: 1.16;
+
+  overflow-wrap: normal;
+}
+
+
+/*
+========================================
+ОТДЕЛЬНАЯ ПАНЕЛЬ ГОЛОСОВАНИЯ
+
+МЕНЯТЬ ШИРИНУ ПАНЕЛИ:
+
+max-width: 680px;
+
+МЕНЯТЬ РАССТОЯНИЕ ОТ СТИХОТВОРЕНИЯ:
+
+margin: 28px auto 0;
+========================================
+*/
+
+.vote-panel {
+  width: calc(100% - 24px);
+  max-width: 680px;
+
+  margin: 28px auto 0;
+  padding: 8px;
+
+  background: white;
+
   border-radius: 10px;
-}
 
-.poem{
-  margin-top:40px;
-  white-space:pre-line;
-  line-height:1.7;
-  font-size:24px;
-}
-
-footer{
-  margin-top:60px;
-  background:#1f2933;
-  color:#d1d5db;
-  padding:20px;
-  text-align:center;
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, .13);
 }
 
 
+/*
+========================================
+БОЛЬШАЯ ЯРКАЯ КНОПКА «ГОЛОСОВАТЬ»
+
+МЕНЯТЬ ЦВЕТ:
+
+background: #b91c1c;
+
+МЕНЯТЬ ВЫСОТУ:
+
+padding: 15px 16px;
+
+МЕНЯТЬ РАЗМЕР НАДПИСИ:
+
+font-size: 19px;
+========================================
+*/
+
+.vote-start {
+  display: block;
+
+  width: 100%;
+
+  padding: 15px 16px;
+
+  background: #b91c1c;
+  color: white;
+
+  border: none;
+  border-radius: 8px;
+
+  font-family: Arial, sans-serif;
+  font-size: 19px;
+  font-weight: bold;
+
+  letter-spacing: .5px;
+
+  cursor: pointer;
+
+  transition:
+    filter .15s ease,
+    transform .15s ease;
+}
+
+.vote-start:hover {
+  filter: brightness(1.12);
+  transform: translateY(-1px);
+}
+
+.vote-start:active {
+  transform: translateY(0);
+}
+
+
+/*
+========================================
+СКРЫТАЯ ЧАСТЬ ГОЛОСОВАНИЯ
+
+По умолчанию она скрыта.
+После нажатия добавляется класс .open.
+========================================
+*/
+
+.vote-details {
+  display: none;
+
+  padding: 14px 8px 5px;
+
+  text-align: center;
+}
+
+.vote-details.open {
+  display: block;
+}
+
+
+/*
+========================================
+ВОПРОС ГОЛОСОВАНИЯ
+
+МЕНЯТЬ РАЗМЕР ВОПРОСА:
+
+font-size: 15px;
+========================================
+*/
+
+.vote-question {
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 1.3;
+}
+
+
+/*
+========================================
+КНОПКИ ДА / НЕТ
+========================================
+*/
+
+.vote-buttons {
+  display: flex;
+  justify-content: center;
+
+  gap: 12px;
+
+  margin-top: 12px;
+}
+
+
+/*
+========================================
+ОБЩИЙ РАЗМЕР КНОПОК ДА / НЕТ
+
+МЕНЯТЬ ШИРИНУ:
+
+min-width: 105px;
+
+МЕНЯТЬ ВЫСОТУ:
+
+padding: 10px 20px;
+
+МЕНЯТЬ РАЗМЕР ТЕКСТА:
+
+font-size: 16px;
+========================================
+*/
+
+.vote-buttons button {
+  min-width: 105px;
+
+  padding: 10px 20px;
+
+  border: none;
+  border-radius: 7px;
+
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+
+/*
+========================================
+ЦВЕТ КНОПКИ «ДА»
+========================================
+*/
+
+.vote-yes {
+  background: #166534;
+  color: white;
+}
+
+
+/*
+========================================
+ЦВЕТ КНОПКИ «НЕТ»
+========================================
+*/
+
+.vote-no {
+  background: #991b1b;
+  color: white;
+}
+
+.vote-buttons button:hover {
+  filter: brightness(1.12);
+}
+
+
+/*
+========================================
+ЗАБЛОКИРОВАННЫЕ КНОПКИ
+
+vote.js блокирует обе кнопки
+после голосования.
+========================================
+*/
+
+.vote-buttons button:disabled {
+  opacity: .45;
+  cursor: default;
+  filter: none;
+}
+
+
+/*
+========================================
+СТАТУС ГОЛОСОВАНИЯ
+========================================
+*/
+
+#voteStatus {
+  min-height: 18px;
+
+  margin-top: 10px;
+
+  color: #555;
+
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+}
+
+
+/*
+========================================
+НИЖНЯЯ ПЛАШКА
+========================================
+*/
+
+footer {
+  margin-top: 18px;
+
+  padding: 8px;
+
+  background: #1f2933;
+  color: #d1d5db;
+
+  text-align: center;
+
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+}
+
+
+/*
+========================================
+МОБИЛЬНАЯ ВЕРСИЯ
+
+Эти параметры работают на экранах
+шириной до 600px.
+========================================
+*/
+
+@media (max-width: 600px) {
+
+  /*
+  Размер верхней надписи.
+  */
+
+  header {
+    padding: 4px 8px;
+  }
+
+  header h1 {
+    font-size: 19px;
+  }
+
+
+  /*
+  Стрелка возврата.
+  */
+
+  .back-link {
+    margin-left: 8px;
+    font-size: 21px;
+  }
+
+
+  /*
+  Отступы страницы от краёв телефона.
+  */
+
+  .container {
+    padding: 0 7px;
+  }
+
+
+  /*
+  Название.
+  */
+
+  .title {
+    font-size: 15px;
+  }
+
+
+  /*
+  Автор.
+  */
+
+  .author {
+    font-size: 10px;
+  }
+
+
+  /*
+  Год.
+  */
+
+  .year {
+    font-size: 9px;
+  }
+
+
+  /*
+  ФОТО НА ТЕЛЕФОНЕ.
+
+  МЕНЯТЬ РАЗМЕР ЗДЕСЬ:
+
+  34px × 34px.
+  */
+
+  .photo {
+    flex-basis: 34px;
+  }
+
+  .photo img {
+    width: 34px;
+    height: 34px;
+  }
+
+
+  /*
+  ТЕКСТ СТИХОТВОРЕНИЯ НА ТЕЛЕФОНЕ.
+
+  МЕНЯТЬ РАЗМЕР ЗДЕСЬ:
+
+  font-size: 9px;
+  */
+
+  .poem {
+    font-size: 9px;
+    line-height: 1.12;
+  }
+
+
+  /*
+  Панель голосования.
+  */
+
+  .vote-panel {
+    width: calc(100% - 14px);
+
+    margin-top: 20px;
+    padding: 6px;
+  }
+
+
+  /*
+  Большая кнопка «ГОЛОСОВАТЬ».
+  */
+
+  .vote-start {
+    padding: 13px 10px;
+    font-size: 17px;
+  }
+
+
+  /*
+  Вопрос.
+  */
+
+  .vote-question {
+    font-size: 13px;
+  }
+
+
+  /*
+  Кнопки «Да» и «Нет».
+  */
+
+  .vote-buttons button {
+    min-width: 90px;
+
+    padding: 9px 15px;
+
+    font-size: 14px;
+  }
+
+}
