@@ -1,6 +1,6 @@
 /*
 ========================================
-Уменьшение и готосовалка | v1.1.1
+vote-start | v1.1.2
 ========================================
 */
 
@@ -376,6 +376,13 @@ font-size: 19px;
   transform: translateY(0);
 }
 
+.vote-start:disabled {
+  background: #6b7280;
+  color: #e5e7eb;
+  cursor: not-allowed;
+  transform: none;
+  filter: none;
+}
 
 /*
 ========================================
