@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0" />
+
+  <title>Подтверждение email</title>
+
+
+  <style>
+
+    /*
+    ========================================
+    БАЗОВЫЕ СТИЛИ СТРАНИЦЫ
+    ========================================
+    */
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #2563eb;
+      color: white;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 520px;
+      margin: 40px auto;
+      background: white;
+      padding: 24px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    button {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 6px;
+      background: #2563eb;
+      color: white;
+      cursor: pointer;
+      margin: 8px;
+    }
+
+    #status {
+      min-height: 24px;
+      font-weight: bold;
+    }
+
+    /*
+    ========================================
+    КНОПКА ПЕРЕХОДА В ACCOUNT
+    По умолчанию скрыта
+    Показывается только после подтверждения
+    ========================================
+    */
+
+    #goAccountBtn {
+      display: none;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<header>
+  <h1>Рифмы века</h1>
+</header>
+
+<div class="container">
+
+  <h2>Подтверждение email</h2>
+
+  <!-- ========================================
+       СТАТУС ПРОВЕРКИ
+  ======================================== -->
+
+  <p id="status">
+    Проверяем подтверждение...
+  </p>
+
+  <!-- ========================================
+       GO TO ACCOUNT
+       Единственная кнопка на странице
+       Показывается после подтверждения email
+  ======================================== -->
+
+  <button
+    id="goAccountBtn"
+    onclick="goAccount()"
+  >
+    Go to account
+  </button>
+
+  <!-- ========================================
+       УБРАННЫЕ КНОПКИ
+       ОСТАВЛЕНЫ КАК КОММЕНТАРИИ
+  ======================================== -->
+
+  <!--
+  <button onclick="checkUser()">
+    Проверить снова
+  </button>
+  -->
+
+  <!--
+  <button onclick="window.location.href='index.html'">
+    На главную
+  </button>
+  -->
+
+  <!--
+  <button onclick="goIndex()">
+    Exit
+  </button>
+  -->
+
+</div>
+
+<script type="module">
+
+  import { supabase }
+  from './supabase-config.js'
+
+  /*
+  ========================================
+  DOM ЭЛЕМЕНТЫ
+  ========================================
+  */
+
+  const statusText =
+    document.getElementById('status')
+
+  const goAccountBtn =
+    document.getElementById('goAccountBtn')
+
+  /*
+  ========================================
+  ПРОВЕРКА ПОЛЬЗОВАТЕЛЯ
+  ========================================
+  */
+
+  async function checkUser() {
+
+    statusText.textContent =
+      'Проверяем сессию...'
+
+    /*
+    Скрываем кнопку перед проверкой
+    */
+
+    goAccountBtn.style.display =
+      'none'
+
+    const { data, error } =
+      await supabase.auth.getUser()
+
+    /*
+    ========================================
+    ЕСЛИ JWT ССЫЛАЕТСЯ НА НЕСУЩЕСТВУЮЩЕГО USER
+    ЧИСТИМ СЕССИЮ И ПОКАЗЫВАЕМ СТАТУС
+    ========================================
+    */
+
+    if (error) {
+
+      if (
+        error.message &&
+        error.message.includes('User from sub claim in JWT does not exist')
+      ) {
+
+        await supabase.auth.signOut()
+
+        statusText.textContent =
+          'Старая сессия больше не действительна. Войди заново.'
+
+        return
+      }
+
+      statusText.textContent =
+        'Ошибка: ' + error.message
+
+      return
+    }
+
+    /*
+    ЕСЛИ ПОЛЬЗОВАТЕЛЬ НЕ НАЙДЕН
+    */
+
+    if (!data.user) {
+
+      statusText.textContent =
+        'Пользователь пока не найден.'
+
+      return
+    }
+
+    /*
+    EMAIL ПОДТВЕРЖДЕН
+    */
+
+    statusText.textContent =
+      'Почта подтверждена: '
+      + data.user.email
+
+    /*
+    Показываем кнопку перехода
+    */
+
+    goAccountBtn.style.display =
+      'inline-block'
+
+    /*
+    ========================================
+    СТАРАЯ ЛОГИКА
+    ОСТАВЛЕНА КАК КОММЕНТАРИЙ
+    ========================================
+
+    Автоматический переход через 1 секунду
+
+    setTimeout(function () {
+
+      window.location.href =
+        'account.html'
+
+    }, 1000)
+
+    ========================================
+    */
+
+  }
+
+  /*
+  ========================================
+  ПЕРЕХОД В ACCOUNT
+  ========================================
+  */
+
+  function goAccount() {
+
+    window.location.href =
+      'account.html'
+
+  }
+
+  /*
+  ========================================
+  УБРАННАЯ ФУНКЦИЯ
+  ОСТАВЛЕНА КАК КОММЕНТАРИЙ
+  ========================================
+
+  function goIndex() {
+
+    window.location.href =
+      'index.html'
+
+  }
+  */
+
+  window.checkUser =
+    checkUser
+
+  window.goAccount =
+    goAccount
+
+  /*
+  ========================================
+  АВТОПРОВЕРКА ПРИ ЗАГРУЗКЕ
+  ========================================
+  */
+
+  checkUser()
+
+</script>
+
+
+
+<!-- ========================================
+     SERVICE CONSOLE
+======================================== -->
+
+<div id="service-console">
+from MVP | v1.0.0
+</div>
+
+<div class="row" id="build-down">
+deploy: --
+</div>
+
+<script>
+(function () {
+  const now = new Date();
+
+  const pad = n =>
+    String(n).padStart(2, "0");
+
+  const date =
+      pad(now.getDate())
+    + "."
+    + pad(now.getMonth() + 1)
+    + "."
+    + now.getFullYear();
+
+  const time =
+      pad(now.getHours())
+    + ":"
+    + pad(now.getMinutes());
+
+  document
+    .getElementById("build-down")
+    .textContent =
+      "deploy: "
+      + date
+      + " "
+      + time;
+})();
+</script>
+
+
+</body>
+</html>
+  
