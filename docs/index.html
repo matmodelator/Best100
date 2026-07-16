@@ -272,32 +272,23 @@ footer {
   gap: 10px;
 }
 
-.login-btn,
-.register-btn {
+.auth-btn {
   width: 100%;
-  padding: 13px 16px;
+  padding: 14px 16px;
 
+  background: #7c2d12;
+  color: white;
+
+  border: 1px solid #7c2d12;
   border-radius: 8px;
+
   font-size: 16px;
   font-weight: bold;
 
   cursor: pointer;
 }
 
-.login-btn {
-  background: #1f2933;
-  color: white;
-  border: 1px solid #1f2933;
-}
-
-.register-btn {
-  background: #7c2d12;
-  color: white;
-  border: 1px solid #7c2d12;
-}
-
-.login-btn:hover,
-.register-btn:hover {
+.auth-btn:hover {
   filter: brightness(1.12);
 }
   
@@ -419,15 +410,15 @@ header p {
 
   <div class="user-actions">
 
-    <button class="login-btn" type="button">
-      Вход
-    </button>
+  <button
+    class="auth-btn"
+    type="button"
+    onclick="window.location.href='sign.html'"
+  >
+    Вход / Регистрация
+  </button>
 
-    <button class="register-btn" type="button">
-      Регистрация
-    </button>
-
-  </div>
+</div>
 
 </aside>
   
@@ -594,7 +585,7 @@ renderUserStatus();
 ======================================== -->
 
 <div id="service-console">
-log&reg  | v3.6.0
+One button log&reg  | v3.6.1
 </div>
 
 <div class="row" id="build-down">
