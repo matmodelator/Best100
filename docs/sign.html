@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+  <!-- ========================================
+       META
+  ======================================== -->
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0" />
+
+  <title>Вход / Регистрация</title>
+
+  <!-- ========================================
+       СТИЛЬ СЕРВИСНОЙ КОНСОЛИ
+  ======================================== 
+
+  <link rel="stylesheet"
+        href="styles/console.css" /> -->
+  
+  <style>
+
+    /* ========================================
+       БАЗОВАЯ РАЗМЕТКА СТРАНИЦЫ
+    ======================================== */
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    /* ========================================
+       ШАПКА
+    ======================================== */
+
+    header {
+      background: #2563eb;
+      color: white;
+      padding: 16px;
+      text-align: center;
+    }
+
+    /* ========================================
+       ОСНОВНОЙ КОНТЕЙНЕР
+    ======================================== */
+
+    .container {
+      max-width: 420px;
+      margin: 40px auto;
+      background: white;
+      padding: 24px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      margin-top: 0;
+      text-align: center;
+    }
+
+    /* ========================================
+       ПОДПИСИ К ПОЛЯМ
+    ======================================== */
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    /* ========================================
+       ПОЛЯ ВВОДА
+    ======================================== */
+
+    input {
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+      margin-bottom: 16px;
+    }
+
+    /* ========================================
+       БЛОК ПАРОЛЯ + ГЛАЗ
+    ======================================== */
+
+    .password-wrapper {
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    .eye-btn {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    /* ========================================
+       КНОПКИ ВХОД / РЕГИСТРАЦИЯ
+    ======================================== */
+
+    .buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    button {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .login-btn {
+      background: #2563eb;
+      color: white;
+    }
+
+    .signup-btn {
+      background: #16a34a;
+      color: white;
+    }
+
+    /* ========================================
+       СТАТУС
+    ======================================== */
+
+    #status {
+      margin-top: 16px;
+      text-align: center;
+      font-weight: bold;
+      min-height: 24px;
+    }
+
+    /* ========================================
+       КНОПКА ВОССТАНОВЛЕНИЯ ПАРОЛЯ
+    ======================================== */
+
+    .recovery-link {
+      display: block;
+      text-align: center;
+      margin-top: 14px;
+      font-size: 14px;
+      color: #2563eb;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .recovery-link:hover {
+      text-decoration: underline;
+    }
+
+    /* ========================================
+       УБРАТЬ ВСТРОЕННЫЙ ГЛАЗ БРАУЗЕРА
+    ======================================== */
+
+    input[type="password"]::-ms-reveal,
+    input[type="password"]::-ms-clear {
+      display: none;
+    }
+
+    input[type="password"]::-webkit-credentials-auto-fill-button {
+      display: none !important;
+    }
+
+    input[type="password"]::-webkit-textfield-decoration-container {
+      display: none !important;
+    }
+    
+  </style>
+</head>
+
+<body>
+
+<!-- ========================================
+     ШАПКА
+======================================== -->
+
+<header>
+  <h1>Рифмы века</h1>
+</header>
+
+<!-- ========================================
+     ОСНОВНОЙ БЛОК
+======================================== -->
+
+<div class="container">
+
+  <h2>Вход / Регистрация</h2>
+
+  <!-- ========================================
+       ФОРМА АУТЕНТИФИКАЦИИ
+  ======================================== -->
+
+  <form id="authForm">
+
+    <!-- EMAIL -->
+
+    <label>Email:</label>
+
+    <input
+      id="email"
+      type="email"
+      required
+    />
+
+    <!-- PASSWORD -->
+
+    <label>Password:</label>
+
+    <div class="password-wrapper">
+
+      <input
+        id="password"
+        type="password"
+        required
+        minlength="6"
+      />
+
+      <button
+        type="button"
+        class="eye-btn"
+        onclick="togglePassword('password', this)"
+      >
+        👁
+      </button>
+
+    </div>
+
+    <!-- CONFIRM PASSWORD -->
+
+    <label>Confirm password:</label>
+
+    <div class="password-wrapper">
+
+      <input
+        id="confirmPassword"
+        type="password"
+        minlength="6"
+        placeholder="Only for sign up"
+      />
+
+      <button
+        type="button"
+        class="eye-btn"
+        onclick="togglePassword('confirmPassword', this)"
+      >
+        👁
+      </button>
+
+    </div>
+
+    <!-- КНОПКИ -->
+
+    <div class="buttons">
+
+      <button
+        type="button"
+        class="login-btn"
+        onclick="login()"
+      >
+        Log in
+      </button>
+
+      <button
+        type="button"
+        class="signup-btn"
+        onclick="signup()"
+      >
+        Sign up
+      </button>
+
+    </div>
+
+  </form>
+
+  <!-- ========================================
+       СТАТУС
+  ======================================== -->
+
+  <p id="status"></p>
+
+  <!-- ========================================
+       ВОССТАНОВЛЕНИЕ ПАРОЛЯ
+  ======================================== -->
+
+  <a
+    href="re-pass.html"
+    class="recovery-link"
+  >
+    Забыли пароль? Восстановить доступ.
+  </a>
+
+</div>
+
+<!-- ========================================
+     ЛОГИКА АУТЕНТИФИКАЦИИ
+======================================== -->
+
+<script type="module">
+
+  import { supabase }
+  from './supabase-config.js'
+
+  /* ========================================
+     ПОЛЯ
+  ======================================== */
+
+  const emailInput =
+    document.getElementById('email')
+
+  const passwordInput =
+    document.getElementById('password')
+
+  const confirmPasswordInput =
+    document.getElementById('confirmPassword')
+
+  const statusText =
+    document.getElementById('status')
+
+  /* ========================================
+     ПОКАЗ / СКРЫТИЕ ПАРОЛЯ
+  ======================================== */
+
+  function togglePassword(id, btn) {
+
+    const field =
+      document.getElementById(id)
+
+    if (field.type === 'password') {
+
+      field.type =
+        'text'
+
+      btn.textContent =
+        '🙈'
+
+    }
+    else {
+
+      field.type =
+        'password'
+
+      btn.textContent =
+        '👁'
+
+    }
+
+  }
+
+  window.togglePassword =
+    togglePassword 
+
+  /* ========================================
+     ВХОД
+  ======================================== */
+
+  async function login() {
+
+    const email =
+      emailInput.value.trim()
+
+    const password =
+      passwordInput.value
+
+    statusText.textContent =
+      'Выполняется вход...'
+
+    const { error } =
+      await supabase.auth.signInWithPassword({
+        email,
+        password
+      })
+
+    if (error) {
+
+      if (
+        error.message &&
+        error.message.includes(
+          'Email not confirmed'
+        )
+      ) {
+
+        statusText.textContent =
+          'Почта не подтверждена'
+
+        setTimeout(function () {
+
+          window.location.href =
+            'check-email.html'
+
+        }, 500)
+
+        return
+      }
+
+      statusText.textContent =
+        'Ошибка: ' + error.message
+
+      return
+    }
+
+    statusText.textContent =
+      'Успешный вход'
+
+    setTimeout(function () {
+
+      window.location.href =
+        'check-account.html'
+
+    }, 300)
+  }
+
+  window.login =
+    login
+
+  /* ========================================
+     РЕГИСТРАЦИЯ
+  ======================================== */
+
+  async function signup() {
+
+    const email =
+      emailInput.value.trim()
+
+    const password =
+      passwordInput.value
+
+    const confirmPassword =
+      confirmPasswordInput.value.trim()
+
+    if (!confirmPassword) {
+
+      statusText.textContent =
+        'Заполните Confirm password'
+
+      return
+    }
+
+    if (password !== confirmPassword) {
+
+      statusText.textContent =
+        'Пароли не совпадают'
+
+      return
+    }
+
+    statusText.textContent =
+      'Регистрация...'
+
+    const { error } =
+      await supabase.auth.signUp({
+
+        email,
+        password,
+
+        options: {
+          emailRedirectTo:
+            'https://matmodelator.github.io/Best100/confirm.html'
+        }
+
+      })
+
+    if (error) {
+
+      statusText.textContent =
+        'Ошибка: ' + error.message
+
+      return
+    }
+
+    statusText.textContent =
+      'Письмо отправлено. Проверь почту.'
+
+    setTimeout(function () {
+
+      window.location.href =
+        'check-email.html'
+
+    }, 800)
+  }
+
+  window.signup =
+    signup
+
+</script>
+
+
+
+
+<!-- ========================================
+     SERVICE CONSOLE
+======================================== -->
+
+<div id="service-console">
+from MVP + редирект на новый confirm | v1.0.0
+</div>
+
+<div class="row" id="build-down">
+deploy: --
+</div>
+
+<script>
+(function () {
+  const now = new Date();
+
+  const pad = n =>
+    String(n).padStart(2, "0");
+
+  const date =
+      pad(now.getDate())
+    + "."
+    + pad(now.getMonth() + 1)
+    + "."
+    + now.getFullYear();
+
+  const time =
+      pad(now.getHours())
+    + ":"
+    + pad(now.getMinutes());
+
+  document
+    .getElementById("build-down")
+    .textContent =
+      "deploy: "
+      + date
+      + " "
+      + time;
+})();
+</script>
+
+
+</body>
+</html>
+  
