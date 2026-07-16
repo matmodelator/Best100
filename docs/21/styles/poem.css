@@ -1,6 +1,6 @@
 /*
 ========================================
-vote-start | v1.1.2
+vote-start + size | v1.1.3
 ========================================
 */
 
@@ -229,19 +229,12 @@ height: 42px;
 */
 
 .photo {
-  flex: 0 0 42px;
+  flex: 0 0 100px;
 }
 
 .photo img {
-  display: block;
-
-  width: 42px;
-  height: 42px;
-
-  object-fit: contain;
-  object-position: center;
-
-  border-radius: 4px;
+  width: 100px;
+  height: auto;
 }
 
 
@@ -286,7 +279,7 @@ line-height: 1.25 или 1.3.
 
   white-space: pre-wrap;
 
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.16;
 
   overflow-wrap: normal;
