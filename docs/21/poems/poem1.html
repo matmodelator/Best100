@@ -93,6 +93,30 @@
 Пусть останется голос...
 </div>
 
+<div class="vote-box">
+  <div class="vote-question">
+    Должно ли это стихотворение входить в Антологию XXI?
+  </div>
+
+  <div class="vote-buttons">
+    <button id="voteYes" type="button" onclick="sendVote('yes')">
+      Да
+    </button>
+
+    <button id="voteNo" type="button" onclick="sendVote('no')">
+      Нет
+    </button>
+  </div>
+
+  <div id="voteStatus"></div>
+</div>
+
+<script>
+const poemNumber = 1;
+</script>
+
+<script src="../scripts/vote.js"></script>
+	
 </div>
 
 <footer>
@@ -104,7 +128,7 @@
 ======================================== -->
 
 <div id="service-console">
-new text | v1.1.5
+vote | v1.2.0
 </div>
 
 <div class="row" id="build-down">
