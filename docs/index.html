@@ -28,10 +28,14 @@ body {
 }
 
 header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
   background: #1f2933;
   color: white;
   padding: 18px;
-  text-align: center;
 }
 
 header h1 {
@@ -80,7 +84,7 @@ nav .links {
 .main-logo {
   display: block;
 
-  width: 150px;   /* РАЗМЕР ЛОГОТИПА МЕНЯЕТСЯ ЗДЕСЬ */
+  width: 120px;   /* РАЗМЕР ЛОГОТИПА МЕНЯЕТСЯ ЗДЕСЬ */
   height: auto;
 
   object-fit: contain;
@@ -366,8 +370,18 @@ header p {
 <body>
 
 <header>
-  <h1>Рифмы века</h1>
-  <p>21 стихотворение русскоязычной поэзии третьего тысячелетия</p>
+
+  <img
+    class="header-logo"
+    src="21/images/logo.svg"
+    alt="Рифмы века"
+  >
+
+  <div class="header-text">
+    <h1>Рифмы века</h1>
+    <p>21 стихотворение русскоязычной поэзии третьего тысячелетия</p>
+  </div>
+
 </header>
 
 <nav>
@@ -450,13 +464,7 @@ header p {
 
   <div class="main-logo-wrap">
 
-    <img
-      class="main-logo"
-      src="21/images/logo.svg"
-      alt="Рифмы века"
-    >
-
-  </div>
+    </div>
 
   <h2 class="section-title" id="top21">
     Антология XXI
@@ -621,7 +629,7 @@ renderUserStatus();
 ======================================== -->
 
 <div id="service-console">
-svg  | v3.7.0
+svg to header  | v3.7.1
 </div>
 
 <div class="row" id="build-down">
