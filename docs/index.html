@@ -49,7 +49,29 @@ header p {
   font-size: 16px;
 }
 
-nav {
+/*
+ЛОГОТИП В HEADER
+*/
+
+.header-logo {
+  display: block;
+
+  width: 72px;      /* размер логотипа */
+  height: 72px;
+
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.header-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  text-align: left;
+}  
+  
+  nav {
   position: relative;
   background: #111827;
   padding: 10px 16px;
@@ -67,29 +89,7 @@ nav .links {
   margin: 0 14px;
   font-family: Arial, sans-serif;
 } 
-
-/*
-ЛОГОТИП НАД «АНТОЛОГИЯ XXI»
-*/
-
-.main-logo-wrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  width: 100%;
-  margin: 0 0 6px;
-}
-
-.main-logo {
-  display: block;
-
-  width: 120px;   /* РАЗМЕР ЛОГОТИПА МЕНЯЕТСЯ ЗДЕСЬ */
-  height: auto;
-
-  object-fit: contain;
-}
-  
+ 
 .user-btn {
   position: absolute;
   right: 16px;
@@ -339,6 +339,11 @@ header p {
   line-height: 1.1;
 }
 
+.header-logo {
+  width: 42px;
+  height: 42px;
+}
+  
   .poem-card {
     padding: 5px;
   }
@@ -629,7 +634,7 @@ renderUserStatus();
 ======================================== -->
 
 <div id="service-console">
-svg to header  | v3.7.1
+ЛОГОТИП В HEADER  | v3.7.2
 </div>
 
 <div class="row" id="build-down">
