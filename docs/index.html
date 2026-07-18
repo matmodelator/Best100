@@ -64,10 +64,25 @@ nav .links {
   font-family: Arial, sans-serif;
 } 
 
-.nav-logo img {
-  display: block;
+/*
+ЛОГОТИП НАД «АНТОЛОГИЯ XXI»
+*/
+
+.main-logo-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   width: 100%;
-  height: 100%;
+  margin: 0 0 6px;
+}
+
+.main-logo {
+  display: block;
+
+  width: 150px;   /* РАЗМЕР ЛОГОТИПА МЕНЯЕТСЯ ЗДЕСЬ */
+  height: auto;
+
   object-fit: contain;
 }
   
@@ -357,14 +372,7 @@ header p {
 
 <nav>
 
-  <a href="index.html" class="nav-logo">
-    <img
-    src="21/images/logo.svg"
-    alt="Рифмы века"
-  >
-  </a>
-
-  <div class="links">
+   <div class="links">
     <a href="#">Главная</a>
     <a href="#top21">Антология XXI</a>
     <a href="#">Авторы</a>
@@ -438,7 +446,21 @@ header p {
   
 <div class="container">
 
-  <h2 class="section-title" id="top21">Антология XXI</h2>
+  <!-- ЛОГОТИП НАД ЗАГОЛОВКОМ -->
+
+  <div class="main-logo-wrap">
+
+    <img
+      class="main-logo"
+      src="21/images/logo.svg"
+      alt="Рифмы века"
+    >
+
+  </div>
+
+  <h2 class="section-title" id="top21">
+    Антология XXI
+  </h2>
 
   <div class="controls">
     <input
@@ -599,7 +621,7 @@ renderUserStatus();
 ======================================== -->
 
 <div id="service-console">
-nav-logo  | v3.6.2
+svg  | v3.7.0
 </div>
 
 <div class="row" id="build-down">
