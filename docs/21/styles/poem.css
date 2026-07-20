@@ -1,6 +1,6 @@
 /*
 ========================================
-Унификация интерфейса | v1.1.5
+Унификация верхнего бара | v1.1.6
 ========================================
 */
 
@@ -78,6 +78,231 @@ header p {
   margin: 6px 0 0;
   color: #d1d5db;
   font-size: 16px;
+}
+
+/*
+========================================
+НИЖНЕЕ МЕНЮ ПОД HEADER
+========================================
+*/
+
+nav {
+  position: relative;
+
+  background: #111827;
+  padding: 10px 16px;
+
+  text-align: center;
+}
+
+nav .links {
+  display: inline-flex;
+  gap: 28px;
+}
+
+nav .links a {
+  color: white;
+  text-decoration: none;
+
+  margin: 0 14px;
+
+  font-family: Arial, sans-serif;
+}
+
+nav .links a:hover {
+  color: #d1d5db;
+}
+
+
+/*
+========================================
+КНОПКА «МЕНЮ»
+========================================
+*/
+
+.user-btn {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  padding: 5px 12px;
+
+  background: #374151;
+  color: white;
+
+  border: 1px solid #6b7280;
+  border-radius: 6px;
+
+  cursor: pointer;
+}
+
+.user-btn:hover {
+  background: #4b5563;
+}
+
+
+/*
+========================================
+БОКОВАЯ ПАНЕЛЬ ПОЛЬЗОВАТЕЛЯ
+========================================
+*/
+
+.user-panel {
+  position: fixed;
+  top: 0;
+  right: -280px;
+
+  width: 280px;
+  height: 100vh;
+
+  background: white;
+
+  box-shadow: -4px 0 14px rgba(0, 0, 0, 0.18);
+
+  padding: 20px;
+
+  z-index: 30;
+
+  transition: right 0.25s;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.user-panel.open {
+  right: 0;
+}
+
+
+/*
+========================================
+КНОПКА ЗАКРЫТИЯ ПАНЕЛИ
+========================================
+*/
+
+.close-btn {
+  align-self: flex-end;
+
+  background: none;
+  border: none;
+
+  font-size: 24px;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+
+/*
+========================================
+СТАТУСЫ ПОЛЬЗОВАТЕЛЯ
+========================================
+*/
+
+.status-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.status {
+  position: relative;
+
+  padding: 8px 12px;
+
+  border-radius: 8px;
+
+  background: #f4efe7;
+
+  cursor: help;
+}
+
+.status.active {
+  background: #7c2d12;
+  color: white;
+}
+
+
+/*
+========================================
+ПОДСКАЗКА У СТАТУСА
+========================================
+*/
+
+.status::after {
+  content: attr(data-tooltip);
+
+  position: absolute;
+  left: 0;
+  top: calc(100% + 6px);
+
+  width: 220px;
+
+  padding: 10px 12px;
+
+  background: #111827;
+  color: white;
+
+  border-radius: 7px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.35;
+
+  opacity: 0;
+  visibility: hidden;
+
+  pointer-events: none;
+
+  z-index: 50;
+
+  transition: opacity 0.15s;
+}
+
+.status:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+/*
+========================================
+КНОПКА ВХОД / РЕГИСТРАЦИЯ
+========================================
+*/
+
+.user-actions {
+  margin-top: auto;
+  padding-top: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.auth-btn {
+  width: 100%;
+
+  padding: 14px 16px;
+
+  background: #7c2d12;
+  color: white;
+
+  border: 1px solid #7c2d12;
+  border-radius: 8px;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.auth-btn:hover {
+  filter: brightness(1.12);
 }
 
 /*
