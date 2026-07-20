@@ -41,13 +41,131 @@
 
 <header>
 
-  <h1>
-    Рифмы века
-  </h1>
+  <img
+    class="header-logo"
+    src="../images/logo.svg"
+    alt="Рифмы века"
+  >
+
+  <div class="header-text">
+
+    <h1>
+      Рифмы века
+    </h1>
+
+    <p>
+      21 стихотворение русскоязычной поэзии третьего тысячелетия
+    </p>
+
+  </div>
 
 </header>
 
+<nav>
 
+  <div class="links">
+
+    <a href="../../index.html">
+      Главная
+    </a>
+
+    <a href="../../index.html#top21">
+      Антология XXI
+    </a>
+
+    <a href="#">
+      Авторы
+    </a>
+
+    <a href="#">
+      О проекте
+    </a>
+
+  </div>
+
+  <button
+    class="user-btn"
+    onclick="toggleUserPanel()"
+  >
+    Меню
+  </button>
+
+</nav>
+
+  <aside
+  class="user-panel"
+  id="userPanel"
+>
+
+  <button
+    class="close-btn"
+    onclick="toggleUserPanel()"
+  >
+    ×
+  </button>
+
+  <h3>
+    Статус пользователя
+  </h3>
+
+  <div class="status-list">
+
+    <div
+      class="status active"
+      data-status="Гость"
+      data-tooltip="Посетитель без регистрации. Может читать и голосовать."
+    >
+      Гость
+    </div>
+
+    <div
+      class="status"
+      data-status="Читатель"
+      data-tooltip="Проголосовал хотя бы один раз."
+    >
+      Читатель
+    </div>
+
+    <div
+      class="status"
+      data-status="Критик"
+      data-tooltip="Оставил содержательный отзыв."
+    >
+      Критик
+    </div>
+
+    <div
+      class="status"
+      data-status="Эксперт"
+      data-tooltip="Получил право экспертных оценок."
+    >
+      Эксперт
+    </div>
+
+    <div
+      class="status"
+      data-status="Автор"
+      data-tooltip="Автор стихотворения, вошедшего в Антологию XXI."
+    >
+      Автор
+    </div>
+
+  </div>
+
+  <div class="user-actions">
+
+    <button
+      class="auth-btn"
+      type="button"
+      onclick="window.location.href='../../sign.html'"
+    >
+      Вход / Регистрация
+    </button>
+
+  </div>
+
+</aside>
+  
 <!-- ========================================
      СТРЕЛКА ВОЗВРАТА
 
@@ -61,13 +179,6 @@
      ../../index.html
 ======================================== -->
 
-<a
-  class="back-link"
-  href="../../index.html"
-  title="Вернуться к Антологии XXI"
->
-  ←
-</a>
 
 
 <!-- ========================================
@@ -583,7 +694,6 @@ function toggleVotePanel() {
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
 <!-- ========================================
      ОБЩИЙ СКРИПТ ГОЛОСОВАНИЯ
 
@@ -593,6 +703,21 @@ function toggleVotePanel() {
 
 <script src="../scripts/vote.js"></script>
 
+<!-- ========================================
+     БОКОВОЕ МЕНЮ
+======================================== -->
+  
+<script>
+
+function toggleUserPanel() {
+
+  document
+    .getElementById("userPanel")
+    .classList.toggle("open");
+
+}
+  
+</script>  
 
 <!-- ========================================
      НИЖНЯЯ ПЛАШКА
@@ -608,7 +733,7 @@ function toggleVotePanel() {
 ======================================== -->
 
 <div id="service-console">
-  ГОЛОСОВАЛКА ТАймер\скролл | v1.5.0
+  Унификация интерфейса | v1.5.1
 </div>
 
 <div
