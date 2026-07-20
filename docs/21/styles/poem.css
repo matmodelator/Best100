@@ -1,6 +1,6 @@
 /*
 ========================================
-Унификация верхнего бара | v1.1.6
+logo zone| v1.1.7
 ========================================
 */
 
@@ -51,16 +51,6 @@ header {
   padding: 18px;
 }
 
-.header-logo {
-  display: block;
-
-  width: 120px;
-  height: auto;
-
-  object-fit: contain;
-  flex-shrink: 0;
-}
-
 .header-text {
   display: flex;
   flex-direction: column;
@@ -78,6 +68,51 @@ header p {
   margin: 6px 0 0;
   color: #d1d5db;
   font-size: 16px;
+}
+
+.header-logo {
+  display: block;
+
+  width: 150px;
+  height: auto;
+
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.zone-up {
+  left: 39%;
+  top: 0;
+  width: 22%;
+  height: 27%;
+}
+
+.zone-left {
+  left: 0;
+  top: 35%;
+  width: 30%;
+  height: 25%;
+}
+
+.zone-center {
+  left: 34%;
+  top: 32%;
+  width: 32%;
+  height: 32%;
+}
+
+.zone-right {
+  right: 0;
+  top: 35%;
+  width: 30%;
+  height: 25%;
+}
+
+.zone-down {
+  left: 39%;
+  bottom: 0;
+  width: 22%;
+  height: 27%;
 }
 
 /*
@@ -440,7 +475,7 @@ height: 42px;
 */
 
 .photo {
-  flex: 0 0 150px;
+  flex: 0 0 200px;
 }
 
 .photo img {
@@ -490,7 +525,7 @@ line-height: 1.25 или 1.3.
 
   white-space: pre-wrap;
 
-  font-size: 15px;
+  font-size: 20px;
   line-height: 1.16;
 
   overflow-wrap: normal;
@@ -793,7 +828,6 @@ footer {
     line-height: 1.1;
   }
 
-}
 
   /*
   Стрелка возврата.
