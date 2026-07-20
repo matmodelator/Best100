@@ -1,6 +1,6 @@
 /*
 ========================================
-vote-blue + size + frag | v1.1.4
+Унификация интерфейса | v1.1.5
 ========================================
 */
 
@@ -35,64 +35,50 @@ body {
 
 /*
 ========================================
-ВЕРХНЯЯ ШАПКА
-
-МЕНЯТЬ ВЫСОТУ ШАПКИ ЗДЕСЬ:
-
-padding: 5px 10px;
-
-МЕНЯТЬ РАЗМЕР «РИФМЫ ВЕКА»:
-
-font-size: 21px;
+ВЕРХНЯЯ ШАПКА — КАК НА INDEX
 ========================================
 */
 
 header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
   background: #1f2933;
   color: white;
 
-  padding: 5px 10px;
+  padding: 18px;
+}
 
-  text-align: center;
+.header-logo {
+  display: block;
+
+  width: 120px;
+  height: auto;
+
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.header-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  text-align: left;
 }
 
 header h1 {
   margin: 0;
-
-  font-size: 21px;
-  line-height: 1.05;
+  font-size: 36px;
 }
 
-
-/*
-========================================
-СТРЕЛКА ВОЗВРАТА
-
-МЕНЯТЬ РАЗМЕР СТРЕЛКИ:
-
-font-size: 24px;
-========================================
-*/
-
-.back-link {
-  display: inline-block;
-
-  margin: 5px 0 0 12px;
-
-  color: #1f2933;
-  text-decoration: none;
-
-  font-family: Arial, sans-serif;
-  font-size: 24px;
-  font-weight: bold;
-
-  line-height: 1;
+header p {
+  margin: 6px 0 0;
+  color: #d1d5db;
+  font-size: 16px;
 }
-
-.back-link:hover {
-  color: #7c2d12;
-}
-
 
 /*
 ========================================
@@ -559,20 +545,30 @@ footer {
 ========================================
 */
 
-@media (max-width: 600px) {
-
-  /*
-  Размер верхней надписи.
-  */
+@media (max-width: 1024px) {
 
   header {
-    padding: 4px 8px;
+    gap: 8px;
+    padding: 4px 10px;
+  }
+
+  .header-logo {
+    width: 48px;
+    height: auto;
   }
 
   header h1 {
-    font-size: 19px;
+    font-size: 22px;
+    line-height: 1;
   }
 
+  header p {
+    margin-top: 2px;
+    font-size: 11px;
+    line-height: 1.1;
+  }
+
+}
 
   /*
   Стрелка возврата.
