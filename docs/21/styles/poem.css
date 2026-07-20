@@ -1,6 +1,6 @@
 /*
 ========================================
-logo zone| v1.1.7
+КОНТЕЙНЕР КОМПАСА| v1.1.8
 ========================================
 */
 
@@ -113,6 +113,127 @@ header p {
   bottom: 0;
   width: 22%;
   height: 27%;
+}
+
+/*
+========================================
+КОНТЕЙНЕР КОМПАСА
+========================================
+*/
+
+.compass {
+  position: relative;
+
+  width: 120px;
+  flex: 0 0 auto;
+}
+
+.compass .header-logo {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  pointer-events: none;
+}
+
+
+/*
+========================================
+ПРОЗРАЧНЫЕ АКТИВНЫЕ ЗОНЫ
+========================================
+*/
+
+.compass-zone {
+  position: absolute;
+
+  padding: 0;
+
+  background: transparent;
+  border: none;
+
+  cursor: pointer;
+}
+
+
+/*
+========================================
+ПОДСКАЗКА
+========================================
+*/
+
+.compass-zone::after {
+  content: attr(data-tooltip);
+
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 7px);
+
+  transform: translateX(-50%) translateY(3px);
+
+  padding: 6px 9px;
+
+  background: #111827;
+  color: white;
+
+  border: 1px solid #6b7280;
+  border-radius: 6px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .28);
+
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  line-height: 1;
+  white-space: nowrap;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  z-index: 100;
+
+  transition:
+    opacity .15s ease,
+    transform .15s ease;
+}
+
+.compass-zone:hover::after,
+.compass-zone:focus-visible::after {
+  opacity: 1;
+  visibility: visible;
+
+  transform: translateX(-50%) translateY(0);
+}
+
+
+/*
+========================================
+МАЛЕНЬКИЙ ТРЕУГОЛЬНИК ПОДСКАЗКИ
+========================================
+*/
+
+.compass-zone::before {
+  content: "";
+
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 2px);
+
+  transform: translateX(-50%);
+
+  border: 5px solid transparent;
+  border-top-color: #111827;
+
+  opacity: 0;
+  visibility: hidden;
+
+  z-index: 101;
+}
+
+.compass-zone:hover::before,
+.compass-zone:focus-visible::before {
+  opacity: 1;
+  visibility: visible;
 }
 
 /*
