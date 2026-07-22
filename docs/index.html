@@ -27,83 +27,6 @@ body {
   color: #1f1f1f;
 }
 
-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-
-  background: #1f2933;
-  color: white;
-  padding: 18px;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 36px;
-}
-
-header p {
-  margin: 6px 0 0;
-  color: #d1d5db;
-  font-size: 16px;
-}
-
-/*
-ЛОГОТИП В HEADER
-*/
-
-.header-logo {
-  display: block;
-
-  width: 120px;      /* размер логотипа */
-  height: auto;
-
-  object-fit: contain;
-  flex-shrink: 0;
-}
-
-.header-text {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  text-align: left;
-}  
-  
-  nav {
-  position: relative;
-  background: #111827;
-  padding: 10px 16px;
-  text-align: center;
-}
-
-nav .links {
-  display: inline-flex;
-  gap: 28px;
-}
-
- nav .links a {
-  color: white;
-  text-decoration: none;
-  margin: 0 14px;
-  font-family: Arial, sans-serif;
-} 
- 
-.user-btn {
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-
-  padding: 5px 12px;
-  background: #374151;
-  color: white;
-  border: 1px solid #6b7280;
-  border-radius: 6px;
-  cursor: pointer;
-}
-  
 .container {
   max-width: 1160px;
   width: 100%;
@@ -210,141 +133,12 @@ footer {
   font-family: Arial, sans-serif;
 }
 
-.user-panel {
-  position: fixed;
-  top: 0;
-  right: -280px;
-  width: 280px;
-  height: 100vh;
-  background: white;
-  box-shadow: -4px 0 14px rgba(0,0,0,.18);
-  padding: 20px;
-  z-index: 30;
-  transition: right .25s;
-  display: flex;
-  flex-direction: column;
-}
-
-.user-panel.open {
-  right: 0;
-}
-
-.close-btn {
-  float: right;
-}
-
-.status-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.status {
-  position: relative;
-  padding: 8px 12px;
-  border-radius: 8px;
-  background: #f4efe7;
-  cursor: help;
-}
-
-.status.active {
-  background: #7c2d12;
-  color: white;
-}
-
-/* Окно подсказки */
-
-.status::after {
-  content: attr(data-tooltip);
-
-  position: absolute;
-  left: 0;
-  top: calc(100% + 6px);
-
-  width: 220px;
-  padding: 10px 12px;
-
-  background: #111827;
-  color: white;
-
-  border-radius: 7px;
-  box-shadow: 0 4px 12px rgba(0,0,0,.2);
-
-  font-family: Arial, sans-serif;
-  font-size: 12px;
-  line-height: 1.35;
-
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-
-  z-index: 50;
-  transition: opacity .15s;
-}
-
-.status:hover::after {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* Кнопки внизу панели */
-
-.user-actions {
-  margin-top: auto;
-  padding-top: 20px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.auth-btn {
-  width: 100%;
-  padding: 14px 16px;
-
-  background: #7c2d12;
-  color: white;
-
-  border: 1px solid #7c2d12;
-  border-radius: 8px;
-
-  font-size: 16px;
-  font-weight: bold;
-
-  cursor: pointer;
-}
-
-.auth-btn:hover {
-  filter: brightness(1.12);
-}
-  
 @media (max-width: 1024px) {
   .top-grid {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(7, 1fr);
   }
-
- header {
-  padding: 4px 10px;
-}
-
-header h1 {
-  font-size: 22px;
-  line-height: 1;
-}
-
-header p {
-  margin-top: 2px;
-  font-size: 11px;
-  line-height: 1.1;
-}
-
-.header-logo {
-  width: 42px;
-  height: 42px;
-}
-  
-  .poem-card {
+.poem-card {
     padding: 5px;
   }
 
@@ -374,104 +168,10 @@ header p {
 
 <body>
 
-<header>
+<div id="headerContainer"></div>
 
-  <img
-    class="header-logo"
-    src="21/images/logo.svg"
-    alt="Рифмы века"
-  >
-
-  <div class="header-text">
-    <h1>Рифмы века</h1>
-    <p>21 стихотворение русскоязычной поэзии третьего тысячелетия</p>
-  </div>
-
-</header>
-
-<nav>
-
-   <div class="links">
-    <a href="#">Главная</a>
-    <a href="#top21">Антология XXI</a>
-    <a href="#">Авторы</a>
-    <a href="#">О проекте</a>
-  </div>
-
-  <button class="user-btn" onclick="toggleUserPanel()">
-    Меню
-  </button>
-
-</nav>
-
-<aside class="user-panel" id="userPanel">
-
-  <button class="close-btn" onclick="toggleUserPanel()">×</button>
-
-  <h3>Статус пользователя</h3>
-
-  <div class="status-list">
-
-    <div
-      class="status active"
-      data-status="Гость"
-      data-tooltip="Посетитель без регистрации. Может читать и голосовать. Чтобы повысить статус, зарегистрируйтесь ниже">
-      Гость
-    </div>
-
-    <div
-      class="status"
-      data-status="Читатель"
-      data-tooltip="Пользователь, который проголосовал хотя бы за одно стихотворение.">
-      Читатель
-    </div>
-
-    <div
-      class="status"
-      data-status="Критик"
-      data-tooltip="Зарегистрированный пользователь, оставивший содержательный отзыв.">
-      Критик
-    </div>
-
-    <div
-      class="status"
-      data-status="Эксперт"
-      data-tooltip="Пользователь, получивший право расширенной оценки стихотворений.">
-      Эксперт
-    </div>
-
-    <div
-      class="status author-status"
-      data-status="Автор"
-      data-tooltip="Поэт, чье стихотворение включено в Антологию XXI и одобрено редакцией.">
-      Автор
-    </div>
-
-  </div>
-
-  <div class="user-actions">
-
-  <button
-    class="auth-btn"
-    type="button"
-    onclick="window.location.href='sign.html'"
-  >
-    Вход / Регистрация
-  </button>
-
-</div>
-
-</aside>
-  
 <div class="container">
-
-  <!-- ЛОГОТИП НАД ЗАГОЛОВКОМ -->
-
-  <div class="main-logo-wrap">
-
-    </div>
-
-  <h2 class="section-title" id="top21">
+<h2 class="section-title" id="top21">
     Антология XXI
   </h2>
 
@@ -586,14 +286,7 @@ async function renderTop21() {
 renderTop21();
   
 </script>
-  
 <script>
-function toggleUserPanel() {
-  document.getElementById("userPanel").classList.toggle("open");
-}
-</script>
-  
-  <script>
 
 const user = {
   votes: 0,
@@ -625,7 +318,96 @@ function renderUserStatus() {
   });
 }
 
-renderUserStatus();
+
+</script>
+
+
+<script>
+
+/*
+========================================
+ЗАГРУЗКА ОБЩЕГО HEADER
+========================================
+*/
+
+async function loadHeader() {
+
+  const headerContainer =
+    document.getElementById("headerContainer");
+
+  try {
+
+    const response =
+      await fetch("header.html");
+
+    if (!response.ok) {
+      throw new Error(
+        "HTTP " + response.status
+      );
+    }
+
+    headerContainer.innerHTML =
+      await response.text();
+
+    document.getElementById("headerLogo").src =
+      "21/images/logo.svg";
+
+    document.getElementById("headerHomeLink").href =
+      "index.html";
+
+    document.getElementById("headerTop21Link").href =
+      "index.html#top21";
+
+    const userPanel =
+      document.getElementById("userPanel");
+
+    document.getElementById("openUserPanelButton")
+      .addEventListener("click", function () {
+        userPanel.classList.add("open");
+      });
+
+    document.getElementById("closeUserPanelButton")
+      .addEventListener("click", function () {
+        userPanel.classList.remove("open");
+      });
+
+    document.getElementById("headerAuthButton")
+      .addEventListener("click", function () {
+        window.location.href = "sign.html";
+      });
+
+    document.getElementById("compassLeft")
+      .addEventListener("click", function () {
+        history.back();
+      });
+
+    document.getElementById("compassCenter")
+      .addEventListener("click", function () {
+        window.location.href = "index.html#top21";
+      });
+
+    document.getElementById("compassRight")
+      .addEventListener("click", function () {
+        history.forward();
+      });
+
+    renderUserStatus();
+
+  } catch (error) {
+
+    console.error(
+      "Ошибка загрузки header.html:",
+      error
+    );
+
+    headerContainer.textContent =
+      "Не удалось загрузить верхнюю панель.";
+
+  }
+
+}
+
+loadHeader();
 
 </script>
 
@@ -634,7 +416,7 @@ renderUserStatus();
 ======================================== -->
 
 <div id="service-console">
-ЛОГОТИП auto size  | v3.7.3
+ fetch header+user menu | v3.8.0
 </div>
 
 <div class="row" id="build-down">
