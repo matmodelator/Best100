@@ -12,19 +12,6 @@
 
   <title>Неоклассицизмы — Рифмы века</title>
 
-  <!--
-  Общие стили страниц стихотворений.
-
-  Текущий файл:
-  docs/21/poems/poem1.html
-
-  CSS:
-  docs/21/styles/poem.css
-
-  Поэтому путь:
-  ../styles/poem.css
-  -->
-
   <link
     rel="stylesheet"
     href="../styles/poem.css"
@@ -36,208 +23,19 @@
 
 
 <!-- ========================================
-     ВЕРХНЯЯ ШАПКА
-======================================== -->
+     ОБЩИЙ HEADER
 
-  <div class="header-text">
-
-    <h1>
-      Рифмы века
-    </h1>
-
-    <p>
-      21 стихотворение русскоязычной поэзии третьего тысячелетия
-    </p>
-
-  </div>
-
-</header>
-
-<div class="compass-nav">
-
-  <img
-    class="header-logo"
-    src="../images/logo.svg"
-    alt="Навигация по Антологии XXI"
-  >
-
-  <!-- ↑ К началу страницы -->
-  <button
-    class="compass-zone compass-up"
-    type="button"
-    title="К началу стихотворения"
-    aria-label="К началу стихотворения"
-    onclick="compassGoUp()"
-  ></button>
-
-  <!-- ← Предыдущий стих -->
-  <button
-    class="compass-zone compass-left"
-    type="button"
-    title="Предыдущий стих"
-    aria-label="Предыдущий стих"
-    onclick="compassPreviousPoem()"
-  ></button>
-
-  <!-- XXI — на главную антологии -->
-  <button
-    class="compass-zone compass-center"
-    type="button"
-    title="Антология XXI"
-    aria-label="Вернуться в Антологию XXI"
-    onclick="compassGoHome()"
-  ></button>
-
-  <!-- → Следующий стих -->
-  <button
-    class="compass-zone compass-right"
-    type="button"
-    title="Следующий стих"
-    aria-label="Следующий стих"
-    onclick="compassNextPoem()"
-  ></button>
-
-  <!-- ↓ К голосованию -->
-  <button
-    class="compass-zone compass-down"
-    type="button"
-    title="К голосованию"
-    aria-label="К голосованию"
-    onclick="compassGoDown()"
-  ></button>
-
-</div>
-
-  <button class="compass-zone zone-up" data-tooltip="К началу"></button>
-
-  <button class="compass-zone zone-left" data-tooltip="Предыдущий стих"></button>
-
-  <button class="compass-zone zone-center" data-tooltip="Антология XXI"></button>
-
-  <button class="compass-zone zone-right" data-tooltip="Следующий стих"></button>
-
-  <button class="compass-zone zone-down" data-tooltip="К голосованию"></button>
-
-</div>
-  
-<nav>
-
-  <div class="links">
-
-    <a href="../../index.html">
-      Главная
-    </a>
-
-    <a href="../../index.html#top21">
-      Антология XXI
-    </a>
-
-    <a href="#">
-      Авторы
-    </a>
-
-    <a href="#">
-      О проекте
-    </a>
-
-  </div>
-
-  <button
-    class="user-btn"
-    onclick="toggleUserPanel()"
-  >
-    Меню
-  </button>
-
-</nav>
-
-  <aside
-  class="user-panel"
-  id="userPanel"
->
-
-  <button
-    class="close-btn"
-    onclick="toggleUserPanel()"
-  >
-    ×
-  </button>
-
-  <h3>
-    Статус пользователя
-  </h3>
-
-  <div class="status-list">
-
-    <div
-      class="status active"
-      data-status="Гость"
-      data-tooltip="Посетитель без регистрации. Может читать и голосовать."
-    >
-      Гость
-    </div>
-
-    <div
-      class="status"
-      data-status="Читатель"
-      data-tooltip="Проголосовал хотя бы один раз."
-    >
-      Читатель
-    </div>
-
-    <div
-      class="status"
-      data-status="Критик"
-      data-tooltip="Оставил содержательный отзыв."
-    >
-      Критик
-    </div>
-
-    <div
-      class="status"
-      data-status="Эксперт"
-      data-tooltip="Получил право экспертных оценок."
-    >
-      Эксперт
-    </div>
-
-    <div
-      class="status"
-      data-status="Автор"
-      data-tooltip="Автор стихотворения, вошедшего в Антологию XXI."
-    >
-      Автор
-    </div>
-
-  </div>
-
-  <div class="user-actions">
-
-    <button
-      class="auth-btn"
-      type="button"
-      onclick="window.location.href='../../sign.html'"
-    >
-      Вход / Регистрация
-    </button>
-
-  </div>
-
-</aside>
-  
-<!-- ========================================
-     СТРЕЛКА ВОЗВРАТА
-
-     Текущий файл:
+     poem1.html:
      docs/21/poems/poem1.html
 
-     Главная:
-     docs/index.html
+     header.html:
+     docs/header.html
 
-     Поэтому поднимаемся на два уровня:
-     ../../index.html
+     Поэтому путь:
+     ../../header.html
 ======================================== -->
 
+<div id="headerContainer"></div>
 
 
 <!-- ========================================
@@ -249,15 +47,9 @@
 
   <!-- ======================================
        НАЗВАНИЕ, АВТОР, ГОД И ФОТО
-
-       Текст находится слева.
-       Маленькое фото находится справа.
   ======================================= -->
 
   <div class="poem-header">
-
-
-    <!-- Название, автор и год -->
 
     <div class="poem-heading">
 
@@ -276,16 +68,6 @@
     </div>
 
 
-    <!--
-    Фото стихотворения.
-
-    Размер фотографии меняется
-    в poem.css в блоке:
-
-    .photo
-    .photo img
-    -->
-
     <div class="photo">
 
       <img
@@ -300,9 +82,6 @@
 
   <!-- ======================================
        ФРАГМЕНТ ДЛЯ КАРТОЧКИ НА ГЛАВНОЙ
-
-       index.html считывает содержимое
-       элемента с классом .excerpt.
   ======================================= -->
 
   <div class="excerpt">
@@ -314,13 +93,6 @@
 
   <!-- ======================================
        ПОЛНЫЙ ТЕКСТ СТИХОТВОРЕНИЯ
-
-       Размер текста меняется в poem.css:
-
-       .poem {
-         font-size: ...;
-         line-height: ...;
-       }
   ======================================= -->
 
   <div class="poem">
@@ -381,36 +153,21 @@
 
 
 <!-- ========================================
-     ОТДЕЛЬНАЯ ПАНЕЛЬ ГОЛОСОВАНИЯ
-
-     Сначала видна только большая яркая
-     кнопка «ГОЛОСОВАТЬ».
-
-     После нажатия под ней открываются:
-     вопрос и кнопки «Да» / «Нет».
+     ПАНЕЛЬ ГОЛОСОВАНИЯ
 ======================================== -->
 
 <section class="vote-panel">
 
+  <button
+    id="openVoteButton"
+    class="vote-start"
+    type="button"
+    onclick="toggleVotePanel()"
+    disabled
+  >
+    ГОЛОСОВАНИЕ откроется через 3:00. Прочитайте до КОНЦА
+  </button>
 
-  <!-- Большая кнопка открытия голосования -->
-
- <button
-  id="openVoteButton"
-  class="vote-start"
-  type="button"
-  onclick="toggleVotePanel()"
-  disabled
->
-  ГОЛОСОВАНИЕ откроется через 3:00. Прочитайте до КОНЦА
-</button>
-
-  <!--
-  Этот блок изначально скрыт.
-
-  После нажатия на кнопку «ГОЛОСОВАТЬ»
-  JavaScript добавляет класс .open.
-  -->
 
   <div
     id="voteDetails"
@@ -445,15 +202,6 @@
     </div>
 
 
-    <!--
-    Сюда vote.js выводит:
-
-    «Ваш голос: Да»
-    «Ваш голос: Нет»
-    «Вы уже голосовали»
-    или сообщение об ошибке.
-    -->
-
     <div id="voteStatus"></div>
 
   </div>
@@ -463,12 +211,6 @@
 
 <!-- ========================================
      НОМЕР СТИХОТВОРЕНИЯ
-
-     poem1.html  → 1
-     poem2.html  → 2
-     poem3.html  → 3
-     ...
-     poem21.html → 21
 ======================================== -->
 
 <script>
@@ -477,44 +219,18 @@
 
 
 <!-- ========================================
-     ОТКРЫТИЕ И ЗАКРЫТИЕ ГОЛОСОВАЛКИ
+     ТАЙМЕР И ДОСТУП К ГОЛОСОВАНИЮ
 ======================================== -->
 
 <script>
 
-/*
-========================================
-УСЛОВИЯ ДОСТУПА К ГОЛОСОВАНИЮ
-
-Менять время здесь:
-
-3 * 60 = 3 минуты
-========================================
-*/
-
 const VOTE_DELAY_SECONDS = 3 * 60;
-
-
-/*
-Текущее оставшееся время.
-*/
 
 let voteSecondsLeft =
   VOTE_DELAY_SECONDS;
 
-
-/*
-Отдельно запоминаем выполнение
-каждого из двух условий.
-*/
-
 let voteTimerFinished = false;
 let pageScrolledToEnd = false;
-
-
-/*
-Получаем элементы страницы.
-*/
 
 const openVoteButton =
   document.getElementById("openVoteButton");
@@ -523,19 +239,7 @@ const voteDetails =
   document.getElementById("voteDetails");
 
 
-/*
-========================================
-ПРОВЕРКА ОБОИХ УСЛОВИЙ
-========================================
-*/
-
 function updateVoteAvailability() {
-
-  /*
-  Голосование доступно только тогда,
-  когда закончился таймер И пользователь
-  прокрутил страницу до самого конца.
-  */
 
   if (
     voteTimerFinished &&
@@ -551,11 +255,6 @@ function updateVoteAvailability() {
   }
 
 
-  /*
-  Таймер закончился, но пользователь
-  ещё не дошёл до конца страницы.
-  */
-
   if (
     voteTimerFinished &&
     !pageScrolledToEnd
@@ -567,11 +266,6 @@ function updateVoteAvailability() {
     return;
   }
 
-
-  /*
-  Пользователь дошёл до конца,
-  но три минуты ещё не прошли.
-  */
 
   if (
     !voteTimerFinished &&
@@ -585,15 +279,6 @@ function updateVoteAvailability() {
 
 }
 
-
-/*
-========================================
-ТАЙМЕР 3 МИНУТЫ
-
-Он запускается сразу после загрузки страницы,
-а не после прокрутки.
-========================================
-*/
 
 function updateVoteTimerText() {
 
@@ -622,10 +307,6 @@ const voteTimer =
     voteSecondsLeft--;
 
 
-    /*
-    Таймер завершён.
-    */
-
     if (voteSecondsLeft <= 0) {
 
       voteSecondsLeft = 0;
@@ -639,24 +320,10 @@ const voteTimer =
     }
 
 
-    /*
-    Пока таймер идёт, показываем
-    оставшееся время.
-    */
-
     updateVoteTimerText();
 
   }, 1000);
 
-
-/*
-========================================
-ПРОВЕРКА ПРОКРУТКИ ДО КОНЦА
-
-Допуск 10 пикселей нужен из-за округлений
-высоты страницы браузером.
-========================================
-*/
 
 function checkPageScroll() {
 
@@ -673,12 +340,6 @@ function checkPageScroll() {
   ) {
 
     pageScrolledToEnd = true;
-
-    /*
-    После первого достижения конца страницы
-    условие остаётся выполненным.
-    Назад прокручивать можно.
-    */
 
     window.removeEventListener(
       "scroll",
@@ -698,29 +359,10 @@ window.addEventListener(
 );
 
 
-/*
-Проверяем сразу после загрузки.
-
-Это нужно для очень коротких страниц,
-которые целиком помещаются на одном экране.
-*/
-
 checkPageScroll();
 
 
-/*
-========================================
-ОТКРЫТИЕ ПАНЕЛИ ГОЛОСОВАНИЯ
-========================================
-*/
-
 function toggleVotePanel() {
-
-  /*
-  Дополнительная защита:
-  панель не откроется раньше выполнения
-  обоих условий.
-  */
 
   if (
     !voteTimerFinished ||
@@ -746,135 +388,14 @@ function toggleVotePanel() {
 
 
 <!-- ========================================
-     БИБЛИОТЕКА SUPABASE
-
-     Она должна подключаться раньше vote.js.
+     SUPABASE И ГОЛОСОВАНИЕ
 ======================================== -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<!-- ========================================
-     ОБЩИЙ СКРИПТ ГОЛОСОВАНИЯ
-
-     Файл:
-     docs/21/scripts/vote.js
-======================================== -->
-
 <script src="../scripts/vote.js"></script>
 
-<!-- ========================================
-     БОКОВОЕ МЕНЮ
-======================================== -->
-  
-<script>
 
-function toggleUserPanel() {
-
-  document
-    .getElementById("userPanel")
-    .classList.toggle("open");
-
-}
-  
-</script>  
-
-<script>
-
-/*
-========================================
-НАВИГАЦИЯ КОМПАСА
-========================================
-*/
-
-
-/*
-↑ К началу страницы
-*/
-
-function compassGoUp() {
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-
-}
-
-
-/*
-↓ К панели голосования
-*/
-
-function compassGoDown() {
-
-  const votePanel =
-    document.querySelector(".vote-panel");
-
-  if (!votePanel) {
-    return;
-  }
-
-  votePanel.scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-  });
-
-}
-
-
-/*
-XXI — на главную страницу антологии
-*/
-
-function compassGoHome() {
-
-  window.location.href =
-    "../../index.html#top21";
-
-}
-
-
-/*
-← Предыдущий стих
-
-Навигация циклическая:
-с первого стиха → к двадцать первому.
-*/
-
-function compassPreviousPoem() {
-
-  const previousNumber =
-    poemNumber <= 1
-      ? 21
-      : poemNumber - 1;
-
-  window.location.href =
-    "poem" + previousNumber + ".html";
-
-}
-
-
-/*
-→ Следующий стих
-
-Навигация циклическая:
-с двадцать первого → к первому.
-*/
-
-function compassNextPoem() {
-
-  const nextNumber =
-    poemNumber >= 21
-      ? 1
-      : poemNumber + 1;
-
-  window.location.href =
-    "poem" + nextNumber + ".html";
-
-}
-
-</script>
-  
 <!-- ========================================
      НИЖНЯЯ ПЛАШКА
 ======================================== -->
@@ -885,11 +406,170 @@ function compassNextPoem() {
 
 
 <!-- ========================================
+     ЗАГРУЗКА ОБЩЕГО HEADER
+======================================== -->
+
+<script>
+
+async function loadHeader() {
+
+  const headerContainer =
+    document.getElementById("headerContainer");
+
+  try {
+
+    const response =
+      await fetch("../../header.html");
+
+    if (!response.ok) {
+      throw new Error(
+        "HTTP " + response.status
+      );
+    }
+
+    headerContainer.innerHTML =
+      await response.text();
+
+
+    /*
+    Пути для страницы стиха.
+    */
+
+    document
+      .getElementById("headerLogo")
+      .src =
+        "../images/logo.svg";
+
+    document
+      .getElementById("headerHomeLink")
+      .href =
+        "../../index.html";
+
+    document
+      .getElementById("headerTop21Link")
+      .href =
+        "../../index.html#top21";
+
+
+    /*
+    Меню пользователя.
+    */
+
+    const userPanel =
+      document.getElementById("userPanel");
+
+    document
+      .getElementById("openUserPanelButton")
+      .addEventListener(
+        "click",
+        function () {
+          userPanel.classList.add("open");
+        }
+      );
+
+    document
+      .getElementById("closeUserPanelButton")
+      .addEventListener(
+        "click",
+        function () {
+          userPanel.classList.remove("open");
+        }
+      );
+
+    document
+      .getElementById("headerAuthButton")
+      .addEventListener(
+        "click",
+        function () {
+          window.location.href =
+            "../../sign.html";
+        }
+      );
+
+
+    /*
+    Компас на странице стихотворения.
+
+    ← предыдущий стих
+    XXI Антология XXI
+    → следующий стих
+    */
+
+    document
+      .getElementById("compassLeft")
+      .addEventListener(
+        "click",
+        function () {
+
+          const previousNumber =
+            poemNumber <= 1
+              ? 21
+              : poemNumber - 1;
+
+          window.location.href =
+            "poem"
+            + previousNumber
+            + ".html";
+
+        }
+      );
+
+    document
+      .getElementById("compassCenter")
+      .addEventListener(
+        "click",
+        function () {
+
+          window.location.href =
+            "../../index.html#top21";
+
+        }
+      );
+
+    document
+      .getElementById("compassRight")
+      .addEventListener(
+        "click",
+        function () {
+
+          const nextNumber =
+            poemNumber >= 21
+              ? 1
+              : poemNumber + 1;
+
+          window.location.href =
+            "poem"
+            + nextNumber
+            + ".html";
+
+        }
+      );
+
+  } catch (error) {
+
+    console.error(
+      "Ошибка загрузки header.html:",
+      error
+    );
+
+    headerContainer.textContent =
+      "Не удалось загрузить верхнюю панель.";
+
+  }
+
+}
+
+loadHeader();
+
+</script>
+
+
+<!-- ========================================
      SERVICE CONSOLE
 ======================================== -->
 
 <div id="service-console">
-  add compass active zone | v1.5.3
+  header fetch + user menu + compass | v1.6.0
 </div>
 
 <div
@@ -899,10 +579,6 @@ function compassNextPoem() {
   deploy: --
 </div>
 
-
-<!-- 
-     АВТОМАТИЧЕСКАЯ ДАТА СБОРКИ
--->
 
 <script>
 
