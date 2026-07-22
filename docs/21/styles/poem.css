@@ -1,6 +1,6 @@
 /*
 ========================================
-КОНТЕЙНЕР КОМПАСА| v1.1.8
+ЗОНЫ КОМПАСА| v1.1.9
 ========================================
 */
 
@@ -70,71 +70,27 @@ header p {
   font-size: 16px;
 }
 
-.header-logo {
-  display: block;
-
-  width: 150px;
-  height: auto;
-
-  object-fit: contain;
-  flex-shrink: 0;
-}
-
-.zone-up {
-  left: 39%;
-  top: 0;
-  width: 22%;
-  height: 27%;
-}
-
-.zone-left {
-  left: 0;
-  top: 35%;
-  width: 30%;
-  height: 25%;
-}
-
-.zone-center {
-  left: 34%;
-  top: 32%;
-  width: 32%;
-  height: 32%;
-}
-
-.zone-right {
-  right: 0;
-  top: 35%;
-  width: 30%;
-  height: 25%;
-}
-
-.zone-down {
-  left: 39%;
-  bottom: 0;
-  width: 22%;
-  height: 27%;
-}
-
 /*
 ========================================
-КОНТЕЙНЕР КОМПАСА
+КОМПАС-НАВИГАТОР
 ========================================
 */
 
-.compass {
+.compass-nav {
   position: relative;
 
-  width: 120px;
+  width: 120px;     /* ОБЩИЙ РАЗМЕР ЛОГОТИПА */
   flex: 0 0 auto;
 }
 
-.compass .header-logo {
+.header-logo {
   display: block;
 
   width: 100%;
   height: auto;
 
   pointer-events: none;
+  user-select: none;
 }
 
 
@@ -147,14 +103,84 @@ header p {
 .compass-zone {
   position: absolute;
 
+  margin: 0;
   padding: 0;
 
   background: transparent;
   border: none;
+  border-radius: 8px;
 
   cursor: pointer;
+  z-index: 5;
 }
 
+
+/*
+Лёгкое выделение зоны при наведении.
+Удали background, если подсветка не нужна.
+*/
+
+.compass-zone:hover,
+.compass-zone:focus-visible {
+  background: transparent;
+  outline: none;
+}
+
+
+/*
+========================================
+РАСПОЛОЖЕНИЕ ПЯТИ ЗОН
+
+Координаты указаны в процентах,
+поэтому сохраняются при изменении
+размера логотипа.
+========================================
+*/
+
+/* Верхняя стрелка */
+.compass-up {
+  left: 38%;
+  top: 0;
+
+  width: 24%;
+  height: 20%;
+}
+
+/* Левая стрелка */
+.compass-left {
+  left: 0;
+  top: 35%;
+
+  width: 21%;
+  height: 31%;
+}
+
+/* Центральная зона XXI */
+.compass-center {
+  left: 31%;
+  top: 75%;
+
+  width: 38%;
+  height: 12%;
+}
+
+/* Правая стрелка */
+.compass-right {
+  right: 0;
+  top: 35%;
+
+  width: 21%;
+  height: 31%;
+}
+
+/* Нижняя стрелка */
+.compass-down {
+  left: 38%;
+  bottom: 0;
+
+  width: 24%;
+  height: 14%;
+}
 
 /*
 ========================================
@@ -933,10 +959,9 @@ footer {
     padding: 4px 10px;
   }
 
-  .header-logo {
-    width: 48px;
-    height: auto;
-  }
+  .compass-nav {
+  width: 48px;
+}
 
   header h1 {
     font-size: 22px;
@@ -949,18 +974,7 @@ footer {
     line-height: 1.1;
   }
 
-
-  /*
-  Стрелка возврата.
-  */
-
-  .back-link {
-    margin-left: 8px;
-    font-size: 21px;
-  }
-
-
-  /*
+   /*
   Отступы страницы от краёв телефона.
   */
 
