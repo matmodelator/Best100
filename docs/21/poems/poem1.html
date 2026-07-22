@@ -39,14 +39,6 @@
      ВЕРХНЯЯ ШАПКА
 ======================================== -->
 
-<header>
-
-  <img
-    class="header-logo"
-    src="../images/logo.svg"
-    alt="Рифмы века"
-  >
-
   <div class="header-text">
 
     <h1>
@@ -61,13 +53,60 @@
 
 </header>
 
-<div class="compass">
+<div class="compass-nav">
 
   <img
     class="header-logo"
-    src="21/images/logo.svg"
-    alt="Рифмы века"
+    src="../images/logo.svg"
+    alt="Навигация по Антологии XXI"
   >
+
+  <!-- ↑ К началу страницы -->
+  <button
+    class="compass-zone compass-up"
+    type="button"
+    title="К началу стихотворения"
+    aria-label="К началу стихотворения"
+    onclick="compassGoUp()"
+  ></button>
+
+  <!-- ← Предыдущий стих -->
+  <button
+    class="compass-zone compass-left"
+    type="button"
+    title="Предыдущий стих"
+    aria-label="Предыдущий стих"
+    onclick="compassPreviousPoem()"
+  ></button>
+
+  <!-- XXI — на главную антологии -->
+  <button
+    class="compass-zone compass-center"
+    type="button"
+    title="Антология XXI"
+    aria-label="Вернуться в Антологию XXI"
+    onclick="compassGoHome()"
+  ></button>
+
+  <!-- → Следующий стих -->
+  <button
+    class="compass-zone compass-right"
+    type="button"
+    title="Следующий стих"
+    aria-label="Следующий стих"
+    onclick="compassNextPoem()"
+  ></button>
+
+  <!-- ↓ К голосованию -->
+  <button
+    class="compass-zone compass-down"
+    type="button"
+    title="К голосованию"
+    aria-label="К голосованию"
+    onclick="compassGoDown()"
+  ></button>
+
+</div>
 
   <button class="compass-zone zone-up" data-tooltip="К началу"></button>
 
@@ -739,6 +778,103 @@ function toggleUserPanel() {
   
 </script>  
 
+<script>
+
+/*
+========================================
+НАВИГАЦИЯ КОМПАСА
+========================================
+*/
+
+
+/*
+↑ К началу страницы
+*/
+
+function compassGoUp() {
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+}
+
+
+/*
+↓ К панели голосования
+*/
+
+function compassGoDown() {
+
+  const votePanel =
+    document.querySelector(".vote-panel");
+
+  if (!votePanel) {
+    return;
+  }
+
+  votePanel.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+
+}
+
+
+/*
+XXI — на главную страницу антологии
+*/
+
+function compassGoHome() {
+
+  window.location.href =
+    "../../index.html#top21";
+
+}
+
+
+/*
+← Предыдущий стих
+
+Навигация циклическая:
+с первого стиха → к двадцать первому.
+*/
+
+function compassPreviousPoem() {
+
+  const previousNumber =
+    poemNumber <= 1
+      ? 21
+      : poemNumber - 1;
+
+  window.location.href =
+    "poem" + previousNumber + ".html";
+
+}
+
+
+/*
+→ Следующий стих
+
+Навигация циклическая:
+с двадцать первого → к первому.
+*/
+
+function compassNextPoem() {
+
+  const nextNumber =
+    poemNumber >= 21
+      ? 1
+      : poemNumber + 1;
+
+  window.location.href =
+    "poem" + nextNumber + ".html";
+
+}
+
+</script>
+  
 <!-- ========================================
      НИЖНЯЯ ПЛАШКА
 ======================================== -->
@@ -753,7 +889,7 @@ function toggleUserPanel() {
 ======================================== -->
 
 <div id="service-console">
-  add compass | v1.5.2
+  add compass active zone | v1.5.3
 </div>
 
 <div
