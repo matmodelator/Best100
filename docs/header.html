@@ -1,0 +1,634 @@
+<style>
+
+/*
+========================================
+ЕДИНЫЙ HEADER from GPT | v1.0.0
+========================================
+*/
+
+
+/*
+========================================
+ВЕРХНЯЯ ШАПКА
+========================================
+*/
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 18px;
+  padding: 18px;
+
+  background: #1f2933;
+  color: white;
+}
+
+.header-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  text-align: left;
+}
+
+.site-header h1 {
+  margin: 0;
+
+  font-size: 36px;
+  line-height: 1;
+}
+
+.site-header p {
+  margin: 5px 0 0;
+
+  color: #d1d5db;
+
+  font-size: 16px;
+  line-height: 1.15;
+}
+
+
+/*
+========================================
+КОМПАС / ЛОГОТИП
+========================================
+*/
+
+.compass-nav {
+  position: relative;
+
+  width: 120px;
+
+  flex: 0 0 auto;
+}
+
+.header-logo {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  user-select: none;
+  pointer-events: none;
+}
+
+
+/*
+========================================
+ТРИ АКТИВНЫЕ ЗОНЫ
+
+← левая стрелка
+XXI центральная зона
+→ правая стрелка
+========================================
+*/
+
+.compass-zone {
+  position: absolute;
+
+  margin: 0;
+  padding: 0;
+
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+
+  cursor: pointer;
+  z-index: 5;
+}
+
+
+/*
+Левая стрелка.
+Координаты зоны меняются здесь.
+*/
+
+.compass-left {
+  left: 0;
+  top: 33%;
+
+  width: 24%;
+  height: 30%;
+}
+
+
+/*
+Центральная зона XXI.
+Координаты зоны меняются здесь.
+*/
+
+.compass-center {
+  left: 33%;
+  bottom: 0;
+
+  width: 34%;
+  height: 18%;
+}
+
+
+/*
+Правая стрелка.
+Координаты зоны меняются здесь.
+*/
+
+.compass-right {
+  right: 0;
+  top: 33%;
+
+  width: 24%;
+  height: 30%;
+}
+
+
+/*
+Фокус с клавиатуры.
+При обычном наведении прямоугольника нет.
+*/
+
+.compass-zone:focus-visible {
+  outline: 1px solid rgba(255, 196, 70, 0.8);
+}
+
+
+/*
+========================================
+НИЖНЕЕ МЕНЮ
+========================================
+*/
+
+.site-nav {
+  position: relative;
+
+  padding: 10px 16px;
+
+  background: #111827;
+
+  text-align: center;
+}
+
+.site-nav .links {
+  display: inline-flex;
+  gap: 28px;
+}
+
+.site-nav .links a {
+  margin: 0 14px;
+
+  color: white;
+
+  text-decoration: none;
+
+  font-family: Arial, sans-serif;
+}
+
+.site-nav .links a:hover {
+  color: #d1d5db;
+}
+
+
+/*
+========================================
+КНОПКА «МЕНЮ»
+========================================
+*/
+
+.user-btn {
+  position: absolute;
+
+  right: 16px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  padding: 5px 12px;
+
+  background: #374151;
+  color: white;
+
+  border: 1px solid #6b7280;
+  border-radius: 6px;
+
+  cursor: pointer;
+}
+
+.user-btn:hover {
+  background: #4b5563;
+}
+
+
+/*
+========================================
+БОКОВАЯ ПАНЕЛЬ
+========================================
+*/
+
+.user-panel {
+  position: fixed;
+
+  top: 0;
+  right: -280px;
+
+  display: flex;
+  flex-direction: column;
+
+  width: 280px;
+  height: 100vh;
+
+  padding: 20px;
+
+  background: white;
+
+  box-shadow:
+    -4px 0 14px rgba(0, 0, 0, 0.18);
+
+  transition: right 0.25s;
+
+  z-index: 100;
+}
+
+.user-panel.open {
+  right: 0;
+}
+
+
+/*
+========================================
+КНОПКА ЗАКРЫТИЯ
+========================================
+*/
+
+.close-btn {
+  align-self: flex-end;
+
+  padding: 0;
+
+  background: none;
+  border: none;
+
+  font-size: 24px;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+
+/*
+========================================
+СТАТУСЫ
+========================================
+*/
+
+.status-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.status {
+  position: relative;
+
+  padding: 8px 12px;
+
+  background: #f4efe7;
+
+  border-radius: 8px;
+
+  cursor: help;
+}
+
+.status.active {
+  background: #7c2d12;
+  color: white;
+}
+
+
+/*
+========================================
+ПОДСКАЗКИ СТАТУСОВ
+========================================
+*/
+
+.status::after {
+  content: attr(data-tooltip);
+
+  position: absolute;
+
+  left: 0;
+  top: calc(100% + 6px);
+
+  width: 220px;
+
+  padding: 10px 12px;
+
+  background: #111827;
+  color: white;
+
+  border-radius: 7px;
+
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.2);
+
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.35;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition: opacity 0.15s;
+
+  z-index: 1000;
+}
+
+.status:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+/*
+========================================
+КНОПКА ВХОД / РЕГИСТРАЦИЯ
+========================================
+*/
+
+.user-actions {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+.auth-btn {
+  width: 100%;
+
+  padding: 14px;
+
+  background: #7c2d12;
+  color: white;
+
+  border: 1px solid #7c2d12;
+  border-radius: 8px;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.auth-btn:hover {
+  filter: brightness(1.12);
+}
+
+
+/*
+========================================
+МОБИЛЬНАЯ ВЕРСИЯ
+========================================
+*/
+
+@media (max-width: 1024px) {
+
+  .site-header {
+    gap: 8px;
+    padding: 4px 10px;
+  }
+
+  .compass-nav {
+    width: 48px;
+  }
+
+  .site-header h1 {
+    font-size: 22px;
+  }
+
+  .site-header p {
+    margin-top: 2px;
+
+    font-size: 11px;
+    line-height: 1.1;
+  }
+
+  .site-nav {
+    padding: 8px 52px 8px 8px;
+  }
+
+  .site-nav .links {
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 8px;
+  }
+
+  .site-nav .links a {
+    margin: 0 4px;
+
+    font-size: 12px;
+  }
+
+  .user-btn {
+    right: 6px;
+
+    padding: 4px 8px;
+
+    font-size: 12px;
+  }
+
+}
+
+</style>
+
+
+<!-- ========================================
+     ВЕРХНЯЯ ПАНЕЛЬ
+======================================== -->
+
+<header class="site-header">
+
+  <div class="compass-nav">
+
+    <img
+      id="headerLogo"
+      class="header-logo"
+      src=""
+      alt="Рифмы века"
+    >
+
+    <!-- ← -->
+
+    <button
+      id="compassLeft"
+      class="compass-zone compass-left"
+      type="button"
+      aria-label="Назад"
+      title="Назад"
+    ></button>
+
+    <!-- XXI -->
+
+    <button
+      id="compassCenter"
+      class="compass-zone compass-center"
+      type="button"
+      aria-label="Антология XXI"
+      title="Антология XXI"
+    ></button>
+
+    <!-- → -->
+
+    <button
+      id="compassRight"
+      class="compass-zone compass-right"
+      type="button"
+      aria-label="Вперёд"
+      title="Вперёд"
+    ></button>
+
+  </div>
+
+
+  <div class="header-text">
+
+    <h1>
+      Рифмы века
+    </h1>
+
+    <p>
+      21 стихотворение русскоязычной поэзии третьего тысячелетия
+    </p>
+
+  </div>
+
+</header>
+
+
+<!-- ========================================
+     НИЖНЕЕ МЕНЮ
+======================================== -->
+
+<nav class="site-nav">
+
+  <div class="links">
+
+    <a
+      id="headerHomeLink"
+      href="#"
+    >
+      Главная
+    </a>
+
+    <a
+      id="headerTop21Link"
+      href="#"
+    >
+      Антология XXI
+    </a>
+
+    <a href="#">
+      Авторы
+    </a>
+
+    <a href="#">
+      О проекте
+    </a>
+
+  </div>
+
+  <button
+    id="openUserPanelButton"
+    class="user-btn"
+    type="button"
+  >
+    Меню
+  </button>
+
+</nav>
+
+
+<!-- ========================================
+     БОКОВАЯ ПАНЕЛЬ
+======================================== -->
+
+<aside
+  class="user-panel"
+  id="userPanel"
+>
+
+  <button
+    id="closeUserPanelButton"
+    class="close-btn"
+    type="button"
+    aria-label="Закрыть меню"
+  >
+    ×
+  </button>
+
+  <h3>
+    Статус пользователя
+  </h3>
+
+  <div class="status-list">
+
+    <div
+      class="status active"
+      data-status="Гость"
+      data-tooltip="Посетитель без регистрации. Может читать и голосовать."
+    >
+      Гость
+    </div>
+
+    <div
+      class="status"
+      data-status="Читатель"
+      data-tooltip="Пользователь, который проголосовал хотя бы за одно стихотворение."
+    >
+      Читатель
+    </div>
+
+    <div
+      class="status"
+      data-status="Критик"
+      data-tooltip="Зарегистрированный пользователь, оставивший содержательный отзыв."
+    >
+      Критик
+    </div>
+
+    <div
+      class="status"
+      data-status="Эксперт"
+      data-tooltip="Пользователь, получивший право расширенной оценки стихотворений."
+    >
+      Эксперт
+    </div>
+
+    <div
+      class="status"
+      data-status="Автор"
+      data-tooltip="Поэт, чьё стихотворение включено в Антологию XXI."
+    >
+      Автор
+    </div>
+
+  </div>
+
+
+  <div class="user-actions">
+
+    <button
+      id="headerAuthButton"
+      class="auth-btn"
+      type="button"
+    >
+      Вход / Регистрация
+    </button>
+
+  </div>
+
+</aside>
