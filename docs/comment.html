@@ -4,9 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Комментарий</title>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <title>Добавить комментарий</title>
 
   <style>
     * {
@@ -16,12 +14,12 @@
     body {
       margin: 0;
       padding: 20px;
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
+      background: #f4f4f4;
       color: #222;
+      font-family: Arial, sans-serif;
     }
 
-    .comment-box {
+    .comment-form {
       width: 100%;
       max-width: 700px;
       margin: 0 auto;
@@ -31,131 +29,229 @@
       border-radius: 10px;
     }
 
-    h2 {
+    .comment-form h1 {
       margin: 0 0 20px;
+      font-size: 24px;
+    }
+
+    .poem-info {
+      margin-bottom: 18px;
+      padding: 10px 12px;
+      background: #f5f5f5;
+      border-radius: 6px;
+      font-size: 14px;
     }
 
     .field {
-      margin-bottom: 15px;
+      margin-bottom: 16px;
     }
 
-    label {
+    .field label {
       display: block;
       margin-bottom: 6px;
       font-weight: bold;
     }
 
-    input,
-    textarea {
+    .field input,
+    .field textarea {
       width: 100%;
-      padding: 11px;
+      padding: 11px 12px;
       border: 1px solid #aaa;
       border-radius: 6px;
+      background: #fff;
+      color: #222;
       font: inherit;
     }
 
-    textarea {
+    .field textarea {
       min-height: 180px;
       resize: vertical;
     }
 
+    .buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
     button {
-      padding: 11px 18px;
+      padding: 10px 18px;
       border: 0;
       border-radius: 6px;
-      background: #222;
-      color: #fff;
       font-size: 16px;
       cursor: pointer;
     }
 
+    #cancelBtn {
+      background: #ddd;
+      color: #222;
+    }
+
+    #submitBtn {
+      background: #222;
+      color: #fff;
+    }
+
     button:disabled {
-      opacity: 0.5;
+      opacity: 0.55;
       cursor: default;
     }
 
     #status {
+      min-height: 22px;
       margin-top: 15px;
-      min-height: 20px;
+      font-size: 14px;
+    }
+
+    #status.error {
+      color: #a40000;
+    }
+
+    #status.success {
+      color: #087a20;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .comment-form {
+        padding: 16px;
+      }
+
+      .buttons {
+        flex-direction: column-reverse;
+      }
+
+      button {
+        width: 100%;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <div class="comment-box">
-    <h2>Добавить комментарий</h2>
+  <form class="comment-form" id="commentForm">
 
-    <form id="commentForm">
+    <h1>Добавить комментарий</h1>
 
-      <div class="field">
-        <label for="authorName">Имя</label>
+    <div class="poem-info">
+      Стихотворение:
+      <strong id="poemLabel">не указано</strong>
+    </div>
 
-        <input
-          id="authorName"
-          type="text"
-          maxlength="60"
-          required
-        >
-      </div>
+    <div class="field">
+      <label for="authorName">Имя</label>
 
-      <div class="field">
-        <label for="commentText">Комментарий</label>
+      <input
+        id="authorName"
+        name="authorName"
+        type="text"
+        maxlength="80"
+        placeholder="Ваше имя"
+        autocomplete="name"
+        required
+      >
+    </div>
 
-        <textarea
-          id="commentText"
-          maxlength="3000"
-          required
-        ></textarea>
-      </div>
+    <div class="field">
+      <label for="commentText">Комментарий</label>
 
-      <button id="submitBtn" type="submit">
-        Отправить
+      <textarea
+        id="commentText"
+        name="commentText"
+        maxlength="5000"
+        placeholder="Напишите комментарий"
+        required
+      ></textarea>
+    </div>
+
+    <div class="buttons">
+      <button
+        id="cancelBtn"
+        type="button"
+      >
+        Отмена
       </button>
 
-      <div id="status"></div>
+      <button
+        id="submitBtn"
+        type="submit"
+      >
+        Отправить
+      </button>
+    </div>
 
-    </form>
-  </div>
+    <div id="status"></div>
 
-  <script>
-    const SUPABASE_URL = "ВСТАВЬ_SUPABASE_URL";
-    const SUPABASE_ANON_KEY = "ВСТАВЬ_SUPABASE_ANON_KEY";
+  </form>
 
-    const supabaseClient = supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_ANON_KEY
-    );
+  <script type="module">
+    import { supabase } from "./config.js";
 
     const form = document.getElementById("commentForm");
     const authorNameInput = document.getElementById("authorName");
     const commentTextInput = document.getElementById("commentText");
+    const poemLabel = document.getElementById("poemLabel");
     const submitBtn = document.getElementById("submitBtn");
+    const cancelBtn = document.getElementById("cancelBtn");
     const status = document.getElementById("status");
 
     const params = new URLSearchParams(window.location.search);
 
     const poemId =
+      params.get("poem_id") ||
       params.get("poem") ||
       params.get("id") ||
-      "unknown";
+      "";
 
-    form.addEventListener("submit", async function (event) {
+    const poemTitle =
+      params.get("title") ||
+      poemId ||
+      "не указано";
+
+    poemLabel.textContent = poemTitle;
+
+    function showStatus(message, type = "") {
+      status.textContent = message;
+      status.className = type;
+    }
+
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
 
       const authorName = authorNameInput.value.trim();
       const commentText = commentTextInput.value.trim();
 
-      if (!authorName || !commentText) {
-        status.textContent = "Заполните имя и комментарий.";
+      if (!poemId) {
+        showStatus(
+          "Не указан идентификатор стихотворения.",
+          "error"
+        );
+        return;
+      }
+
+      if (!authorName) {
+        showStatus("Введите имя.", "error");
+        authorNameInput.focus();
+        return;
+      }
+
+      if (!commentText) {
+        showStatus("Введите комментарий.", "error");
+        commentTextInput.focus();
         return;
       }
 
       submitBtn.disabled = true;
-      status.textContent = "Отправка...";
+      cancelBtn.disabled = true;
 
-      const { error } = await supabaseClient
-        .from("comments")
+      showStatus("Отправка...");
+
+      const { error } = await supabase
+        .from("top21_comments")
         .insert({
           poem_id: poemId,
           author_name: authorName,
@@ -163,17 +259,33 @@
         });
 
       submitBtn.disabled = false;
+      cancelBtn.disabled = false;
 
       if (error) {
-        console.error(error);
-        status.textContent = "Ошибка отправки: " + error.message;
+        console.error("Ошибка Supabase:", error);
+
+        showStatus(
+          "Ошибка отправки: " + error.message,
+          "error"
+        );
+
         return;
       }
 
       form.reset();
 
-      status.textContent =
-        "Комментарий отправлен и появится после модерации.";
+      showStatus(
+        "Комментарий отправлен.",
+        "success"
+      );
+    });
+
+    cancelBtn.addEventListener("click", () => {
+      if (document.referrer) {
+        history.back();
+      } else {
+        window.location.href = "./index.html";
+      }
     });
   </script>
 
@@ -184,7 +296,7 @@
 ======================================== -->
 
 <div id="service-console">
- GPT | v1.0.0
+ switch to config | v1.1.0
 </div>
 
 <div class="row" id="build-down">
