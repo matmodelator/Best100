@@ -1,6 +1,6 @@
 /*
 ========================================
-ЗОНЫ КОМПАСА| v1.1.9
+review panel | v1.2.0
 ========================================
 */
 
@@ -942,6 +942,157 @@ footer {
   font-size: 11px;
 }
 
+/*
+========================================
+ЛЕВАЯ ПАНЕЛЬ REVIEW
+========================================
+*/
+
+.open-review-button {
+  position: fixed;
+  left: 0;
+  top: 50%;
+
+  transform:
+    translateY(-50%)
+    rotate(-90deg)
+    translateY(-100%);
+
+  transform-origin: left top;
+
+  padding: 7px 14px;
+
+  background: #374151;
+  color: white;
+
+  border: 1px solid #6b7280;
+  border-radius: 0 0 7px 7px;
+
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+
+  cursor: pointer;
+
+  z-index: 80;
+}
+
+.open-review-button:hover {
+  background: #4b5563;
+}
+
+
+/*
+========================================
+САМА ЛЕВАЯ ПАНЕЛЬ
+========================================
+*/
+
+.review-side-panel {
+  position: fixed;
+
+  left: -420px;
+  top: 0;
+
+  width: 420px;
+  max-width: 92vw;
+  height: 100vh;
+
+  padding: 20px;
+
+  background: white;
+  color: #1f1f1f;
+
+  overflow-y: auto;
+
+  box-shadow:
+    4px 0 14px rgba(0, 0, 0, 0.18);
+
+  transition: left 0.25s ease;
+
+  z-index: 1000;
+}
+
+.review-side-panel.open {
+  left: 0;
+}
+
+
+/*
+========================================
+КНОПКА ЗАКРЫТИЯ
+========================================
+*/
+
+.review-close-button {
+  display: block;
+
+  margin: 0 0 10px auto;
+  padding: 0;
+
+  background: none;
+  color: #1f2933;
+
+  border: none;
+
+  font-size: 28px;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+.review-close-button:hover {
+  color: #7c2d12;
+}
+
+
+/*
+========================================
+ЗАТЕМНЕНИЕ
+========================================
+*/
+
+.review-overlay {
+  position: fixed;
+  inset: 0;
+
+  display: none;
+
+  background:
+    rgba(17, 24, 39, 0.42);
+
+  z-index: 900;
+}
+
+.review-overlay.open {
+  display: block;
+}
+
+
+/*
+========================================
+МОБИЛЬНАЯ ВЕРСИЯ review-side-panel
+========================================
+*/
+
+@media (max-width: 600px) {
+
+  .review-side-panel {
+    left: -92vw;
+
+    width: 92vw;
+  }
+
+  .review-side-panel.open {
+    left: 0;
+  }
+
+  .open-review-button {
+    padding: 6px 10px;
+
+    font-size: 11px;
+  }
+
+}
 
 /*
 ========================================
