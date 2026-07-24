@@ -25,10 +25,10 @@
 <!-- ========================================
      ОБЩИЙ HEADER
 
-     Текущий файл:
+     poem1.html:
      docs/21/poems/poem1.html
 
-     Header:
+     header.html:
      docs/header.html
 
      Поэтому путь:
@@ -211,14 +211,6 @@
 
 <!-- ========================================
      НОМЕР СТИХОТВОРЕНИЯ
-
-     Для остальных файлов меняется только
-     это число:
-
-     poem2.html  → 2
-     poem3.html  → 3
-     ...
-     poem21.html → 21
 ======================================== -->
 
 <script>
@@ -232,60 +224,22 @@
 
 <script>
 
-/*
-========================================
-ЗАДЕРЖКА ДО ГОЛОСОВАНИЯ
-
-3 * 60 = 3 минуты.
-========================================
-*/
-
-const VOTE_DELAY_SECONDS =
-  3 * 60;
-
-
-/*
-Текущее оставшееся время.
-*/
+const VOTE_DELAY_SECONDS = 3 * 60;
 
 let voteSecondsLeft =
   VOTE_DELAY_SECONDS;
 
-
-/*
-Состояния двух условий.
-*/
-
 let voteTimerFinished = false;
 let pageScrolledToEnd = false;
 
-
-/*
-Элементы голосования.
-*/
-
 const openVoteButton =
-  document.getElementById(
-    "openVoteButton"
-  );
+  document.getElementById("openVoteButton");
 
 const voteDetails =
-  document.getElementById(
-    "voteDetails"
-  );
+  document.getElementById("voteDetails");
 
-
-/*
-========================================
-ПРОВЕРКА ДОСТУПНОСТИ ГОЛОСОВАНИЯ
-========================================
-*/
 
 function updateVoteAvailability() {
-
-  /*
-  Оба условия выполнены.
-  */
 
   if (
     voteTimerFinished &&
@@ -298,14 +252,8 @@ function updateVoteAvailability() {
       "ГОЛОСОВАТЬ";
 
     return;
-
   }
 
-
-  /*
-  Таймер закончился,
-  но читатель не дошёл до конца.
-  */
 
   if (
     voteTimerFinished &&
@@ -316,14 +264,8 @@ function updateVoteAvailability() {
       "ДОЙДИТЕ ДО КОНЦА ТЕКСТА";
 
     return;
-
   }
 
-
-  /*
-  Читатель дошёл до конца,
-  но таймер ещё работает.
-  */
 
   if (
     !voteTimerFinished &&
@@ -338,26 +280,14 @@ function updateVoteAvailability() {
 }
 
 
-/*
-========================================
-ВЫВОД ТАЙМЕРА
-========================================
-*/
-
 function updateVoteTimerText() {
 
   const minutes =
-    Math.floor(
-      voteSecondsLeft / 60
-    );
+    Math.floor(voteSecondsLeft / 60);
 
   const seconds =
-    String(
-      voteSecondsLeft % 60
-    ).padStart(
-      2,
-      "0"
-    );
+    String(voteSecondsLeft % 60)
+      .padStart(2, "0");
 
   openVoteButton.textContent =
     "ГОЛОСОВАНИЕ ЧЕРЕЗ "
@@ -371,49 +301,29 @@ function updateVoteTimerText() {
 updateVoteTimerText();
 
 
-/*
-========================================
-ЗАПУСК ТАЙМЕРА
-========================================
-*/
-
 const voteTimer =
-  setInterval(
-    function () {
+  setInterval(function () {
 
-      voteSecondsLeft--;
-
-
-      if (
-        voteSecondsLeft <= 0
-      ) {
-
-        voteSecondsLeft = 0;
-        voteTimerFinished = true;
-
-        clearInterval(
-          voteTimer
-        );
-
-        updateVoteAvailability();
-
-        return;
-
-      }
+    voteSecondsLeft--;
 
 
-      updateVoteTimerText();
+    if (voteSecondsLeft <= 0) {
 
-    },
-    1000
-  );
+      voteSecondsLeft = 0;
+      voteTimerFinished = true;
+
+      clearInterval(voteTimer);
+
+      updateVoteAvailability();
+
+      return;
+    }
 
 
-/*
-========================================
-ПРОВЕРКА ПРОКРУТКИ ДО КОНЦА
-========================================
-*/
+    updateVoteTimerText();
+
+  }, 1000);
+
 
 function checkPageScroll() {
 
@@ -422,13 +332,11 @@ function checkPageScroll() {
     + window.innerHeight;
 
   const pageHeight =
-    document.documentElement
-      .scrollHeight;
+    document.documentElement.scrollHeight;
 
 
   if (
-    currentBottom >=
-    pageHeight - 10
+    currentBottom >= pageHeight - 10
   ) {
 
     pageScrolledToEnd = true;
@@ -451,25 +359,10 @@ window.addEventListener(
 );
 
 
-/*
-Проверяем сразу для короткой страницы.
-*/
-
 checkPageScroll();
 
 
-/*
-========================================
-ОТКРЫТИЕ ПАНЕЛИ ГОЛОСОВАНИЯ
-========================================
-*/
-
 function toggleVotePanel() {
-
-  /*
-  Панель не открывается,
-  пока не выполнены оба условия.
-  */
 
   if (
     !voteTimerFinished ||
@@ -477,14 +370,11 @@ function toggleVotePanel() {
   ) {
 
     return;
-
   }
 
 
   const isOpen =
-    voteDetails.classList.toggle(
-      "open"
-    );
+    voteDetails.classList.toggle("open");
 
 
   openVoteButton.textContent =
@@ -501,13 +391,9 @@ function toggleVotePanel() {
      SUPABASE И ГОЛОСОВАНИЕ
 ======================================== -->
 
-<script
-  src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
-></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script
-  src="../scripts/vote.js"
-></script>
+<script src="../scripts/vote.js"></script>
 
 
 <!-- ========================================
@@ -520,641 +406,119 @@ function toggleVotePanel() {
 
 
 <!-- ========================================
-     ЗАГРУЗКА HEADER И REVIEW
+     ЗАГРУЗКА ОБЩЕГО HEADER
 ======================================== -->
 
 <script>
 
-/*
-========================================
-ЗАКРЫТИЕ БОКОВЫХ ПАНЕЛЕЙ
-========================================
-*/
-
-function closeSidePanels() {
-
-  const reviewPanel =
-    document.getElementById(
-      "reviewPanel"
-    );
-
-  const userPanel =
-    document.getElementById(
-      "userPanel"
-    );
-
-  const panelOverlay =
-    document.getElementById(
-      "panelOverlay"
-    );
-
-
-  if (reviewPanel) {
-
-    reviewPanel.classList.remove(
-      "open"
-    );
-
-  }
-
-
-  if (userPanel) {
-
-    userPanel.classList.remove(
-      "open"
-    );
-
-  }
-
-
-  if (panelOverlay) {
-
-    panelOverlay.classList.remove(
-      "open"
-    );
-
-  }
-
-}
-
-
-/*
-========================================
-ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК REVIEW
-========================================
-*/
-
-function initializeReviewTabs() {
-
-  const reviewTabs =
-    document.querySelectorAll(
-      "[data-review-tab]"
-    );
-
-  const reviewSections =
-    document.querySelectorAll(
-      "[data-review-section]"
-    );
-
-
-  reviewTabs.forEach(
-    function (tabButton) {
-
-      tabButton.addEventListener(
-        "click",
-        function () {
-
-          const selectedTab =
-            tabButton.dataset.reviewTab;
-
-
-          /*
-          Переключаем активную кнопку.
-          */
-
-          reviewTabs.forEach(
-            function (button) {
-
-              const isActive =
-                button === tabButton;
-
-              button.classList.toggle(
-                "active",
-                isActive
-              );
-
-              button.setAttribute(
-                "aria-selected",
-                String(isActive)
-              );
-
-            }
-          );
-
-
-          /*
-          Переключаем активный раздел.
-          */
-
-          reviewSections.forEach(
-            function (section) {
-
-              const isActive =
-                section.dataset
-                  .reviewSection
-                === selectedTab;
-
-              section.classList.toggle(
-                "active",
-                isActive
-              );
-
-            }
-          );
-
-        }
-      );
-
-    }
-  );
-
-}
-
-
-/*
-========================================
-ЗАПОЛНЕНИЕ РАЗДЕЛА «СПРАВКА»
-
-Название, автор и год берутся
-непосредственно со страницы стиха.
-========================================
-*/
-
-function fillReviewReference() {
-
-  const title =
-    document.querySelector(
-      ".title"
-    )?.textContent.trim() || "—";
-
-  const author =
-    document.querySelector(
-      ".author"
-    )?.textContent.trim() || "—";
-
-  const year =
-    document.querySelector(
-      ".year"
-    )?.textContent.trim() || "—";
-
-
-  const referenceTitle =
-    document.getElementById(
-      "referenceTitle"
-    );
-
-  const referenceAuthor =
-    document.getElementById(
-      "referenceAuthor"
-    );
-
-  const referenceYear =
-    document.getElementById(
-      "referenceYear"
-    );
-
-
-  if (referenceTitle) {
-
-    referenceTitle.textContent =
-      title;
-
-  }
-
-
-  if (referenceAuthor) {
-
-    referenceAuthor.textContent =
-      author;
-
-  }
-
-
-  if (referenceYear) {
-
-    referenceYear.textContent =
-      year;
-
-  }
-
-}
-
-
-/*
-========================================
-ЗАГРУЗКА ОБЩЕГО HEADER
-========================================
-*/
-
 async function loadHeader() {
 
   const headerContainer =
-    document.getElementById(
-      "headerContainer"
-    );
-
+    document.getElementById("headerContainer");
 
   try {
 
-    /*
-    Загружаем header.html.
-    */
+    const response =
+      await fetch("../../header.html");
 
-    const headerResponse =
-      await fetch(
-        "../../header.html"
-      );
-
-
-    if (!headerResponse.ok) {
-
+    if (!response.ok) {
       throw new Error(
-        "Ошибка загрузки header.html: HTTP "
-        + headerResponse.status
+        "HTTP " + response.status
       );
-
     }
-
 
     headerContainer.innerHTML =
-      await headerResponse.text();
-
-
-    /*
-    ========================================
-    ЗАГРУЗКА REVIEW.HTML
-
-    review.html:
-    docs/review.html
-
-    Текущий файл:
-    docs/21/poems/poem1.html
-
-    Поэтому путь:
-    ../../review.html
-    ========================================
-    */
-
-    const reviewContainer =
-      document.getElementById(
-        "reviewContainer"
-      );
-
-
-    if (!reviewContainer) {
-
-      throw new Error(
-        "В header.html не найден #reviewContainer"
-      );
-
-    }
-
-
-    const reviewResponse =
-      await fetch(
-        "../../review.html"
-      );
-
-
-    if (!reviewResponse.ok) {
-
-      throw new Error(
-        "Ошибка загрузки review.html: HTTP "
-        + reviewResponse.status
-      );
-
-    }
-
-
-    reviewContainer.innerHTML =
-      await reviewResponse.text();
-
+      await response.text();
 
     /*
-    ========================================
-    ПУТИ ДЛЯ СТРАНИЦЫ СТИХА
-    ========================================
+========================================
+ЗАГРУЗКА REVIEW.HTML
+========================================
+*/
+
+const reviewContainer =
+  document.getElementById("reviewContainer");
+
+const reviewResponse =
+  await fetch("../../review.html");
+
+if (!reviewResponse.ok) {
+  throw new Error(
+    "Ошибка загрузки review.html: HTTP "
+    + reviewResponse.status
+  );
+}
+
+reviewContainer.innerHTML =
+  await reviewResponse.text();
+
+    /*
+    Пути для страницы стиха.
     */
 
-    const headerLogo =
-      document.getElementById(
-        "headerLogo"
-      );
-
-    const headerHomeLink =
-      document.getElementById(
-        "headerHomeLink"
-      );
-
-    const headerTop21Link =
-      document.getElementById(
-        "headerTop21Link"
-      );
-
-
-    if (headerLogo) {
-
-      headerLogo.src =
+    document
+      .getElementById("headerLogo")
+      .src =
         "../images/logo.svg";
 
-    }
-
-
-    if (headerHomeLink) {
-
-      headerHomeLink.href =
+    document
+      .getElementById("headerHomeLink")
+      .href =
         "../../index.html";
 
-    }
-
-
-    if (headerTop21Link) {
-
-      headerTop21Link.href =
+    document
+      .getElementById("headerTop21Link")
+      .href =
         "../../index.html#top21";
 
-    }
-
 
     /*
-    ========================================
-    ЭЛЕМЕНТЫ БОКОВЫХ ПАНЕЛЕЙ
-    ========================================
+    Меню пользователя.
     */
-
-    const reviewPanel =
-      document.getElementById(
-        "reviewPanel"
-      );
 
     const userPanel =
-      document.getElementById(
-        "userPanel"
-      );
+      document.getElementById("userPanel");
 
-    const panelOverlay =
-      document.getElementById(
-        "panelOverlay"
-      );
-
-    const openReviewPanelButton =
-      document.getElementById(
-        "openReviewPanelButton"
-      );
-
-    const closeReviewPanelButton =
-      document.getElementById(
-        "closeReviewPanelButton"
-      );
-
-    const openUserPanelButton =
-      document.getElementById(
-        "openUserPanelButton"
-      );
-
-    const closeUserPanelButton =
-      document.getElementById(
-        "closeUserPanelButton"
-      );
-
-
-    /*
-    ========================================
-    ОТКРЫТИЕ ЛЕВОЙ ПАНЕЛИ
-    ========================================
-    */
-
-    if (
-      openReviewPanelButton &&
-      reviewPanel
-    ) {
-
-      openReviewPanelButton
-        .addEventListener(
-          "click",
-          function () {
-
-            /*
-            Закрываем правую панель.
-            */
-
-            if (userPanel) {
-
-              userPanel.classList.remove(
-                "open"
-              );
-
-            }
-
-
-            /*
-            Открываем левую панель.
-            */
-
-            reviewPanel.classList.add(
-              "open"
-            );
-
-
-            if (panelOverlay) {
-
-              panelOverlay.classList.add(
-                "open"
-              );
-
-            }
-
-          }
-        );
-
-    }
-
-
-    /*
-    ========================================
-    ЗАКРЫТИЕ ЛЕВОЙ ПАНЕЛИ
-    ========================================
-    */
-
-    if (closeReviewPanelButton) {
-
-      closeReviewPanelButton
-        .addEventListener(
-          "click",
-          closeSidePanels
-        );
-
-    }
-
-
-    /*
-    ========================================
-    ОТКРЫТИЕ ПРАВОЙ ПАНЕЛИ
-    ========================================
-    */
-
-    if (
-      openUserPanelButton &&
-      userPanel
-    ) {
-
-      openUserPanelButton
-        .addEventListener(
-          "click",
-          function () {
-
-            /*
-            Закрываем левую панель.
-            */
-
-            if (reviewPanel) {
-
-              reviewPanel.classList.remove(
-                "open"
-              );
-
-            }
-
-
-            /*
-            Открываем правую панель.
-            */
-
-            userPanel.classList.add(
-              "open"
-            );
-
-
-            if (panelOverlay) {
-
-              panelOverlay.classList.add(
-                "open"
-              );
-
-            }
-
-          }
-        );
-
-    }
-
-
-    /*
-    ========================================
-    ЗАКРЫТИЕ ПРАВОЙ ПАНЕЛИ
-    ========================================
-    */
-
-    if (closeUserPanelButton) {
-
-      closeUserPanelButton
-        .addEventListener(
-          "click",
-          closeSidePanels
-        );
-
-    }
-
-
-    /*
-    ========================================
-    ЗАКРЫТИЕ ПО КЛИКУ НА ЗАТЕМНЕНИЕ
-    ========================================
-    */
-
-    if (panelOverlay) {
-
-      panelOverlay.addEventListener(
+    document
+      .getElementById("openUserPanelButton")
+      .addEventListener(
         "click",
-        closeSidePanels
-      );
-
-    }
-
-
-    /*
-    ========================================
-    ЗАКРЫТИЕ ПО ESCAPE
-    ========================================
-    */
-
-    document.addEventListener(
-      "keydown",
-      function (event) {
-
-        if (event.key === "Escape") {
-
-          closeSidePanels();
-
+        function () {
+          userPanel.classList.add("open");
         }
+      );
 
-      }
-    );
+    document
+      .getElementById("closeUserPanelButton")
+      .addEventListener(
+        "click",
+        function () {
+          userPanel.classList.remove("open");
+        }
+      );
 
-
-    /*
-    ========================================
-    ВХОД / РЕГИСТРАЦИЯ
-    ========================================
-    */
-
-    const headerAuthButton =
-      document.getElementById(
-        "headerAuthButton"
+    document
+      .getElementById("headerAuthButton")
+      .addEventListener(
+        "click",
+        function () {
+          window.location.href =
+            "../../sign.html";
+        }
       );
 
 
-    if (headerAuthButton) {
-
-      headerAuthButton
-        .addEventListener(
-          "click",
-          function () {
-
-            window.location.href =
-              "../../sign.html";
-
-          }
-        );
-
-    }
-
-
     /*
-    ========================================
-    ВКЛАДКИ REVIEW.HTML
-    ========================================
-    */
-
-    initializeReviewTabs();
-
-
-    /*
-    Заполняем справку данными страницы.
-    */
-
-    fillReviewReference();
-
-
-    /*
-    ========================================
-    КОМПАС НА СТРАНИЦЕ СТИХА
+    Компас на странице стихотворения.
 
     ← предыдущий стих
     XXI Антология XXI
     → следующий стих
-    ========================================
     */
 
-    const compassLeft =
-      document.getElementById(
-        "compassLeft"
-      );
-
-    const compassCenter =
-      document.getElementById(
-        "compassCenter"
-      );
-
-    const compassRight =
-      document.getElementById(
-        "compassRight"
-      );
-
-
-    if (compassLeft) {
-
-      compassLeft.addEventListener(
+    document
+      .getElementById("compassLeft")
+      .addEventListener(
         "click",
         function () {
 
@@ -1162,7 +526,6 @@ async function loadHeader() {
             poemNumber <= 1
               ? 21
               : poemNumber - 1;
-
 
           window.location.href =
             "poem"
@@ -1172,12 +535,9 @@ async function loadHeader() {
         }
       );
 
-    }
-
-
-    if (compassCenter) {
-
-      compassCenter.addEventListener(
+    document
+      .getElementById("compassCenter")
+      .addEventListener(
         "click",
         function () {
 
@@ -1187,12 +547,9 @@ async function loadHeader() {
         }
       );
 
-    }
-
-
-    if (compassRight) {
-
-      compassRight.addEventListener(
+    document
+      .getElementById("compassRight")
+      .addEventListener(
         "click",
         function () {
 
@@ -1200,7 +557,6 @@ async function loadHeader() {
             poemNumber >= 21
               ? 1
               : poemNumber + 1;
-
 
           window.location.href =
             "poem"
@@ -1210,15 +566,12 @@ async function loadHeader() {
         }
       );
 
-    }
-
   } catch (error) {
 
     console.error(
-      "Ошибка загрузки компонентов:",
+      "Ошибка загрузки header.html:",
       error
     );
-
 
     headerContainer.textContent =
       "Не удалось загрузить верхнюю панель.";
@@ -1226,11 +579,6 @@ async function loadHeader() {
   }
 
 }
-
-
-/*
-Запускаем загрузку.
-*/
 
 loadHeader();
 
@@ -1242,7 +590,7 @@ loadHeader();
 ======================================== -->
 
 <div id="service-console">
- review fetch | v1.7.0
+  header fetch handmade | v1.8.0
 </div>
 
 <div
@@ -1253,10 +601,6 @@ loadHeader();
 </div>
 
 
-<!-- ========================================
-     АВТОМАТИЧЕСКАЯ ДАТА СБОРКИ
-======================================== -->
-
 <script>
 
 (function () {
@@ -1264,15 +608,9 @@ loadHeader();
   const now =
     new Date();
 
-
   const pad =
     number =>
-      String(number)
-        .padStart(
-          2,
-          "0"
-        );
-
+      String(number).padStart(2, "0");
 
   const date =
       pad(now.getDate())
@@ -1281,17 +619,13 @@ loadHeader();
     + "."
     + now.getFullYear();
 
-
   const time =
       pad(now.getHours())
     + ":"
     + pad(now.getMinutes());
 
-
   document
-    .getElementById(
-      "build-down"
-    )
+    .getElementById("build-down")
     .textContent =
       "deploy: "
       + date
