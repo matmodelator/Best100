@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Комментарий</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      color: #222;
+    }
+
+    .comment-box {
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+
+    h2 {
+      margin: 0 0 20px;
+    }
+
+    .field {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 11px;
+      border: 1px solid #aaa;
+      border-radius: 6px;
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 180px;
+      resize: vertical;
+    }
+
+    button {
+      padding: 11px 18px;
+      border: 0;
+      border-radius: 6px;
+      background: #222;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+
+    #status {
+      margin-top: 15px;
+      min-height: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="comment-box">
+    <h2>Добавить комментарий</h2>
+
+    <form id="commentForm">
+
+      <div class="field">
+        <label for="authorName">Имя</label>
+
+        <input
+          id="authorName"
+          type="text"
+          maxlength="60"
+          required
+        >
+      </div>
+
+      <div class="field">
+        <label for="commentText">Комментарий</label>
+
+        <textarea
+          id="commentText"
+          maxlength="3000"
+          required
+        ></textarea>
+      </div>
+
+      <button id="submitBtn" type="submit">
+        Отправить
+      </button>
+
+      <div id="status"></div>
+
+    </form>
+  </div>
+
+  <script>
+    const SUPABASE_URL = "ВСТАВЬ_SUPABASE_URL";
+    const SUPABASE_ANON_KEY = "ВСТАВЬ_SUPABASE_ANON_KEY";
+
+    const supabaseClient = supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY
+    );
+
+    const form = document.getElementById("commentForm");
+    const authorNameInput = document.getElementById("authorName");
+    const commentTextInput = document.getElementById("commentText");
+    const submitBtn = document.getElementById("submitBtn");
+    const status = document.getElementById("status");
+
+    const params = new URLSearchParams(window.location.search);
+
+    const poemId =
+      params.get("poem") ||
+      params.get("id") ||
+      "unknown";
+
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      const authorName = authorNameInput.value.trim();
+      const commentText = commentTextInput.value.trim();
+
+      if (!authorName || !commentText) {
+        status.textContent = "Заполните имя и комментарий.";
+        return;
+      }
+
+      submitBtn.disabled = true;
+      status.textContent = "Отправка...";
+
+      const { error } = await supabaseClient
+        .from("comments")
+        .insert({
+          poem_id: poemId,
+          author_name: authorName,
+          comment_text: commentText
+        });
+
+      submitBtn.disabled = false;
+
+      if (error) {
+        console.error(error);
+        status.textContent = "Ошибка отправки: " + error.message;
+        return;
+      }
+
+      form.reset();
+
+      status.textContent =
+        "Комментарий отправлен и появится после модерации.";
+    });
+  </script>
+
+
+
+<!-- ========================================
+     SERVICE CONSOLE
+======================================== -->
+
+<div id="service-console">
+ GPT | v1.0.0
+</div>
+
+<div class="row" id="build-down">
+deploy: --
+</div>
+
+<script>
+(function () {
+  const now = new Date();
+
+  const pad = n =>
+    String(n).padStart(2, "0");
+
+  const date =
+      pad(now.getDate())
+    + "."
+    + pad(now.getMonth() + 1)
+    + "."
+    + now.getFullYear();
+
+  const time =
+      pad(now.getHours())
+    + ":"
+    + pad(now.getMinutes());
+
+  document
+    .getElementById("build-down")
+    .textContent =
+      "deploy: "
+      + date
+      + " "
+      + time;
+})();
+</script>
+
+
+</body>
+</html>
+  
