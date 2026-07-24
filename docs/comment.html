@@ -2,7 +2,11 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>Добавить комментарий</title>
 
@@ -100,7 +104,10 @@
     #status {
       min-height: 22px;
       margin-top: 15px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
       font-size: 14px;
+      line-height: 1.45;
     }
 
     #status.error {
@@ -109,6 +116,20 @@
 
     #status.success {
       color: #087a20;
+    }
+
+    #service-console {
+      max-width: 700px;
+      margin: 18px auto 0;
+      color: #777;
+      font-size: 12px;
+    }
+
+    #build-down {
+      max-width: 700px;
+      margin: 4px auto 0;
+      color: #999;
+      font-size: 11px;
     }
 
     @media (max-width: 600px) {
@@ -133,17 +154,22 @@
 
 <body>
 
-  <form class="comment-form" id="commentForm">
+  <form
+    class="comment-form"
+    id="commentForm"
+  >
 
     <h1>Добавить комментарий</h1>
 
     <div class="poem-info">
       Стихотворение:
-      <strong id="poemLabel">не указано</strong>
+      <strong id="poemLabel">определяется...</strong>
     </div>
 
     <div class="field">
-      <label for="authorName">Имя</label>
+      <label for="authorName">
+        Имя
+      </label>
 
       <input
         id="authorName"
@@ -157,7 +183,9 @@
     </div>
 
     <div class="field">
-      <label for="commentText">Комментарий</label>
+      <label for="commentText">
+        Комментарий
+      </label>
 
       <textarea
         id="commentText"
@@ -184,122 +212,279 @@
       </button>
     </div>
 
-    <div id="status"></div>
+    <div
+      id="status"
+      role="status"
+      aria-live="polite"
+    ></div>
 
   </form>
+
+  <div id="service-console">
+    comments | v1.2.0
+  </div>
+
+  <div id="build-down">
+    deploy: --
+  </div>
 
   <script type="module">
     import { supabase } from "./config.js";
 
-    const form = document.getElementById("commentForm");
-    const authorNameInput = document.getElementById("authorName");
-    const commentTextInput = document.getElementById("commentText");
-    const poemLabel = document.getElementById("poemLabel");
-    const submitBtn = document.getElementById("submitBtn");
-    const cancelBtn = document.getElementById("cancelBtn");
-    const status = document.getElementById("status");
+    const form =
+      document.getElementById("commentForm");
 
-   const poemMatch =
-  document.referrer.match(/poem(\d+)\.html/i);
+    const authorNameInput =
+      document.getElementById("authorName");
 
-const poemId =
-  poemMatch
-    ? Number(poemMatch[1])
-    : null;
+    const commentTextInput =
+      document.getElementById("commentText");
 
-poemLabel.textContent =
-  poemId
-    ? "Стихотворение №" + poemId
-    : "Не определено";
+    const poemLabel =
+      document.getElementById("poemLabel");
+
+    const submitBtn =
+      document.getElementById("submitBtn");
+
+    const cancelBtn =
+      document.getElementById("cancelBtn");
+
+    const status =
+      document.getElementById("status");
+
+    /*
+    ========================================
+    ОПРЕДЕЛЕНИЕ НОМЕРА СТИХОТВОРЕНИЯ
+
+    При переходе:
+
+    poem1.html → comment.html
+    poem2.html → comment.html
+    ...
+
+    номер берётся из document.referrer.
+    ========================================
+    */
+
+    const referrer =
+      document.referrer || "";
+
+    const poemMatch =
+      referrer.match(/poem(\d+)\.html/i);
+
+    const poemId =
+      poemMatch
+        ? Number(poemMatch[1])
+        : null;
+
+    if (Number.isInteger(poemId) && poemId > 0) {
+      poemLabel.textContent =
+        "Стихотворение №" + poemId;
+    } else {
+      poemLabel.textContent =
+        "Не удалось определить";
+    }
+
+    /*
+    ========================================
+    СООБЩЕНИЕ ПОД ФОРМОЙ
+    ========================================
+    */
 
     function showStatus(message, type = "") {
       status.textContent = message;
       status.className = type;
     }
 
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
+    /*
+    ========================================
+    БЛОКИРОВКА КНОПОК
+    ========================================
+    */
 
-      const authorName = authorNameInput.value.trim();
-      const commentText = commentTextInput.value.trim();
+    function setSendingState(isSending) {
+      submitBtn.disabled = isSending;
+      cancelBtn.disabled = isSending;
 
-      if (!poemId) {
+      submitBtn.textContent =
+        isSending
+          ? "Отправка..."
+          : "Отправить";
+    }
+
+    /*
+    ========================================
+    ОТПРАВКА КОММЕНТАРИЯ В SUPABASE
+    ========================================
+    */
+
+    form.addEventListener(
+      "submit",
+      async function (event) {
+        event.preventDefault();
+
+        showStatus("");
+
+        const authorName =
+          authorNameInput.value.trim();
+
+        const commentText =
+          commentTextInput.value.trim();
+
+        if (
+          !Number.isInteger(poemId) ||
+          poemId < 1
+        ) {
+          const message =
+            "Не удалось определить номер стихотворения. " +
+            "Откройте форму со страницы poem1.html.";
+
+          showStatus(message, "error");
+          alert(message);
+
+          return;
+        }
+
+        if (!authorName) {
+          showStatus(
+            "Введите имя.",
+            "error"
+          );
+
+          authorNameInput.focus();
+
+          return;
+        }
+
+        if (!commentText) {
+          showStatus(
+            "Введите комментарий.",
+            "error"
+          );
+
+          commentTextInput.focus();
+
+          return;
+        }
+
+        setSendingState(true);
+
         showStatus(
-          "Не удалось определить номер стихотворения.",
-          "error"
-        );
-        return;
-      }
-
-      if (!authorName) {
-        showStatus("Введите имя.", "error");
-        authorNameInput.focus();
-        return;
-      }
-
-      if (!commentText) {
-        showStatus("Введите комментарий.", "error");
-        commentTextInput.focus();
-        return;
-      }
-
-      submitBtn.disabled = true;
-      cancelBtn.disabled = true;
-
-      showStatus("Отправка...");
-
-     const result = await supabase
-  .from("top21_comments")
-  .insert({
-    poem_id: poemId,
-    author_name: authorName,
-    comment_text: commentText,
-    is_approved: false
-  })
-  .select();
-
-console.log(result);
-
-if (result.error) {
-
-    alert(JSON.stringify(result.error, null, 2));
-
-    return;
-}
-
-alert("OK");
-
-      submitBtn.disabled = false;
-      cancelBtn.disabled = false;
-
-      if (error) {
-        console.error("Ошибка Supabase:", error);
-
-        showStatus(
-          "Ошибка отправки: " + error.message,
-          "error"
+          "Отправка комментария..."
         );
 
-        return;
+        try {
+          const { error } = await supabase
+            .from("top21_comments")
+            .insert([
+              {
+                poem_id: poemId,
+                author_name: authorName,
+                comment_text: commentText,
+                is_approved: false
+              }
+            ]);
+
+          /*
+          Supabase возвращает ошибку объектом,
+          поэтому её необходимо проверить отдельно.
+          */
+
+          if (error) {
+            console.error(
+              "Supabase insert error:",
+              error
+            );
+
+            const errorDetails = [
+              "Комментарий не отправлен.",
+              "",
+              "Сообщение: " +
+                (error.message || "не указано"),
+              "Код: " +
+                (error.code || "не указан"),
+              "Details: " +
+                (error.details || "не указаны"),
+              "Hint: " +
+                (error.hint || "не указан")
+            ].join("\n");
+
+            showStatus(
+              errorDetails,
+              "error"
+            );
+
+            alert(errorDetails);
+
+            return;
+          }
+
+          /*
+          Ошибки нет — запрос принят Supabase.
+          */
+
+          form.reset();
+
+          const successMessage =
+            "Комментарий успешно отправлен на модерацию.";
+
+          showStatus(
+            successMessage,
+            "success"
+          );
+
+          alert(successMessage);
+
+        } catch (caughtError) {
+          /*
+          Сюда попадут ошибки импорта,
+          сети или выполнения JavaScript.
+          */
+
+          console.error(
+            "Comment submit exception:",
+            caughtError
+          );
+
+          const errorMessage =
+            "Комментарий не отправлен.\n\n" +
+            (
+              caughtError?.message ||
+              String(caughtError)
+            );
+
+          showStatus(
+            errorMessage,
+            "error"
+          );
+
+          alert(errorMessage);
+
+        } finally {
+          setSendingState(false);
+        }
       }
+    );
 
-      form.reset();
+    /*
+    ========================================
+    ОТМЕНА
+    ========================================
+    */
 
-      showStatus(
-        "Комментарий отправлен.",
-        "success"
-      );
-    });
-
-    cancelBtn.addEventListener("click", () => {
-      if (document.referrer) {
-        history.back();
-      } else {
-        window.location.href = "./index.html";
+    cancelBtn.addEventListener(
+      "click",
+      function () {
+        if (document.referrer) {
+          history.back();
+        } else {
+          window.location.href =
+            "./index.html";
+        }
       }
-    });
-  </script>
+    );
 
+  
 
 
 <!-- ========================================
@@ -307,7 +492,11 @@ alert("OK");
 ======================================== -->
 
 <div id="service-console">
- fix Error | v1.1.2
+ импортирует Supabase из docs/config.js;
+отправляет запись в top21_comments;
+при ошибке показывает полный ответ Supabase и под формой, и через alert;
+при успехе показывает подтверждение;
+не содержит .select(), старого result, несуществующей переменной error и CDN. | v1.3.0
 </div>
 
 <div class="row" id="build-down">
