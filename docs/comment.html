@@ -199,20 +199,18 @@
     const cancelBtn = document.getElementById("cancelBtn");
     const status = document.getElementById("status");
 
-    const params = new URLSearchParams(window.location.search);
+   const poemMatch =
+  document.referrer.match(/poem(\d+)\.html/i);
 
-    const poemId =
-      params.get("poem_id") ||
-      params.get("poem") ||
-      params.get("id") ||
-      "";
+const poemId =
+  poemMatch
+    ? Number(poemMatch[1])
+    : null;
 
-    const poemTitle =
-      params.get("title") ||
-      poemId ||
-      "не указано";
-
-    poemLabel.textContent = poemTitle;
+poemLabel.textContent =
+  poemId
+    ? "Стихотворение №" + poemId
+    : "Не определено";
 
     function showStatus(message, type = "") {
       status.textContent = message;
@@ -227,7 +225,7 @@
 
       if (!poemId) {
         showStatus(
-          "Не указан идентификатор стихотворения.",
+          "Не удалось определить номер стихотворения.",
           "error"
         );
         return;
@@ -296,7 +294,7 @@
 ======================================== -->
 
 <div id="service-console">
- switch to config | v1.1.0
+ fix poemID | v1.1.1
 </div>
 
 <div class="row" id="build-down">
