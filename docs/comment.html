@@ -248,13 +248,26 @@ poemLabel.textContent =
 
       showStatus("Отправка...");
 
-      const { error } = await supabase
-        .from("top21_comments")
-        .insert({
-          poem_id: poemId,
-          author_name: authorName,
-          comment_text: commentText
-        });
+     const result = await supabase
+  .from("top21_comments")
+  .insert({
+    poem_id: poemId,
+    author_name: authorName,
+    comment_text: commentText,
+    is_approved: false
+  })
+  .select();
+
+console.log(result);
+
+if (result.error) {
+
+    alert(JSON.stringify(result.error, null, 2));
+
+    return;
+}
+
+alert("OK");
 
       submitBtn.disabled = false;
       cancelBtn.disabled = false;
@@ -294,7 +307,7 @@ poemLabel.textContent =
 ======================================== -->
 
 <div id="service-console">
- fix poemID | v1.1.1
+ fix Error | v1.1.2
 </div>
 
 <div class="row" id="build-down">
