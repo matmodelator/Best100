@@ -2,7 +2,7 @@
 
 /*
 ========================================
-ЕДИНЫЙ HEADER from GPT | v1.0.0
+Обзор и комменты выпадают слева | v1.1.0
 ========================================
 */
 
@@ -77,11 +77,7 @@
 
 /*
 ========================================
-ТРИ АКТИВНЫЕ ЗОНЫ
-
-← левая стрелка
-XXI центральная зона
-→ правая стрелка
+АКТИВНЫЕ ЗОНЫ КОМПАСА
 ========================================
 */
 
@@ -96,13 +92,13 @@ XXI центральная зона
   border-radius: 8px;
 
   cursor: pointer;
+
   z-index: 5;
 }
 
 
 /*
 Левая стрелка.
-Координаты зоны меняются здесь.
 */
 
 .compass-left {
@@ -116,7 +112,6 @@ XXI центральная зона
 
 /*
 Центральная зона XXI.
-Координаты зоны меняются здесь.
 */
 
 .compass-center {
@@ -130,7 +125,6 @@ XXI центральная зона
 
 /*
 Правая стрелка.
-Координаты зоны меняются здесь.
 */
 
 .compass-right {
@@ -144,11 +138,11 @@ XXI центральная зона
 
 /*
 Фокус с клавиатуры.
-При обычном наведении прямоугольника нет.
 */
 
 .compass-zone:focus-visible {
-  outline: 1px solid rgba(255, 196, 70, 0.8);
+  outline:
+    1px solid rgba(255, 196, 70, 0.8);
 }
 
 
@@ -161,7 +155,9 @@ XXI центральная зона
 .site-nav {
   position: relative;
 
-  padding: 10px 16px;
+  min-height: 42px;
+
+  padding: 10px 150px;
 
   background: #111827;
 
@@ -170,6 +166,9 @@ XXI центральная зона
 
 .site-nav .links {
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
   gap: 28px;
 }
 
@@ -190,14 +189,12 @@ XXI центральная зона
 
 /*
 ========================================
-КНОПКА «МЕНЮ»
+ОБЩИЙ СТИЛЬ БОКОВЫХ КНОПОК
 ========================================
 */
 
-.user-btn {
+.side-menu-btn {
   position: absolute;
-
-  right: 16px;
   top: 50%;
 
   transform: translateY(-50%);
@@ -210,46 +207,152 @@ XXI центральная зона
   border: 1px solid #6b7280;
   border-radius: 6px;
 
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+
   cursor: pointer;
 }
 
-.user-btn:hover {
+.side-menu-btn:hover {
   background: #4b5563;
 }
 
 
 /*
 ========================================
-БОКОВАЯ ПАНЕЛЬ
+КНОПКА ЛЕВОЙ ПАНЕЛИ
 ========================================
 */
 
-.user-panel {
-  position: fixed;
+.review-btn {
+  left: 16px;
+}
 
+
+/*
+========================================
+КНОПКА ПРАВОЙ ПАНЕЛИ
+========================================
+*/
+
+.user-btn {
+  right: 16px;
+}
+
+
+/*
+========================================
+ОБЩИЙ СТИЛЬ БОКОВЫХ ПАНЕЛЕЙ
+========================================
+*/
+
+.side-panel {
+  position: fixed;
   top: 0;
-  right: -280px;
 
   display: flex;
   flex-direction: column;
 
-  width: 280px;
+  width: 360px;
+  max-width: 92vw;
   height: 100vh;
 
   padding: 20px;
 
   background: white;
+  color: #1f1f1f;
+
+  overflow-y: auto;
+
+  transition:
+    left 0.25s ease,
+    right 0.25s ease;
+
+  z-index: 1000;
+}
+
+
+/*
+========================================
+ЛЕВАЯ ПАНЕЛЬ
+
+Разбор от ИИ и комментарии.
+========================================
+*/
+
+.review-panel {
+  left: -360px;
+
+  box-shadow:
+    4px 0 14px rgba(0, 0, 0, 0.18);
+}
+
+.review-panel.open {
+  left: 0;
+}
+
+
+/*
+========================================
+ПРАВАЯ ПАНЕЛЬ
+
+Меню пользователя.
+========================================
+*/
+
+.user-panel {
+  right: -360px;
 
   box-shadow:
     -4px 0 14px rgba(0, 0, 0, 0.18);
-
-  transition: right 0.25s;
-
-  z-index: 100;
 }
 
 .user-panel.open {
   right: 0;
+}
+
+
+/*
+========================================
+ЗАТЕМНЕНИЕ СТРАНИЦЫ
+========================================
+*/
+
+.panel-overlay {
+  position: fixed;
+  inset: 0;
+
+  display: none;
+
+  background: rgba(17, 24, 39, 0.42);
+
+  z-index: 900;
+}
+
+.panel-overlay.open {
+  display: block;
+}
+
+
+/*
+========================================
+ШАПКА БОКОВОЙ ПАНЕЛИ
+========================================
+*/
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  margin-bottom: 16px;
+}
+
+.panel-header h2,
+.panel-header h3 {
+  margin: 0;
 }
 
 
@@ -260,23 +363,257 @@ XXI центральная зона
 */
 
 .close-btn {
-  align-self: flex-end;
+  flex: 0 0 auto;
 
   padding: 0;
 
   background: none;
   border: none;
 
-  font-size: 24px;
+  color: #1f2933;
+
+  font-size: 28px;
   line-height: 1;
 
   cursor: pointer;
 }
 
+.close-btn:hover {
+  color: #7c2d12;
+}
+
 
 /*
 ========================================
-СТАТУСЫ
+ВКЛАДКИ ЛЕВОЙ ПАНЕЛИ
+========================================
+*/
+
+.review-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 8px;
+
+  margin-bottom: 16px;
+}
+
+.review-tab {
+  padding: 10px 8px;
+
+  background: #f4efe7;
+  color: #1f2933;
+
+  border: 1px solid #d6d0c7;
+  border-radius: 7px;
+
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.review-tab:hover {
+  background: #ebe3d8;
+}
+
+.review-tab.active {
+  background: #7c2d12;
+  color: white;
+
+  border-color: #7c2d12;
+}
+
+
+/*
+========================================
+СОДЕРЖИМОЕ ЛЕВОЙ ПАНЕЛИ
+========================================
+*/
+
+.review-section {
+  display: none;
+}
+
+.review-section.active {
+  display: block;
+}
+
+.review-section-title {
+  margin: 0 0 12px;
+
+  color: #7c2d12;
+
+  font-size: 20px;
+}
+
+.review-text {
+  white-space: pre-wrap;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+
+/*
+========================================
+ТАБЛИЦА ОЦЕНОК ИИ
+========================================
+*/
+
+.ai-score-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.ai-score-item {
+  padding-bottom: 10px;
+
+  border-bottom: 1px solid #e5e0d8;
+}
+
+.ai-score-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin-bottom: 5px;
+}
+
+.ai-score-name {
+  font-weight: bold;
+}
+
+.ai-score-value {
+  flex: 0 0 auto;
+
+  color: #7c2d12;
+
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+}
+
+.ai-score-comment {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+
+/*
+========================================
+КОММЕНТАРИИ
+========================================
+*/
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+}
+
+.comment-item {
+  padding: 12px;
+
+  background: #f4efe7;
+
+  border-radius: 8px;
+}
+
+.comment-author {
+  margin-bottom: 5px;
+
+  color: #7c2d12;
+
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.comment-text {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.comments-empty {
+  padding: 16px;
+
+  background: #f4efe7;
+  color: #6b7280;
+
+  border-radius: 8px;
+
+  text-align: center;
+
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+}
+
+
+/*
+========================================
+ФОРМА КОММЕНТАРИЯ
+========================================
+*/
+
+.comment-form {
+  margin-top: 16px;
+}
+
+.comment-form textarea {
+  display: block;
+
+  width: 100%;
+  min-height: 100px;
+
+  padding: 10px;
+
+  resize: vertical;
+
+  border: 1px solid #c7c7c7;
+  border-radius: 8px;
+
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+.comment-submit {
+  width: 100%;
+
+  margin-top: 8px;
+  padding: 11px;
+
+  background: #7c2d12;
+  color: white;
+
+  border: none;
+  border-radius: 8px;
+
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.comment-submit:hover {
+  filter: brightness(1.12);
+}
+
+
+/*
+========================================
+СТАТУСЫ ПОЛЬЗОВАТЕЛЯ
 ========================================
 */
 
@@ -341,7 +678,7 @@ XXI центральная зона
 
   transition: opacity 0.15s;
 
-  z-index: 1000;
+  z-index: 1100;
 }
 
 .status:hover::after {
@@ -398,6 +735,7 @@ XXI центральная зона
 
   .site-header {
     gap: 8px;
+
     padding: 4px 10px;
   }
 
@@ -417,11 +755,11 @@ XXI центральная зона
   }
 
   .site-nav {
-    padding: 8px 52px 8px 8px;
+    padding:
+      8px 76px;
   }
 
   .site-nav .links {
-    justify-content: center;
     flex-wrap: wrap;
 
     gap: 8px;
@@ -433,12 +771,76 @@ XXI центральная зона
     font-size: 12px;
   }
 
+  .side-menu-btn {
+    padding: 4px 7px;
+
+    font-size: 11px;
+  }
+
+  .review-btn {
+    left: 5px;
+  }
+
   .user-btn {
-    right: 6px;
+    right: 5px;
+  }
 
-    padding: 4px 8px;
+  .side-panel {
+    width: 320px;
+  }
 
-    font-size: 12px;
+  .review-panel {
+    left: -320px;
+  }
+
+  .user-panel {
+    right: -320px;
+  }
+
+}
+
+
+/*
+========================================
+ОЧЕНЬ УЗКИЙ ЭКРАН
+========================================
+*/
+
+@media (max-width: 520px) {
+
+  .site-nav {
+    padding:
+      8px 62px;
+  }
+
+  .site-nav .links {
+    gap: 4px;
+  }
+
+  .site-nav .links a {
+    font-size: 10px;
+  }
+
+  .review-btn {
+    font-size: 0;
+  }
+
+  .review-btn::after {
+    content: "Разбор";
+
+    font-size: 11px;
+  }
+
+  .side-panel {
+    width: 92vw;
+  }
+
+  .review-panel {
+    left: -92vw;
+  }
+
+  .user-panel {
+    right: -92vw;
   }
 
 }
@@ -461,7 +863,8 @@ XXI центральная зона
       alt="Рифмы века"
     >
 
-    <!-- ← -->
+
+    <!-- Левая стрелка -->
 
     <button
       id="compassLeft"
@@ -471,7 +874,8 @@ XXI центральная зона
       title="Назад"
     ></button>
 
-    <!-- XXI -->
+
+    <!-- Центральная зона XXI -->
 
     <button
       id="compassCenter"
@@ -481,7 +885,8 @@ XXI центральная зона
       title="Антология XXI"
     ></button>
 
-    <!-- → -->
+
+    <!-- Правая стрелка -->
 
     <button
       id="compassRight"
@@ -515,6 +920,20 @@ XXI центральная зона
 
 <nav class="site-nav">
 
+
+  <!-- Кнопка левой панели -->
+
+  <button
+    id="openReviewPanelButton"
+    class="side-menu-btn review-btn"
+    type="button"
+  >
+    Разбор / Комментарии
+  </button>
+
+
+  <!-- Центральные ссылки -->
+
   <div class="links">
 
     <a
@@ -541,9 +960,12 @@ XXI центральная зона
 
   </div>
 
+
+  <!-- Кнопка правой панели -->
+
   <button
     id="openUserPanelButton"
-    class="user-btn"
+    class="side-menu-btn user-btn"
     type="button"
   >
     Меню
@@ -553,26 +975,297 @@ XXI центральная зона
 
 
 <!-- ========================================
-     БОКОВАЯ ПАНЕЛЬ
+     ЗАТЕМНЕНИЕ СТРАНИЦЫ
+======================================== -->
+
+<div
+  id="panelOverlay"
+  class="panel-overlay"
+></div>
+
+
+<!-- ========================================
+     ЛЕВАЯ ПАНЕЛЬ
+
+     РАЗБОР ОТ ИИ И КОММЕНТАРИИ
 ======================================== -->
 
 <aside
-  class="user-panel"
-  id="userPanel"
+  id="reviewPanel"
+  class="side-panel review-panel"
 >
 
-  <button
-    id="closeUserPanelButton"
-    class="close-btn"
-    type="button"
-    aria-label="Закрыть меню"
-  >
-    ×
-  </button>
+  <div class="panel-header">
 
-  <h3>
-    Статус пользователя
-  </h3>
+    <h2>
+      Разбор и комментарии
+    </h2>
+
+    <button
+      id="closeReviewPanelButton"
+      class="close-btn"
+      type="button"
+      aria-label="Закрыть разбор"
+    >
+      ×
+    </button>
+
+  </div>
+
+
+  <!-- Переключатели -->
+
+  <div class="review-tabs">
+
+    <button
+      id="aiReviewTabButton"
+      class="review-tab active"
+      type="button"
+      data-review-tab="ai"
+    >
+      Обзор от ИИ
+    </button>
+
+    <button
+      id="commentsTabButton"
+      class="review-tab"
+      type="button"
+      data-review-tab="comments"
+    >
+      Комментарии
+    </button>
+
+  </div>
+
+
+  <!-- ======================================
+       ОБЗОР ОТ ИИ
+  ======================================= -->
+
+  <section
+    id="aiReviewSection"
+    class="review-section active"
+  >
+
+    <h3 class="review-section-title">
+      Обзор от ИИ
+    </h3>
+
+
+    <!--
+    В этот контейнер можно загрузить
+    отдельный обзор конкретного стиха.
+    -->
+
+    <div
+      id="aiReviewContent"
+      class="review-text"
+    >
+
+      <div class="ai-score-list">
+
+        <div class="ai-score-item">
+
+          <div class="ai-score-head">
+
+            <span class="ai-score-name">
+              Образность
+            </span>
+
+            <span class="ai-score-value">
+              —
+            </span>
+
+          </div>
+
+          <div class="ai-score-comment">
+            Обзор пока не добавлен.
+          </div>
+
+        </div>
+
+        <div class="ai-score-item">
+
+          <div class="ai-score-head">
+
+            <span class="ai-score-name">
+              Ритм и музыкальность
+            </span>
+
+            <span class="ai-score-value">
+              —
+            </span>
+
+          </div>
+
+        </div>
+
+        <div class="ai-score-item">
+
+          <div class="ai-score-head">
+
+            <span class="ai-score-name">
+              Язык и лексика
+            </span>
+
+            <span class="ai-score-value">
+              —
+            </span>
+
+          </div>
+
+        </div>
+
+        <div class="ai-score-item">
+
+          <div class="ai-score-head">
+
+            <span class="ai-score-name">
+              Композиция
+            </span>
+
+            <span class="ai-score-value">
+              —
+            </span>
+
+          </div>
+
+        </div>
+
+        <div class="ai-score-item">
+
+          <div class="ai-score-head">
+
+            <span class="ai-score-name">
+              Размер и рифма
+            </span>
+
+            <span class="ai-score-value">
+              —
+            </span>
+
+          </div>
+
+        </div>
+
+        <div class="ai-score-item">
+
+          <div class="ai-score-head">
+
+            <span class="ai-score-name">
+              Эмоциональное воздействие
+            </span>
+
+            <span class="ai-score-value">
+              —
+            </span>
+
+          </div>
+
+        </div>
+
+        <div class="ai-score-item">
+
+          <div class="ai-score-head">
+
+            <span class="ai-score-name">
+              Общая оценка
+            </span>
+
+            <span class="ai-score-value">
+              —
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ======================================
+       КОММЕНТАРИИ
+  ======================================= -->
+
+  <section
+    id="commentsSection"
+    class="review-section"
+  >
+
+    <h3 class="review-section-title">
+      Комментарии читателей
+    </h3>
+
+
+    <div
+      id="commentsList"
+      class="comments-list"
+    >
+
+      <div class="comments-empty">
+        Комментариев пока нет.
+      </div>
+
+    </div>
+
+
+    <form
+      id="commentForm"
+      class="comment-form"
+    >
+
+      <textarea
+        id="commentText"
+        placeholder="Напишите комментарий..."
+      ></textarea>
+
+      <button
+        id="commentSubmitButton"
+        class="comment-submit"
+        type="submit"
+      >
+        Отправить комментарий
+      </button>
+
+    </form>
+
+  </section>
+
+</aside>
+
+
+<!-- ========================================
+     ПРАВАЯ ПАНЕЛЬ
+
+     МЕНЮ ПОЛЬЗОВАТЕЛЯ
+======================================== -->
+
+<aside
+  id="userPanel"
+  class="side-panel user-panel"
+>
+
+  <div class="panel-header">
+
+    <h3>
+      Статус пользователя
+    </h3>
+
+    <button
+      id="closeUserPanelButton"
+      class="close-btn"
+      type="button"
+      aria-label="Закрыть меню"
+    >
+      ×
+    </button>
+
+  </div>
+
 
   <div class="status-list">
 
@@ -609,9 +1302,9 @@ XXI центральная зона
     </div>
 
     <div
-      class="status"
+      class="status author-status"
       data-status="Автор"
-      data-tooltip="Поэт, чьё стихотворение включено в Антологию XXI."
+      data-tooltip="Поэт, чьё стихотворение включено в Антологию XXI и одобрено редакцией."
     >
       Автор
     </div>
