@@ -37,7 +37,46 @@
 
 <div id="headerContainer"></div>
 
+<!-- ========================================
+     ЛЕВАЯ ПАНЕЛЬ REVIEW
 
+     Она существует независимо от header.html
+     и поэтому не может сломать header.
+======================================== -->
+
+<button
+  id="openReviewButton"
+  class="open-review-button"
+  type="button"
+>
+  Разбор
+</button>
+
+<div
+  id="reviewOverlay"
+  class="review-overlay"
+></div>
+
+<aside
+  id="reviewPanel"
+  class="review-side-panel"
+>
+
+  <button
+    id="closeReviewButton"
+    class="review-close-button"
+    type="button"
+    aria-label="Закрыть разбор"
+  >
+    ×
+  </button>
+
+  <div id="reviewContainer">
+    Загрузка...
+  </div>
+
+</aside>
+  
 <!-- ========================================
      ОСНОВНОЙ КОНТЕЙНЕР
 ======================================== -->
@@ -430,27 +469,6 @@ async function loadHeader() {
     headerContainer.innerHTML =
       await response.text();
 
-    /*
-========================================
-ЗАГРУЗКА REVIEW.HTML
-========================================
-*/
-
-const reviewContainer =
-  document.getElementById("reviewContainer");
-
-const reviewResponse =
-  await fetch("../../review.html");
-
-if (!reviewResponse.ok) {
-  throw new Error(
-    "Ошибка загрузки review.html: HTTP "
-    + reviewResponse.status
-  );
-}
-
-reviewContainer.innerHTML =
-  await reviewResponse.text();
 
     /*
     Пути для страницы стиха.
@@ -584,13 +602,267 @@ loadHeader();
 
 </script>
 
+ <!-- ========================================
+     ЗАГРУЗКА REVIEW.HTML
+
+     Текущий файл:
+     docs/21/poems/poem1.html
+
+     Review:
+     docs/review.html
+
+     Поэтому путь:
+     ../../review.html
+======================================== -->
+
+<script>
+
+async function loadReview() {
+
+  const reviewContainer =
+    document.getElementById(
+      "reviewContainer"
+    );
+
+  try {
+
+    const response =
+      await fetch(
+        "../../review.html"
+      );
+
+    if (!response.ok) {
+
+      throw new Error(
+        "HTTP "
+        + response.status
+      );
+
+    }
+
+    reviewContainer.innerHTML =
+      await response.text();
+
+/*
+========================================
+ЗАГРУЗКА РАЗБОРА ДЛЯ ТЕКУЩЕГО СТИХА
+
+poem1.html  → review1.html
+poem2.html  → review2.html
+...
+========================================
+*/
+
+const aiReviewContainer =
+  document.getElementById(
+    "aiReviewContent"
+  );
+
+if (aiReviewContainer) {
+
+  const aiResponse =
+    await fetch(
+      "../reviews/review"
+      + poemNumber
+      + ".html"
+    );
+
+  if (aiResponse.ok) {
+
+    aiReviewContainer.innerHTML =
+      await aiResponse.text();
+
+  } else {
+
+    aiReviewContainer.innerHTML =
+      "Разбор пока отсутствует.";
+
+  }
+
+}
+    
+    initializeReviewTabs();
+
+  } catch (error) {
+
+    console.error(
+      "Ошибка загрузки review.html:",
+      error
+    );
+
+    reviewContainer.textContent =
+      "Не удалось загрузить разбор.";
+
+  }
+
+}
+
+
+/*
+========================================
+ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК REVIEW
+========================================
+*/
+
+function initializeReviewTabs() {
+
+  const tabs =
+    document.querySelectorAll(
+      "#reviewPanel [data-review-tab]"
+    );
+
+  const sections =
+    document.querySelectorAll(
+      "#reviewPanel [data-review-section]"
+    );
+
+  tabs.forEach(
+    function (tab) {
+
+      tab.addEventListener(
+        "click",
+        function () {
+
+          const selectedName =
+            tab.dataset.reviewTab;
+
+          tabs.forEach(
+            function (item) {
+
+              const isActive =
+                item === tab;
+
+              item.classList.toggle(
+                "active",
+                isActive
+              );
+
+              item.setAttribute(
+                "aria-selected",
+                String(isActive)
+              );
+
+            }
+          );
+
+          sections.forEach(
+            function (section) {
+
+              section.classList.toggle(
+                "active",
+                section.dataset.reviewSection
+                  === selectedName
+              );
+
+            }
+          );
+
+        }
+      );
+
+    }
+  );
+
+}
+
+
+/*
+========================================
+ОТКРЫТИЕ И ЗАКРЫТИЕ ЛЕВОЙ ПАНЕЛИ
+========================================
+*/
+
+const reviewPanel =
+  document.getElementById(
+    "reviewPanel"
+  );
+
+const reviewOverlay =
+  document.getElementById(
+    "reviewOverlay"
+  );
+
+const openReviewButton =
+  document.getElementById(
+    "openReviewButton"
+  );
+
+const closeReviewButton =
+  document.getElementById(
+    "closeReviewButton"
+  );
+
+
+function openReviewPanel() {
+
+  reviewPanel.classList.add(
+    "open"
+  );
+
+  reviewOverlay.classList.add(
+    "open"
+  );
+
+}
+
+
+function closeReviewPanel() {
+
+  reviewPanel.classList.remove(
+    "open"
+  );
+
+  reviewOverlay.classList.remove(
+    "open"
+  );
+
+}
+
+
+openReviewButton.addEventListener(
+  "click",
+  openReviewPanel
+);
+
+closeReviewButton.addEventListener(
+  "click",
+  closeReviewPanel
+);
+
+reviewOverlay.addEventListener(
+  "click",
+  closeReviewPanel
+);
+
+document.addEventListener(
+  "keydown",
+  function (event) {
+
+    if (event.key === "Escape") {
+      closeReviewPanel();
+    }
+
+  }
+);
+
+
+/*
+Review загружается самостоятельно.
+
+Даже если review.html не загрузится,
+header.html продолжит работать.
+*/
+
+loadReview();
+
+</script> 
 
 <!-- ========================================
      SERVICE CONSOLE
 ======================================== -->
 
 <div id="service-console">
-  header fetch handmade | v1.8.0
+  header & review отдельными модулями | v1.9.0
 </div>
 
 <div
