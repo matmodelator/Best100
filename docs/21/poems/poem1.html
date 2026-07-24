@@ -491,39 +491,275 @@ async function loadHeader() {
 
 
     /*
-    Меню пользователя.
+========================================
+БОКОВЫЕ ПАНЕЛИ
+========================================
+*/
+
+const reviewPanel =
+  document.getElementById(
+    "reviewPanel"
+  );
+
+const userPanel =
+  document.getElementById(
+    "userPanel"
+  );
+
+const panelOverlay =
+  document.getElementById(
+    "panelOverlay"
+  );
+
+const openReviewPanelButton =
+  document.getElementById(
+    "openReviewPanelButton"
+  );
+
+const closeReviewPanelButton =
+  document.getElementById(
+    "closeReviewPanelButton"
+  );
+
+const openUserPanelButton =
+  document.getElementById(
+    "openUserPanelButton"
+  );
+
+const closeUserPanelButton =
+  document.getElementById(
+    "closeUserPanelButton"
+  );
+
+
+/*
+========================================
+ЗАКРЫТИЕ ОБЕИХ ПАНЕЛЕЙ
+========================================
+*/
+
+function closeAllSidePanels() {
+
+  reviewPanel.classList.remove(
+    "open"
+  );
+
+  userPanel.classList.remove(
+    "open"
+  );
+
+  panelOverlay.classList.remove(
+    "open"
+  );
+
+}
+
+
+/*
+========================================
+ОТКРЫТИЕ ЛЕВОЙ ПАНЕЛИ
+========================================
+*/
+
+openReviewPanelButton.addEventListener(
+  "click",
+  function () {
+
+    /*
+    Правая панель закрывается,
+    если она была открыта.
     */
 
-    const userPanel =
-      document.getElementById("userPanel");
+    userPanel.classList.remove(
+      "open"
+    );
 
-    document
-      .getElementById("openUserPanelButton")
-      .addEventListener(
-        "click",
-        function () {
-          userPanel.classList.add("open");
-        }
-      );
+    reviewPanel.classList.add(
+      "open"
+    );
 
-    document
-      .getElementById("closeUserPanelButton")
-      .addEventListener(
-        "click",
-        function () {
-          userPanel.classList.remove("open");
-        }
-      );
+    panelOverlay.classList.add(
+      "open"
+    );
 
-    document
-      .getElementById("headerAuthButton")
-      .addEventListener(
-        "click",
-        function () {
-          window.location.href =
-            "../../sign.html";
-        }
-      );
+  }
+);
+
+
+/*
+========================================
+ЗАКРЫТИЕ ЛЕВОЙ ПАНЕЛИ
+========================================
+*/
+
+closeReviewPanelButton.addEventListener(
+  "click",
+  closeAllSidePanels
+);
+
+
+/*
+========================================
+ОТКРЫТИЕ ПРАВОЙ ПАНЕЛИ
+========================================
+*/
+
+openUserPanelButton.addEventListener(
+  "click",
+  function () {
+
+    /*
+    Левая панель закрывается,
+    если она была открыта.
+    */
+
+    reviewPanel.classList.remove(
+      "open"
+    );
+
+    userPanel.classList.add(
+      "open"
+    );
+
+    panelOverlay.classList.add(
+      "open"
+    );
+
+  }
+);
+
+
+/*
+========================================
+ЗАКРЫТИЕ ПРАВОЙ ПАНЕЛИ
+========================================
+*/
+
+closeUserPanelButton.addEventListener(
+  "click",
+  closeAllSidePanels
+);
+
+
+/*
+========================================
+ЗАКРЫТИЕ ПО ЗАТЕМНЕНИЮ
+========================================
+*/
+
+panelOverlay.addEventListener(
+  "click",
+  closeAllSidePanels
+);
+
+
+/*
+========================================
+ЗАКРЫТИЕ ПО ESCAPE
+========================================
+*/
+
+document.addEventListener(
+  "keydown",
+  function (event) {
+
+    if (event.key === "Escape") {
+      closeAllSidePanels();
+    }
+
+  }
+);
+
+
+/*
+========================================
+ВХОД / РЕГИСТРАЦИЯ
+========================================
+*/
+
+document
+  .getElementById(
+    "headerAuthButton"
+  )
+  .addEventListener(
+    "click",
+    function () {
+
+      window.location.href =
+        "../../sign.html";
+
+    }
+  );
+
+
+/*
+========================================
+ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ЛЕВОЙ ПАНЕЛИ
+========================================
+*/
+
+const reviewTabButtons =
+  document.querySelectorAll(
+    "#reviewPanel [data-review-tab]"
+  );
+
+const aiReviewSection =
+  document.getElementById(
+    "aiReviewSection"
+  );
+
+const commentsSection =
+  document.getElementById(
+    "commentsSection"
+  );
+
+
+reviewTabButtons.forEach(
+  function (tabButton) {
+
+    tabButton.addEventListener(
+      "click",
+      function () {
+
+        const selectedTab =
+          tabButton.dataset.reviewTab;
+
+
+        /*
+        Активная кнопка.
+        */
+
+        reviewTabButtons.forEach(
+          function (button) {
+
+            button.classList.toggle(
+              "active",
+              button === tabButton
+            );
+
+          }
+        );
+
+
+        /*
+        Активный раздел.
+        */
+
+        aiReviewSection.classList.toggle(
+          "active",
+          selectedTab === "ai"
+        );
+
+        commentsSection.classList.toggle(
+          "active",
+          selectedTab === "comments"
+        );
+
+      }
+    );
+
+  }
+);
 
 
     /*
@@ -862,7 +1098,7 @@ loadReview();
 ======================================== -->
 
 <div id="service-console">
-  header & review отдельными модулями | v1.9.0
+  БОКОВЫЕ ПАНЕЛИ | v1.10.0
 </div>
 
 <div
