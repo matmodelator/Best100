@@ -1,0 +1,1584 @@
+
+
+<style>
+
+/*
+========================================
+GPT  ПАНЕЛЬ РАЗБОРА И ОБСУЖДЕНИЯ | v1.0.0
+
+Этот файл загружается внутрь левой
+выезжающей панели reviewPanel.
+
+Предполагаемое расположение:
+
+docs/review.html
+========================================
+*/
+
+
+/*
+========================================
+ОБЩИЙ КОНТЕЙНЕР
+========================================
+*/
+
+.review-component {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  min-height: 100%;
+
+  color: #1f1f1f;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+}
+
+
+/*
+========================================
+ЗАГОЛОВОК ПАНЕЛИ
+========================================
+*/
+
+.review-component-title {
+  margin: 0 0 14px;
+
+  color: #1f2933;
+
+  font-size: 22px;
+  line-height: 1.1;
+}
+
+
+/*
+========================================
+ПЕРЕКЛЮЧАТЕЛИ РАЗДЕЛОВ
+
+На широком экране — три колонки.
+Получается сетка 3 × 2.
+========================================
+*/
+
+.review-tabs {
+  display: grid;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 6px;
+
+  margin-bottom: 16px;
+}
+
+.review-tab {
+  min-width: 0;
+
+  padding: 9px 5px;
+
+  background: #f4efe7;
+  color: #1f2933;
+
+  border: 1px solid #d6d0c7;
+  border-radius: 7px;
+
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.review-tab:hover {
+  background: #ebe3d8;
+}
+
+.review-tab.active {
+  background: #7c2d12;
+  color: white;
+
+  border-color: #7c2d12;
+}
+
+
+/*
+========================================
+СОДЕРЖИМОЕ РАЗДЕЛОВ
+
+По умолчанию все разделы скрыты.
+Активный раздел получает класс active.
+========================================
+*/
+
+.review-section {
+  display: none;
+}
+
+.review-section.active {
+  display: block;
+}
+
+.review-section-title {
+  margin: 0 0 12px;
+
+  color: #7c2d12;
+
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.review-section-description {
+  margin: -5px 0 14px;
+
+  color: #6b7280;
+
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+
+/*
+========================================
+ОБЩИЕ КАРТОЧКИ
+========================================
+*/
+
+.review-card {
+  margin-bottom: 10px;
+  padding: 12px;
+
+  background: #f8f5ef;
+
+  border: 1px solid #e3ddd4;
+  border-radius: 8px;
+}
+
+.review-card:last-child {
+  margin-bottom: 0;
+}
+
+
+/*
+========================================
+РАЗБОР ИИ
+========================================
+*/
+
+.ai-review-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.ai-review-item {
+  padding-bottom: 10px;
+
+  border-bottom: 1px solid #e5e0d8;
+}
+
+.ai-review-item:last-child {
+  padding-bottom: 0;
+
+  border-bottom: none;
+}
+
+.ai-review-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin-bottom: 5px;
+}
+
+.ai-review-name {
+  font-weight: bold;
+}
+
+.ai-review-score {
+  flex: 0 0 auto;
+
+  color: #7c2d12;
+
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.ai-review-comment {
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.ai-review-total {
+  margin-top: 14px;
+  padding: 13px;
+
+  background: #7c2d12;
+  color: white;
+
+  border-radius: 8px;
+}
+
+.ai-review-total .ai-review-head {
+  margin: 0;
+}
+
+.ai-review-total .ai-review-score {
+  color: white;
+
+  font-size: 18px;
+}
+
+
+/*
+========================================
+КРИТИКА
+========================================
+*/
+
+.criticism-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.criticism-title {
+  margin: 0 0 4px;
+
+  color: #1f2933;
+
+  font-size: 16px;
+}
+
+.criticism-meta {
+  margin-bottom: 8px;
+
+  color: #777;
+
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+}
+
+.criticism-text {
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.criticism-open {
+  display: inline-block;
+
+  margin-top: 9px;
+
+  color: #7c2d12;
+
+  border: none;
+  background: none;
+
+  padding: 0;
+
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+
+/*
+========================================
+ЭКСПЕРТНЫЕ МНЕНИЯ
+========================================
+*/
+
+.expert-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.expert-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin-bottom: 7px;
+}
+
+.expert-name {
+  color: #7c2d12;
+
+  font-weight: bold;
+}
+
+.expert-score {
+  flex: 0 0 auto;
+
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+}
+
+.expert-verdict {
+  margin-bottom: 7px;
+
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.expert-verdict.yes {
+  color: #166534;
+}
+
+.expert-verdict.no {
+  color: #991b1b;
+}
+
+.expert-text {
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+
+/*
+========================================
+КОММЕНТАРИИ
+========================================
+*/
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.comment-item {
+  padding: 11px;
+
+  background: #f4efe7;
+
+  border-radius: 8px;
+}
+
+.comment-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin-bottom: 5px;
+}
+
+.comment-author {
+  color: #7c2d12;
+
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.comment-date {
+  color: #777;
+
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+}
+
+.comment-text {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.comments-empty {
+  padding: 16px;
+
+  background: #f4efe7;
+  color: #6b7280;
+
+  border-radius: 8px;
+
+  text-align: center;
+
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+}
+
+
+/*
+========================================
+ФОРМА ДОБАВЛЕНИЯ КОММЕНТАРИЯ
+========================================
+*/
+
+.comment-form {
+  margin-top: 14px;
+}
+
+.comment-form textarea {
+  display: block;
+
+  width: 100%;
+  min-height: 90px;
+
+  padding: 10px;
+
+  resize: vertical;
+
+  background: white;
+
+  border: 1px solid #c7c7c7;
+  border-radius: 8px;
+
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+.comment-submit {
+  width: 100%;
+
+  margin-top: 8px;
+  padding: 11px;
+
+  background: #7c2d12;
+  color: white;
+
+  border: none;
+  border-radius: 8px;
+
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.comment-submit:hover {
+  filter: brightness(1.12);
+}
+
+
+/*
+========================================
+СПРАВКА О СТИХОТВОРЕНИИ
+========================================
+*/
+
+.reference-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 1px;
+
+  overflow: hidden;
+
+  border: 1px solid #e3ddd4;
+  border-radius: 8px;
+}
+
+.reference-row {
+  display: grid;
+  grid-template-columns: 42% 58%;
+
+  background: #f8f5ef;
+}
+
+.reference-row:nth-child(even) {
+  background: #f1ece4;
+}
+
+.reference-label,
+.reference-value {
+  padding: 8px 9px;
+}
+
+.reference-label {
+  color: #5b4638;
+
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.reference-value {
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.reference-tags {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 5px;
+}
+
+.reference-tag {
+  padding: 3px 7px;
+
+  background: #e4d8ca;
+  color: #5b4638;
+
+  border-radius: 12px;
+
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+}
+
+
+/*
+========================================
+СТАТИСТИКА
+========================================
+*/
+
+.statistics-group {
+  margin-bottom: 16px;
+}
+
+.statistics-group:last-child {
+  margin-bottom: 0;
+}
+
+.statistics-title {
+  margin: 0 0 8px;
+
+  color: #5b4638;
+
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.statistics-list {
+  overflow: hidden;
+
+  border: 1px solid #e3ddd4;
+  border-radius: 8px;
+}
+
+.statistics-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  padding: 8px 10px;
+
+  background: #f8f5ef;
+
+  border-bottom: 1px solid #e8e2d9;
+}
+
+.statistics-row:last-child {
+  border-bottom: none;
+}
+
+.statistics-label {
+  font-size: 13px;
+}
+
+.statistics-value {
+  flex: 0 0 auto;
+
+  color: #7c2d12;
+
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+
+/*
+========================================
+ПОЛОСА РЕЗУЛЬТАТОВ ГОЛОСОВАНИЯ
+========================================
+*/
+
+.vote-stat {
+  margin-bottom: 10px;
+}
+
+.vote-stat:last-child {
+  margin-bottom: 0;
+}
+
+.vote-stat-head {
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 4px;
+
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+}
+
+.vote-stat-track {
+  height: 9px;
+
+  overflow: hidden;
+
+  background: #e5e7eb;
+
+  border-radius: 10px;
+}
+
+.vote-stat-bar {
+  height: 100%;
+
+  border-radius: 10px;
+}
+
+.vote-stat-bar.yes {
+  width: 0%;
+
+  background: #166534;
+}
+
+.vote-stat-bar.no {
+  width: 0%;
+
+  background: #991b1b;
+}
+
+
+/*
+========================================
+МОБИЛЬНАЯ ВЕРСИЯ
+========================================
+*/
+
+@media (max-width: 600px) {
+
+  /*
+  На узком экране вкладки становятся
+  сеткой 2 × 3.
+  */
+
+  .review-tabs {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .review-tab {
+    font-size: 11px;
+  }
+
+  .reference-row {
+    grid-template-columns: 40% 60%;
+  }
+
+}
+
+</style>
+
+
+<!-- ========================================
+     КОМПОНЕНТ РАЗБОРА И ОБСУЖДЕНИЯ
+======================================== -->
+
+<div
+  id="reviewComponent"
+  class="review-component"
+>
+
+  <h2 class="review-component-title">
+    Разбор и обсуждение
+  </h2>
+
+
+  <!-- ======================================
+       ШЕСТЬ ПЕРЕКЛЮЧАТЕЛЕЙ
+  ======================================= -->
+
+  <div
+    class="review-tabs"
+    role="tablist"
+    aria-label="Разделы разбора"
+  >
+
+    <button
+      class="review-tab active"
+      type="button"
+      role="tab"
+      data-review-tab="ai"
+      aria-selected="true"
+    >
+      Разбор ИИ
+    </button>
+
+    <button
+      class="review-tab"
+      type="button"
+      role="tab"
+      data-review-tab="criticism"
+      aria-selected="false"
+    >
+      Критика
+    </button>
+
+    <button
+      class="review-tab"
+      type="button"
+      role="tab"
+      data-review-tab="experts"
+      aria-selected="false"
+    >
+      Эксперты
+    </button>
+
+    <button
+      class="review-tab"
+      type="button"
+      role="tab"
+      data-review-tab="comments"
+      aria-selected="false"
+    >
+      Комментарии
+    </button>
+
+    <button
+      class="review-tab"
+      type="button"
+      role="tab"
+      data-review-tab="reference"
+      aria-selected="false"
+    >
+      Справка
+    </button>
+
+    <button
+      class="review-tab"
+      type="button"
+      role="tab"
+      data-review-tab="statistics"
+      aria-selected="false"
+    >
+      Статистика
+    </button>
+
+  </div>
+
+
+  <!-- ======================================
+       РАЗБОР ИИ
+
+       Содержимое этого раздела можно
+       позднее загружать из отдельного файла:
+
+       docs/21/reviews/review1.html
+       docs/21/reviews/review2.html
+       ...
+  ======================================= -->
+
+  <section
+    class="review-section active"
+    data-review-section="ai"
+  >
+
+    <h3 class="review-section-title">
+      Разбор ИИ
+    </h3>
+
+    <div class="review-section-description">
+      Анализ стихотворения по основным поэтическим критериям.
+    </div>
+
+
+    <div
+      id="aiReviewContent"
+      class="review-card"
+    >
+
+      <div class="ai-review-list">
+
+        <div class="ai-review-item">
+
+          <div class="ai-review-head">
+
+            <span class="ai-review-name">
+              Образность
+            </span>
+
+            <span class="ai-review-score">
+              —
+            </span>
+
+          </div>
+
+          <div class="ai-review-comment">
+            Разбор пока не добавлен.
+          </div>
+
+        </div>
+
+
+        <div class="ai-review-item">
+
+          <div class="ai-review-head">
+
+            <span class="ai-review-name">
+              Ритм и музыкальность
+            </span>
+
+            <span class="ai-review-score">
+              —
+            </span>
+
+          </div>
+
+          <div class="ai-review-comment">
+            —
+          </div>
+
+        </div>
+
+
+        <div class="ai-review-item">
+
+          <div class="ai-review-head">
+
+            <span class="ai-review-name">
+              Язык и лексика
+            </span>
+
+            <span class="ai-review-score">
+              —
+            </span>
+
+          </div>
+
+          <div class="ai-review-comment">
+            —
+          </div>
+
+        </div>
+
+
+        <div class="ai-review-item">
+
+          <div class="ai-review-head">
+
+            <span class="ai-review-name">
+              Композиция
+            </span>
+
+            <span class="ai-review-score">
+              —
+            </span>
+
+          </div>
+
+          <div class="ai-review-comment">
+            —
+          </div>
+
+        </div>
+
+
+        <div class="ai-review-item">
+
+          <div class="ai-review-head">
+
+            <span class="ai-review-name">
+              Размер и рифма
+            </span>
+
+            <span class="ai-review-score">
+              —
+            </span>
+
+          </div>
+
+          <div class="ai-review-comment">
+            —
+          </div>
+
+        </div>
+
+
+        <div class="ai-review-item">
+
+          <div class="ai-review-head">
+
+            <span class="ai-review-name">
+              Эмоциональное воздействие
+            </span>
+
+            <span class="ai-review-score">
+              —
+            </span>
+
+          </div>
+
+          <div class="ai-review-comment">
+            —
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="ai-review-total">
+
+        <div class="ai-review-head">
+
+          <span class="ai-review-name">
+            Общая оценка
+          </span>
+
+          <span class="ai-review-score">
+            —
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ======================================
+       КРИТИКА
+
+       Здесь находятся полноценные
+       авторские рецензии критиков.
+  ======================================= -->
+
+  <section
+    class="review-section"
+    data-review-section="criticism"
+  >
+
+    <h3 class="review-section-title">
+      Критика
+    </h3>
+
+    <div class="review-section-description">
+      Развёрнутые рецензии зарегистрированных критиков.
+    </div>
+
+
+    <div
+      id="criticismList"
+      class="criticism-list"
+    >
+
+      <div class="comments-empty">
+        Критических рецензий пока нет.
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ======================================
+       ЭКСПЕРТНЫЕ МНЕНИЯ
+
+       Эксперт может оставить оценку,
+       краткое заключение и решение:
+       входит / не входит в Антологию XXI.
+  ======================================= -->
+
+  <section
+    class="review-section"
+    data-review-section="experts"
+  >
+
+    <h3 class="review-section-title">
+      Экспертные мнения
+    </h3>
+
+    <div class="review-section-description">
+      Оценки и заключения пользователей со статусом «Эксперт».
+    </div>
+
+
+    <div
+      id="expertList"
+      class="expert-list"
+    >
+
+      <div class="comments-empty">
+        Экспертных мнений пока нет.
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ======================================
+       КОММЕНТАРИИ ЧИТАТЕЛЕЙ
+  ======================================= -->
+
+  <section
+    class="review-section"
+    data-review-section="comments"
+  >
+
+    <h3 class="review-section-title">
+      Комментарии
+    </h3>
+
+    <div class="review-section-description">
+      Обсуждение стихотворения читателями проекта.
+    </div>
+
+
+    <div
+      id="commentsList"
+      class="comments-list"
+    >
+
+      <div class="comments-empty">
+        Комментариев пока нет.
+      </div>
+
+    </div>
+
+
+    <!--
+    На первом этапе форма может быть
+    отключена для незарегистрированных
+    пользователей через JavaScript.
+    -->
+
+    <form
+      id="commentForm"
+      class="comment-form"
+    >
+
+      <textarea
+        id="commentText"
+        maxlength="3000"
+        placeholder="Напишите комментарий..."
+      ></textarea>
+
+      <button
+        id="commentSubmitButton"
+        class="comment-submit"
+        type="submit"
+      >
+        Отправить комментарий
+      </button>
+
+    </form>
+
+  </section>
+
+
+  <!-- ======================================
+       СПРАВКА
+
+       Это статический паспорт произведения.
+       Значения можно подставлять из страницы
+       стихотворения или отдельного файла.
+  ======================================= -->
+
+  <section
+    class="review-section"
+    data-review-section="reference"
+  >
+
+    <h3 class="review-section-title">
+      Справка
+    </h3>
+
+    <div class="review-section-description">
+      Основные сведения о стихотворении и его публикации.
+    </div>
+
+
+    <div
+      id="referenceList"
+      class="reference-list"
+    >
+
+      <div class="reference-row">
+
+        <div class="reference-label">
+          Название
+        </div>
+
+        <div
+          id="referenceTitle"
+          class="reference-value"
+        >
+          —
+        </div>
+
+      </div>
+
+
+      <div class="reference-row">
+
+        <div class="reference-label">
+          Автор
+        </div>
+
+        <div
+          id="referenceAuthor"
+          class="reference-value"
+        >
+          —
+        </div>
+
+      </div>
+
+
+      <div class="reference-row">
+
+        <div class="reference-label">
+          Год
+        </div>
+
+        <div
+          id="referenceYear"
+          class="reference-value"
+        >
+          —
+        </div>
+
+      </div>
+
+
+      <div class="reference-row">
+
+        <div class="reference-label">
+          Первая публикация
+        </div>
+
+        <div
+          id="referenceFirstPublication"
+          class="reference-value"
+        >
+          —
+        </div>
+
+      </div>
+
+
+      <div class="reference-row">
+
+        <div class="reference-label">
+          Источник
+        </div>
+
+        <div
+          id="referenceSource"
+          class="reference-value"
+        >
+          —
+        </div>
+
+      </div>
+
+
+      <div class="reference-row">
+
+        <div class="reference-label">
+          Цикл
+        </div>
+
+        <div
+          id="referenceCycle"
+          class="reference-value"
+        >
+          —
+        </div>
+
+      </div>
+
+
+      <div class="reference-row">
+
+        <div class="reference-label">
+          Жанр
+        </div>
+
+        <div
+          id="referenceGenre"
+          class="reference-value"
+        >
+          —
+        </div>
+
+      </div>
+
+
+      <div class="reference-row">
+
+        <div class="reference-label">
+          Размер
+        </div>
+
+        <div
+          id="referenceMeter"
+          class="reference-value"
+        >
+          —
+        </div>
+
+      </div>
+
+
+      <div class="reference-row">
+
+        <div class="reference-label">
+          Рифмовка
+        </div>
+
+        <div
+          id="referenceRhyme"
+          class="reference-value"
+        >
+          —
+        </div>
+
+      </div>
+
+
+      <div class="reference-row">
+
+        <div class="reference-label">
+          Строфы
+        </div>
+
+        <div
+          id="referenceStanzas"
+          class="reference-value"
+        >
+          —
+        </div>
+
+      </div>
+
+
+      <div class="reference-row">
+
+        <div class="reference-label">
+          Строки
+        </div>
+
+        <div
+          id="referenceLines"
+          class="reference-value"
+        >
+          —
+        </div>
+
+      </div>
+
+
+      <div class="reference-row">
+
+        <div class="reference-label">
+          Темы
+        </div>
+
+        <div
+          id="referenceThemes"
+          class="reference-value"
+        >
+          —
+        </div>
+
+      </div>
+
+
+      <div class="reference-row">
+
+        <div class="reference-label">
+          Теги
+        </div>
+
+        <div
+          id="referenceTags"
+          class="reference-value reference-tags"
+        >
+          —
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ======================================
+       СТАТИСТИКА
+
+       Эти значения должны загружаться
+       из Supabase или другого хранилища.
+  ======================================= -->
+
+  <section
+    class="review-section"
+    data-review-section="statistics"
+  >
+
+    <h3 class="review-section-title">
+      Статистика
+    </h3>
+
+    <div class="review-section-description">
+      Голосование, просмотры и активность читателей.
+    </div>
+
+
+    <!-- Голосование -->
+
+    <div class="statistics-group">
+
+      <h4 class="statistics-title">
+        Голосование
+      </h4>
+
+
+      <div class="review-card">
+
+        <div class="vote-stat">
+
+          <div class="vote-stat-head">
+
+            <span>
+              Да
+            </span>
+
+            <strong id="voteYesPercent">
+              0%
+            </strong>
+
+          </div>
+
+          <div class="vote-stat-track">
+
+            <div
+              id="voteYesBar"
+              class="vote-stat-bar yes"
+            ></div>
+
+          </div>
+
+        </div>
+
+
+        <div class="vote-stat">
+
+          <div class="vote-stat-head">
+
+            <span>
+              Нет
+            </span>
+
+            <strong id="voteNoPercent">
+              0%
+            </strong>
+
+          </div>
+
+          <div class="vote-stat-track">
+
+            <div
+              id="voteNoBar"
+              class="vote-stat-bar no"
+            ></div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="statistics-list">
+
+        <div class="statistics-row">
+
+          <span class="statistics-label">
+            Всего голосов
+          </span>
+
+          <span
+            id="votesTotal"
+            class="statistics-value"
+          >
+            0
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Экспертные оценки -->
+
+    <div class="statistics-group">
+
+      <h4 class="statistics-title">
+        Эксперты
+      </h4>
+
+      <div class="statistics-list">
+
+        <div class="statistics-row">
+
+          <span class="statistics-label">
+            Экспертных оценок
+          </span>
+
+          <span
+            id="expertRatingsTotal"
+            class="statistics-value"
+          >
+            0
+          </span>
+
+        </div>
+
+        <div class="statistics-row">
+
+          <span class="statistics-label">
+            Средняя оценка
+          </span>
+
+          <span
+            id="expertAverageScore"
+            class="statistics-value"
+          >
+            —
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Критика и комментарии -->
+
+    <div class="statistics-group">
+
+      <h4 class="statistics-title">
+        Обсуждение
+      </h4>
+
+      <div class="statistics-list">
+
+        <div class="statistics-row">
+
+          <span class="statistics-label">
+            Критических рецензий
+          </span>
+
+          <span
+            id="criticismTotal"
+            class="statistics-value"
+          >
+            0
+          </span>
+
+        </div>
+
+        <div class="statistics-row">
+
+          <span class="statistics-label">
+            Комментариев
+          </span>
+
+          <span
+            id="commentsTotal"
+            class="statistics-value"
+          >
+            0
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Просмотры -->
+
+    <div class="statistics-group">
+
+      <h4 class="statistics-title">
+        Просмотры
+      </h4>
+
+      <div class="statistics-list">
+
+        <div class="statistics-row">
+
+          <span class="statistics-label">
+            Сегодня
+          </span>
+
+          <span
+            id="viewsToday"
+            class="statistics-value"
+          >
+            0
+          </span>
+
+        </div>
+
+        <div class="statistics-row">
+
+          <span class="statistics-label">
+            За неделю
+          </span>
+
+          <span
+            id="viewsWeek"
+            class="statistics-value"
+          >
+            0
+          </span>
+
+        </div>
+
+        <div class="statistics-row">
+
+          <span class="statistics-label">
+            Всего
+          </span>
+
+          <span
+            id="viewsTotal"
+            class="statistics-value"
+          >
+            0
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</div>
