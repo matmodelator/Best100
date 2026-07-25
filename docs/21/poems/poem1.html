@@ -652,76 +652,6 @@ document
 
 
 /*
-========================================
-ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ЛЕВОЙ ПАНЕЛИ
-========================================
-*/
-
-const reviewTabButtons =
-  document.querySelectorAll(
-    "#reviewPanel [data-review-tab]"
-  );
-
-const aiReviewSection =
-  document.getElementById(
-    "aiReviewSection"
-  );
-
-const commentsSection =
-  document.getElementById(
-    "commentsSection"
-  );
-
-
-reviewTabButtons.forEach(
-  function (tabButton) {
-
-    tabButton.addEventListener(
-      "click",
-      function () {
-
-        const selectedTab =
-          tabButton.dataset.reviewTab;
-
-
-        /*
-        Активная кнопка.
-        */
-
-        reviewTabButtons.forEach(
-          function (button) {
-
-            button.classList.toggle(
-              "active",
-              button === tabButton
-            );
-
-          }
-        );
-
-
-        /*
-        Активный раздел.
-        */
-
-        aiReviewSection.classList.toggle(
-          "active",
-          selectedTab === "ai"
-        );
-
-        commentsSection.classList.toggle(
-          "active",
-          selectedTab === "comments"
-        );
-
-      }
-    );
-
-  }
-);
-
-
-    /*
     Компас на странице стихотворения.
 
     ← предыдущий стих
@@ -790,6 +720,9 @@ reviewTabButtons.forEach(
       "Не удалось загрузить верхнюю панель.";
 
   }
+
+
+    await loadReview();
 
 }
 
@@ -1000,7 +933,7 @@ function initializeReviewTabs() {
 ======================================== -->
 
 <div id="service-console">
-  чистка от дублей | v1.10.3
+  Пересобранный файл | v1.11.0
 </div>
 
 <div
