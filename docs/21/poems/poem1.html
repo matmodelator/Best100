@@ -880,6 +880,38 @@ async function loadReview() {
 
 /*
 ========================================
+ПЕРЕХОД К ФОРМЕ КОММЕНТАРИЯ
+
+Передаём номер текущего стихотворения:
+
+poem1.html → comment.html?poem=1
+poem2.html → comment.html?poem=2
+...
+========================================
+*/
+
+const openCommentPageButton =
+  document.getElementById(
+    "openCommentPageButton"
+  );
+
+if (openCommentPageButton) {
+
+  openCommentPageButton.addEventListener(
+    "click",
+    function () {
+
+      window.location.href =
+        "../../comment.html?poem="
+        + poemNumber;
+
+    }
+  );
+
+}
+    
+/*
+========================================
 ЗАГРУЗКА РАЗБОРА ДЛЯ ТЕКУЩЕГО СТИХА
 
 poem1.html  → review1.html
@@ -1097,7 +1129,7 @@ loadReview();
 ======================================== -->
 
 <div id="service-console">
-  fix switch to supabase | v1.10.1
+  comment is button in review | v1.10.2
 </div>
 
 <div
