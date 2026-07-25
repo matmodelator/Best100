@@ -244,62 +244,37 @@
     const status =
       document.getElementById("status");
 
-    /*
-    ========================================
-    ОПРЕДЕЛЕНИЕ НОМЕРА СТИХОТВОРЕНИЯ
+  /*
+========================================
+ОПРЕДЕЛЕНИЕ НОМЕРА СТИХОТВОРЕНИЯ
 
-    При переходе:
+Номер передаётся в параметре:
 
-    poem1.html → comment.html
-    poem2.html → comment.html
-    ...
+comment.html?poem=
 
-    номер берётся из URL
-    ========================================
-    */
+Если параметр отсутствует,
+используется poemId = 0.
+========================================
+*/
 
-    const params =
+const params =
   new URLSearchParams(
     window.location.search
   );
-
-/*
-========================================
-НОМЕР СТИХОТВОРЕНИЯ
-
-Если параметр poem отсутствует,
-используем poemId = 0.
-========================================
-*/
 
 let poemId =
   Number(
     params.get("poem")
   );
 
-if (
-  !Number.isInteger(poemId) ||
-  poemId < 0
-) {
+if (!Number.isInteger(poemId) || poemId < 0) {
   poemId = 0;
 }
 
-/*
-Отображение номера.
-*/
-
 poemLabel.textContent =
   poemId === 0
-    ? "Стихотворение: не указано"
+    ? "Общий комментарий"
     : "Стихотворение №" + poemId;
-
-    if (Number.isInteger(poemId) && poemId > 0) {
-      poemLabel.textContent =
-        "Стихотворение №" + poemId;
-    } else {
-      poemLabel.textContent =
-        "Не удалось определить";
-    }
 
     /*
     ========================================
@@ -346,20 +321,6 @@ poemLabel.textContent =
 
         const commentText =
           commentTextInput.value.trim();
-
-        if (
-          !Number.isInteger(poemId) ||
-          poemId < 1
-        ) {
-          const message =
-            "Не удалось определить номер стихотворения. " +
-            "Откройте форму со страницы poem1.html.";
-
-          showStatus(message, "error");
-          alert(message);
-
-          return;
-        }
 
         if (!authorName) {
           showStatus(
@@ -508,7 +469,7 @@ poemLabel.textContent =
 ======================================== -->
 
 <div id="service-console">
-номер берётся из URL| v1.3.4
+fix poemId| v1.3.6
 </div>
 
 <div class="row" id="build-down">
