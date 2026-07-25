@@ -4,14 +4,7 @@
 
 /*
 ========================================
-GPT  ПАНЕЛЬ РАЗБОРА И ОБСУЖДЕНИЯ | v1.0.0
-
-Этот файл загружается внутрь левой
-выезжающей панели reviewPanel.
-
-Предполагаемое расположение:
-
-docs/review.html
+коммент отдельно | v1.0.1
 ========================================
 */
 
@@ -1052,33 +1045,20 @@ docs/review.html
 
     </div>
 
+<!-- ======================================
+     ДОБАВЛЕНИЕ КОММЕНТАРИЯ
 
-    <!--
-    На первом этапе форма может быть
-    отключена для незарегистрированных
-    пользователей через JavaScript.
-    -->
+     Открывает отдельную страницу
+     comment.html.
+====================================== -->
 
-    <form
-      id="commentForm"
-      class="comment-form"
-    >
-
-      <textarea
-        id="commentText"
-        maxlength="3000"
-        placeholder="Напишите комментарий..."
-      ></textarea>
-
-      <button
-        id="commentSubmitButton"
-        class="comment-submit"
-        type="submit"
-      >
-        Отправить комментарий
-      </button>
-
-    </form>
+<button
+  id="openCommentPageButton"
+  class="comment-submit"
+  type="button"
+>
+  Добавить комментарий
+</button>
 
   </section>
 
