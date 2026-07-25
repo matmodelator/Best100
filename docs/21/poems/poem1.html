@@ -36,47 +36,7 @@
 ======================================== -->
 
 <div id="headerContainer"></div>
-
-<!-- ========================================
-     ЛЕВАЯ ПАНЕЛЬ REVIEW
-
-     Она существует независимо от header.html
-     и поэтому не может сломать header.
-======================================== -->
-
-<button
-  id="openReviewButton"
-  class="open-review-button"
-  type="button"
->
-  Разбор
-</button>
-
-<div
-  id="reviewOverlay"
-  class="review-overlay"
-></div>
-
-<aside
-  id="reviewPanel"
-  class="review-side-panel"
->
-
-  <button
-    id="closeReviewButton"
-    class="review-close-button"
-    type="button"
-    aria-label="Закрыть разбор"
-  >
-    ×
-  </button>
-
-  <div id="reviewContainer">
-    Загрузка...
-  </div>
-
-</aside>
-  
+ 
 <!-- ========================================
      ОСНОВНОЙ КОНТЕЙНЕР
 ======================================== -->
@@ -1033,95 +993,6 @@ function initializeReviewTabs() {
 }
 
 
-/*
-========================================
-ОТКРЫТИЕ И ЗАКРЫТИЕ ЛЕВОЙ ПАНЕЛИ
-========================================
-*/
-
-const reviewPanel =
-  document.getElementById(
-    "reviewPanel"
-  );
-
-const reviewOverlay =
-  document.getElementById(
-    "reviewOverlay"
-  );
-
-const openReviewButton =
-  document.getElementById(
-    "openReviewButton"
-  );
-
-const closeReviewButton =
-  document.getElementById(
-    "closeReviewButton"
-  );
-
-
-function openReviewPanel() {
-
-  reviewPanel.classList.add(
-    "open"
-  );
-
-  reviewOverlay.classList.add(
-    "open"
-  );
-
-}
-
-
-function closeReviewPanel() {
-
-  reviewPanel.classList.remove(
-    "open"
-  );
-
-  reviewOverlay.classList.remove(
-    "open"
-  );
-
-}
-
-
-openReviewButton.addEventListener(
-  "click",
-  openReviewPanel
-);
-
-closeReviewButton.addEventListener(
-  "click",
-  closeReviewPanel
-);
-
-reviewOverlay.addEventListener(
-  "click",
-  closeReviewPanel
-);
-
-document.addEventListener(
-  "keydown",
-  function (event) {
-
-    if (event.key === "Escape") {
-      closeReviewPanel();
-    }
-
-  }
-);
-
-
-/*
-Review загружается самостоятельно.
-
-Даже если review.html не загрузится,
-header.html продолжит работать.
-*/
-
-loadReview();
-
 </script> 
 
 <!-- ========================================
@@ -1129,7 +1000,7 @@ loadReview();
 ======================================== -->
 
 <div id="service-console">
-  comment is button in review | v1.10.2
+  чистка от дублей | v1.10.3
 </div>
 
 <div
