@@ -2,7 +2,7 @@
 
 /*
 ========================================
-контейнер для загрузки review.html | v1.1.2
+чистка дублей | v1.2.2
 ========================================
 */
 
@@ -385,234 +385,6 @@
 
 /*
 ========================================
-ВКЛАДКИ ЛЕВОЙ ПАНЕЛИ
-========================================
-*/
-
-.review-tabs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-
-  gap: 8px;
-
-  margin-bottom: 16px;
-}
-
-.review-tab {
-  padding: 10px 8px;
-
-  background: #f4efe7;
-  color: #1f2933;
-
-  border: 1px solid #d6d0c7;
-  border-radius: 7px;
-
-  font-family: Arial, sans-serif;
-  font-size: 13px;
-  font-weight: bold;
-
-  cursor: pointer;
-}
-
-.review-tab:hover {
-  background: #ebe3d8;
-}
-
-.review-tab.active {
-  background: #7c2d12;
-  color: white;
-
-  border-color: #7c2d12;
-}
-
-
-/*
-========================================
-СОДЕРЖИМОЕ ЛЕВОЙ ПАНЕЛИ
-========================================
-*/
-
-.review-section {
-  display: none;
-}
-
-.review-section.active {
-  display: block;
-}
-
-.review-section-title {
-  margin: 0 0 12px;
-
-  color: #7c2d12;
-
-  font-size: 20px;
-}
-
-.review-text {
-  white-space: pre-wrap;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  font-size: 15px;
-  line-height: 1.5;
-}
-
-
-/*
-========================================
-ТАБЛИЦА ОЦЕНОК ИИ
-========================================
-*/
-
-.ai-score-list {
-  display: flex;
-  flex-direction: column;
-
-  gap: 10px;
-}
-
-.ai-score-item {
-  padding-bottom: 10px;
-
-  border-bottom: 1px solid #e5e0d8;
-}
-
-.ai-score-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  gap: 10px;
-
-  margin-bottom: 5px;
-}
-
-.ai-score-name {
-  font-weight: bold;
-}
-
-.ai-score-value {
-  flex: 0 0 auto;
-
-  color: #7c2d12;
-
-  font-family: Arial, sans-serif;
-  font-weight: bold;
-}
-
-.ai-score-comment {
-  font-size: 14px;
-  line-height: 1.4;
-}
-
-
-/*
-========================================
-КОММЕНТАРИИ
-========================================
-*/
-
-.comments-list {
-  display: flex;
-  flex-direction: column;
-
-  gap: 12px;
-}
-
-.comment-item {
-  padding: 12px;
-
-  background: #f4efe7;
-
-  border-radius: 8px;
-}
-
-.comment-author {
-  margin-bottom: 5px;
-
-  color: #7c2d12;
-
-  font-family: Arial, sans-serif;
-  font-size: 13px;
-  font-weight: bold;
-}
-
-.comment-text {
-  font-size: 14px;
-  line-height: 1.4;
-}
-
-.comments-empty {
-  padding: 16px;
-
-  background: #f4efe7;
-  color: #6b7280;
-
-  border-radius: 8px;
-
-  text-align: center;
-
-  font-family: Arial, sans-serif;
-  font-size: 13px;
-}
-
-
-/*
-========================================
-ФОРМА КОММЕНТАРИЯ
-========================================
-*/
-
-.comment-form {
-  margin-top: 16px;
-}
-
-.comment-form textarea {
-  display: block;
-
-  width: 100%;
-  min-height: 100px;
-
-  padding: 10px;
-
-  resize: vertical;
-
-  border: 1px solid #c7c7c7;
-  border-radius: 8px;
-
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-}
-
-.comment-submit {
-  width: 100%;
-
-  margin-top: 8px;
-  padding: 11px;
-
-  background: #7c2d12;
-  color: white;
-
-  border: none;
-  border-radius: 8px;
-
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  font-weight: bold;
-
-  cursor: pointer;
-}
-
-.comment-submit:hover {
-  filter: brightness(1.12);
-}
-
-
-/*
-========================================
 СТАТУСЫ ПОЛЬЗОВАТЕЛЯ
 ========================================
 */
@@ -847,11 +619,6 @@
 
 </style>
 
-<!-- ========================================
-     контейнер для загрузки review.html
-======================================== -->
-
-<div id="reviewContainer"></div>
 
 <!-- ========================================
      ВЕРХНЯЯ ПАНЕЛЬ
@@ -988,11 +755,10 @@
   class="panel-overlay"
 ></div>
 
-
 <!-- ========================================
      ЛЕВАЯ ПАНЕЛЬ
 
-     РАЗБОР ОТ ИИ И КОММЕНТАРИИ
+     Содержимое загружается из review.html
 ======================================== -->
 
 <aside
@@ -1003,7 +769,7 @@
   <div class="panel-header">
 
     <h2>
-      Разбор и комментарии
+      Разбор и обсуждение
     </h2>
 
     <button
@@ -1017,216 +783,9 @@
 
   </div>
 
-
-  <!-- Переключатели -->
-
-  <div class="review-tabs">
-
-    <button
-      id="aiReviewTabButton"
-      class="review-tab active"
-      type="button"
-      data-review-tab="ai"
-    >
-      Обзор от ИИ
-    </button>
-
-    <button
-      id="commentsTabButton"
-      class="review-tab"
-      type="button"
-      data-review-tab="comments"
-    >
-      Комментарии
-    </button>
-
+  <div id="reviewContainer">
+    Загрузка...
   </div>
-
-
-  <!-- ======================================
-       ОБЗОР ОТ ИИ
-  ======================================= -->
-
-  <section
-    id="aiReviewSection"
-    class="review-section active"
-  >
-
-    <h3 class="review-section-title">
-      Обзор от ИИ
-    </h3>
-
-
-    <!--
-    В этот контейнер можно загрузить
-    отдельный обзор конкретного стиха.
-    -->
-
-    <div
-      id="aiReviewContent"
-      class="review-text"
-    >
-
-      <div class="ai-score-list">
-
-        <div class="ai-score-item">
-
-          <div class="ai-score-head">
-
-            <span class="ai-score-name">
-              Образность
-            </span>
-
-            <span class="ai-score-value">
-              —
-            </span>
-
-          </div>
-
-          <div class="ai-score-comment">
-            Обзор пока не добавлен.
-          </div>
-
-        </div>
-
-        <div class="ai-score-item">
-
-          <div class="ai-score-head">
-
-            <span class="ai-score-name">
-              Ритм и музыкальность
-            </span>
-
-            <span class="ai-score-value">
-              —
-            </span>
-
-          </div>
-
-        </div>
-
-        <div class="ai-score-item">
-
-          <div class="ai-score-head">
-
-            <span class="ai-score-name">
-              Язык и лексика
-            </span>
-
-            <span class="ai-score-value">
-              —
-            </span>
-
-          </div>
-
-        </div>
-
-        <div class="ai-score-item">
-
-          <div class="ai-score-head">
-
-            <span class="ai-score-name">
-              Композиция
-            </span>
-
-            <span class="ai-score-value">
-              —
-            </span>
-
-          </div>
-
-        </div>
-
-        <div class="ai-score-item">
-
-          <div class="ai-score-head">
-
-            <span class="ai-score-name">
-              Размер и рифма
-            </span>
-
-            <span class="ai-score-value">
-              —
-            </span>
-
-          </div>
-
-        </div>
-
-        <div class="ai-score-item">
-
-          <div class="ai-score-head">
-
-            <span class="ai-score-name">
-              Эмоциональное воздействие
-            </span>
-
-            <span class="ai-score-value">
-              —
-            </span>
-
-          </div>
-
-        </div>
-
-        <div class="ai-score-item">
-
-          <div class="ai-score-head">
-
-            <span class="ai-score-name">
-              Общая оценка
-            </span>
-
-            <span class="ai-score-value">
-              —
-            </span>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- ======================================
-       КОММЕНТАРИИ
-  ======================================= -->
-
-  <section
-    id="commentsSection"
-    class="review-section"
-  >
-
-    <h3 class="review-section-title">
-      Комментарии читателей
-    </h3>
-
-
-    <div
-      id="commentsList"
-      class="comments-list"
-    >
-
-      <div class="comments-empty">
-        Комментариев пока нет.
-      </div>
-
-    </div>
-
-
-   <button
-  id="openCommentPageButton"
-  class="comment-submit"
-  type="button"
->
-  Добавить комментарий
-</button>
-
-  </section>
 
 </aside>
 
