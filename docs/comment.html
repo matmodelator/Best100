@@ -155,9 +155,10 @@
 <body>
 
   <form
-    class="comment-form"
-    id="commentForm"
-  >
+  class="comment-form"
+  id="commentForm"
+  onsubmit="return false;"
+>
 
     <h1>Добавить комментарий</h1>
 
@@ -273,8 +274,8 @@ if (!Number.isInteger(poemId) || poemId < 0) {
 
 poemLabel.textContent =
   poemId === 0
-    ? "Общий комментарий"
-    : "Стихотворение №" + poemId;
+    ? "не указано"
+    : "№" + poemId;
 
     /*
     ========================================
@@ -469,7 +470,7 @@ poemLabel.textContent =
 ======================================== -->
 
 <div id="service-console">
-fix poemId| v1.3.6
+fix poemLabel & Get;| v1.3.7
 </div>
 
 <div class="row" id="build-down">
