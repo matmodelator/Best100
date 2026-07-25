@@ -842,6 +842,7 @@ if (aiReviewContainer) {
 }
     
     initializeReviewTabs();
+    await loadComments();
 
   } catch (error) {
 
@@ -857,7 +858,140 @@ if (aiReviewContainer) {
 
 }
 
+/*
+========================================
+ЗАГРУЗКА ОДОБРЕННЫХ КОММЕНТАРИЕВ
+========================================
+*/
 
+async function loadComments() {
+
+  const commentsList =
+    document.getElementById(
+      "commentsList"
+    );
+
+  if (!commentsList) {
+    return;
+  }
+
+  commentsList.innerHTML =
+    "Загрузка комментариев...";
+
+  try {
+
+    /*
+    Подключаем тот же Supabase-клиент,
+    который используется в comment.html.
+    */
+
+    const { supabase } =
+      await import(
+        "../../supabase-config.js"
+      );
+
+    const { data, error } =
+      await supabase
+        .from("top21_comments")
+        .select(
+          "author_name, comment_text, created_at"
+        )
+        .eq(
+          "poem_id",
+          poemNumber
+        )
+        .eq(
+          "is_approved",
+          true
+        )
+        .order(
+          "created_at",
+          { ascending: false }
+        );
+
+    if (error) {
+      throw error;
+    }
+
+    if (!data || data.length === 0) {
+
+      commentsList.innerHTML = `
+        <div class="comments-empty">
+          Комментариев пока нет.
+        </div>
+      `;
+
+      return;
+    }
+
+    commentsList.innerHTML =
+      data.map(function (comment) {
+
+        const date =
+          new Date(
+            comment.created_at
+          ).toLocaleDateString(
+            "ru-RU"
+          );
+
+        return `
+<div class="comment-item">
+
+  <div class="comment-head">
+
+    <div class="comment-author"></div>
+
+    <div class="comment-date">
+      ${date}
+    </div>
+
+  </div>
+
+  <div class="comment-text"></div>
+
+</div>
+`;
+
+      }).join("");
+
+    const commentItems =
+      commentsList.querySelectorAll(
+        ".comment-item"
+      );
+
+    commentItems.forEach(
+      function (commentItem, index) {
+
+        commentItem
+          .querySelector(".comment-author")
+          .textContent =
+            data[index].author_name;
+
+        commentItem
+          .querySelector(".comment-text")
+          .textContent =
+            data[index].comment_text;
+
+      }
+    );
+
+  } catch (error) {
+
+    console.error(
+      "Ошибка загрузки комментариев:",
+      error
+    );
+
+    commentsList.innerHTML = `
+      <div class="comments-empty">
+        Не удалось загрузить комментарии.
+      </div>
+    `;
+
+  }
+
+}
+  
 /*
 ========================================
 ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК REVIEW
@@ -933,7 +1067,7 @@ function initializeReviewTabs() {
 ======================================== -->
 
 <div id="service-console">
-  Пересобранный файл | v1.11.0
+  ЗАГРУЗКА ОДОБРЕННЫХ КОММЕНТАРИЕВ | v1.12.0
 </div>
 
 <div
