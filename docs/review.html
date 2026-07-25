@@ -4,7 +4,7 @@
 
 /*
 ========================================
-коммент отдельно | v1.0.1
+чистка комментов | v1.1.1
 ========================================
 */
 
@@ -410,32 +410,9 @@
 
 /*
 ========================================
-ФОРМА ДОБАВЛЕНИЯ КОММЕНТАРИЯ
+КНОПКА ДОБАВЛЕНИЯ КОММЕНТАРИЯ
 ========================================
 */
-
-.comment-form {
-  margin-top: 14px;
-}
-
-.comment-form textarea {
-  display: block;
-
-  width: 100%;
-  min-height: 90px;
-
-  padding: 10px;
-
-  resize: vertical;
-
-  background: white;
-
-  border: 1px solid #c7c7c7;
-  border-radius: 8px;
-
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-}
 
 .comment-submit {
   width: 100%;
@@ -1016,51 +993,43 @@
   </section>
 
 
-  <!-- ======================================
-       КОММЕНТАРИИ ЧИТАТЕЛЕЙ
-  ======================================= -->
-
-  <section
-    class="review-section"
-    data-review-section="comments"
-  >
-
-    <h3 class="review-section-title">
-      Комментарии
-    </h3>
-
-    <div class="review-section-description">
-      Обсуждение стихотворения читателями проекта.
-    </div>
-
-
-    <div
-      id="commentsList"
-      class="comments-list"
-    >
-
-      <div class="comments-empty">
-        Комментариев пока нет.
-      </div>
-
-    </div>
-
 <!-- ======================================
-     ДОБАВЛЕНИЕ КОММЕНТАРИЯ
-
-     Открывает отдельную страницу
-     comment.html.
+     КОММЕНТАРИИ ЧИТАТЕЛЕЙ
 ====================================== -->
 
-<button
-  id="openCommentPageButton"
-  class="comment-submit"
-  type="button"
+<section
+  class="review-section"
+  data-review-section="comments"
 >
-  Добавить комментарий
-</button>
 
-  </section>
+  <h3 class="review-section-title">
+    Комментарии
+  </h3>
+
+  <div class="review-section-description">
+    Обсуждение стихотворения читателями проекта.
+  </div>
+
+  <div
+    id="commentsList"
+    class="comments-list"
+  >
+
+    <div class="comments-empty">
+      Комментариев пока нет.
+    </div>
+
+  </div>
+
+  <button
+    id="openCommentPageButton"
+    class="comment-submit"
+    type="button"
+  >
+    Добавить комментарий
+  </button>
+
+</section>
 
 
   <!-- ======================================
