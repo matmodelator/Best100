@@ -254,20 +254,44 @@
     poem2.html → comment.html
     ...
 
-    номер берётся из document.referrer.
+    номер берётся из URL
     ========================================
     */
 
-    const referrer =
-      document.referrer || "";
+    const params =
+  new URLSearchParams(
+    window.location.search
+  );
 
-    const poemMatch =
-      referrer.match(/poem(\d+)\.html/i);
+/*
+========================================
+НОМЕР СТИХОТВОРЕНИЯ
 
-    const poemId =
-      poemMatch
-        ? Number(poemMatch[1])
-        : null;
+Если параметр poem отсутствует,
+используем poemId = 0.
+========================================
+*/
+
+let poemId =
+  Number(
+    params.get("poem")
+  );
+
+if (
+  !Number.isInteger(poemId) ||
+  poemId < 0
+) {
+  poemId = 0;
+}
+
+/*
+Отображение номера.
+*/
+
+poemLabel.textContent =
+  poemId === 0
+    ? "Стихотворение: не указано"
+    : "Стихотворение №" + poemId;
 
     if (Number.isInteger(poemId) && poemId > 0) {
       poemLabel.textContent =
@@ -484,7 +508,7 @@
 ======================================== -->
 
 <div id="service-console">
-fix supabase-config.js| v1.3.3
+номер берётся из URL| v1.3.4
 </div>
 
 <div class="row" id="build-down">
