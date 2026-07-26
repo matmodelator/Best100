@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1">
+
+<title>Проверка аккаунта</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f6f8;
+}
+
+header{
+    background:#2563eb;
+    color:#fff;
+    padding:16px;
+    text-align:center;
+}
+
+.container{
+    max-width:520px;
+    margin:60px auto;
+    background:#fff;
+    border-radius:10px;
+    padding:30px;
+    box-shadow:0 4px 12px rgba(0,0,0,.1);
+    text-align:center;
+}
+
+h2{
+    margin-top:0;
+}
+
+#status{
+    margin-top:25px;
+    font-size:16px;
+    line-height:1.6;
+}
+
+.spinner{
+    width:34px;
+    height:34px;
+    margin:25px auto;
+    border:4px solid #ddd;
+    border-top-color:#2563eb;
+    border-radius:50%;
+    animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>Рифмы века</h1>
+
+</header>
+
+<div class="container">
+
+<h2>Проверка аккаунта</h2>
+
+<div class="spinner"></div>
+
+<div id="status">
+
+Проверяем аккаунт...
+
+</div>
+
+</div>
+
+<script type="module">
+
+import { supabase }
+from "./supabase-config.js";
+
+const statusBox =
+document.getElementById("status");
+
+(async function(){
+
+const {
+
+data:{user},
+error:userError
+
+}=
+await supabase.auth.getUser();
+
+if(userError || !user){
+
+statusBox.textContent=
+"Пользователь не найден.";
+
+setTimeout(function(){
+
+location.href="sign.html";
+
+},1000);
+
+return;
+
+}
+
+statusBox.textContent=
+"Получение статуса...";
+
+const {
+
+data,
+error
+
+}=
+await supabase
+.from("top21_accounts")
+.select("status")
+.eq(
+"user_id",
+user.id
+)
+.single();
+
+if(error){
+
+statusBox.textContent=
+"Создание аккаунта...";
+
+const insert=
+await supabase
+.from("top21_accounts")
+.insert({
+
+user_id:user.id,
+
+status:"Читатель"
+
+});
+
+if(insert.error){
+
+statusBox.textContent=
+insert.error.message;
+
+return;
+
+}
+
+localStorage.setItem(
+"userStatus",
+"Читатель"
+);
+
+setTimeout(function(){
+
+location.href="index.html";
+
+},300);
+
+return;
+
+}
+
+localStorage.setItem(
+"userStatus",
+data.status
+);
+
+statusBox.textContent=
+"Статус: "
++ data.status;
+
+setTimeout(function(){
+
+location.href="index.html";
+
+},300);
+
+})();
+
+</script>
+
+<div id="service-console">
+GPT | v1.0.0
+</div>
+
+<div id="build-down">
+deploy: --
+</div>
+
+<script>
+(function(){
+
+const now=new Date();
+
+const pad=n=>String(n).padStart(2,"0");
+
+document.getElementById(
+"build-down"
+).textContent=
+
+"deploy: "
++pad(now.getDate())
++"."
++pad(now.getMonth()+1)
++"."
++now.getFullYear()
++" "
++pad(now.getHours())
++":"
++pad(now.getMinutes());
+
+})();
+</script>
+
+</body>
+</html>
