@@ -871,6 +871,8 @@ async function loadComments() {
       "commentsList"
     );
 
+console.log("commentsList =", commentsList);
+  
   if (!commentsList) {
     return;
   }
@@ -893,6 +895,10 @@ async function loadComments() {
     const { data, error } =
       await supabase
         .from("top21_comments")
+
+console.log("Supabase error:", error);
+console.log("Supabase data:", data);
+      
         .select(
           "author_name, comment_text, created_at"
         )
@@ -1067,7 +1073,7 @@ function initializeReviewTabs() {
 ======================================== -->
 
 <div id="service-console">
-  ЗАГРУЗКА ОДОБРЕННЫХ КОММЕНТАРИЕВ | v1.12.0
+  console.log | v1.12.1
 </div>
 
 <div
