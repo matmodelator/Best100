@@ -428,6 +428,8 @@ async function loadHeader() {
     headerContainer.innerHTML =
       await response.text();
 
+   renderUserStatus();
+   renderUserButton(); 
 
     /*
     Пути для страницы стиха.
@@ -678,16 +680,17 @@ document
         }
       );
 
-  document
-  .getElementById("compassCenter")
-  .addEventListener("click", function (event) {
+    document
+      .getElementById("compassCenter")
+      .addEventListener(
+        "click",
+        function () {
 
-    event.preventDefault();
-    event.stopPropagation();
+          window.location.href =
+            "../../index.html#top21";
 
-    window.location.replace("../../index.html#top21");
-
-  });
+        }
+      );
 
     document
       .getElementById("compassRight")
@@ -1072,7 +1075,7 @@ function initializeReviewTabs() {
 ======================================== -->
 
 <div id="service-console">
-fix  дрыжок при переходе по компасу | v1.12.3
+ renderUserStatus | v1.12.4
 </div>
 
 <div
