@@ -286,47 +286,6 @@ async function renderTop21() {
 renderTop21();
   
 </script>
-<script>
-
-/*
-========================================
-СТАТУС ПОЛЬЗОВАТЕЛЯ ИЗ CHECK-ACCOUNT
-========================================
-*/
-
-function getUserStatus() {
-
-  return (
-    localStorage.getItem(
-      "userStatus"
-    )
-    || "Гость"
-  );
-
-}
-
-
-function renderUserStatus() {
-
-  const currentStatus =
-    getUserStatus();
-
-  document
-    .querySelectorAll(".status")
-    .forEach(function (item) {
-
-      item.classList.toggle(
-        "active",
-        item.dataset.status
-          === currentStatus
-      );
-
-    });
-
-}
-
-</script>
-
 
 <script>
 
@@ -354,6 +313,9 @@ async function loadHeader() {
 
     headerContainer.innerHTML =
       await response.text();
+
+    renderUserStatus();
+    renderUserButton();
 
     document.getElementById("headerLogo").src =
       "21/images/logo.svg";
@@ -440,7 +402,7 @@ loadHeader();
 ======================================== -->
 
 <div id="service-console">
- СТАТУС ПОЛЬЗОВАТЕЛЯ ИЗ CHECK-ACCOUNT | v3.9.0
+минус СТАТУС ПОЛЬЗОВАТЕЛЯ ИЗ CHECK-ACCOUNT плюс загрузка из хидер | v3.9.1
 </div>
 
 <div class="row" id="build-down">
