@@ -198,43 +198,59 @@
   <h2>Вход / Регистрация</h2>
 
   <!-- ========================================
-       ФОРМА АУТЕНТИФИКАЦИИ
-  ======================================== -->
+     ФОРМА АУТЕНТИФИКАЦИИ
+======================================== -->
 
-  <form id="authForm">
+<form id="authForm">
 
-    <!-- EMAIL -->
+  <!-- EMAIL -->
 
-    <label>Email:</label>
+  <label>Email:</label>
+
+  <input
+    id="email"
+    type="email"
+    required
+  />
+
+ <!-- NAME -->
+
+<label for="name">
+  Имя (литературный псевдоним):
+</label>
+
+<input
+  id="name"
+  type="text"
+  maxlength="80"
+  autocomplete="nickname"
+  placeholder="Обязательно для регистрации"
+/>
+  
+  </div>
+
+  <!-- PASSWORD -->
+
+  <label>Password:</label>
+
+  <div class="password-wrapper">
 
     <input
-      id="email"
-      type="email"
+      id="password"
+      type="password"
       required
+      minlength="6"
     />
 
-    <!-- PASSWORD -->
+    <button
+      type="button"
+      class="eye-btn"
+      onclick="togglePassword('password', this)"
+    >
+      👁
+    </button>
 
-    <label>Password:</label>
-
-    <div class="password-wrapper">
-
-      <input
-        id="password"
-        type="password"
-        required
-        minlength="6"
-      />
-
-      <button
-        type="button"
-        class="eye-btn"
-        onclick="togglePassword('password', this)"
-      >
-        👁
-      </button>
-
-    </div>
+  </div>
 
     <!-- CONFIRM PASSWORD -->
 
@@ -316,10 +332,13 @@
   ======================================== */
 
   const emailInput =
-    document.getElementById('email')
+  document.getElementById('email')
 
-  const passwordInput =
-    document.getElementById('password')
+const nameInput =
+  document.getElementById('name')
+
+const passwordInput =
+  document.getElementById('password')
 
   const confirmPasswordInput =
     document.getElementById('confirmPassword')
@@ -429,68 +448,136 @@
 
   async function signup() {
 
-    const email =
-      emailInput.value.trim()
+  const name =
+    nameInput.value.trim()
 
-    const password =
-      passwordInput.value
+  const email =
+    emailInput.value.trim()
 
-    const confirmPassword =
-      confirmPasswordInput.value.trim()
+  const password =
+    passwordInput.value
 
-    if (!confirmPassword) {
+  const confirmPassword =
+    confirmPasswordInput.value.trim()
 
-      statusText.textContent =
-        'Заполните Confirm password'
 
-      return
-    }
+  /*
+  Имя обязательно только при регистрации.
+  При входе поле не проверяется.
+  */
 
-    if (password !== confirmPassword) {
-
-      statusText.textContent =
-        'Пароли не совпадают'
-
-      return
-    }
+  if (!name) {
 
     statusText.textContent =
-      'Регистрация...'
+      'Введите имя или литературный псевдоним'
 
-    const { error } =
-      await supabase.auth.signUp({
+    nameInput.focus()
 
-        email,
-        password,
-
-        options: {
-          emailRedirectTo:
-            'https://matmodelator.github.io/Best100/confirm.html'
-        }
-
-      })
-
-    if (error) {
-
-      statusText.textContent =
-        'Ошибка: ' + error.message
-
-      return
-    }
-
-    statusText.textContent =
-      'Письмо отправлено. Проверь почту.'
-
-    setTimeout(function () {
-
-      window.location.href =
-        'check-email.html'
-
-    }, 800)
+    return
   }
 
-  window.signup =
-    signup
+
+  if (!email) {
+
+    statusText.textContent =
+      'Введите Email'
+
+    emailInput.focus()
+
+    return
+  }
+
+
+  if (!password) {
+
+    statusText.textContent =
+      'Введите Password'
+
+    passwordInput.focus()
+
+    return
+  }
+
+
+  if (!confirmPassword) {
+
+    statusText.textContent =
+      'Заполните Confirm password'
+
+    confirmPasswordInput.focus()
+
+    return
+  }
+
+
+  if (password !== confirmPassword) {
+
+    statusText.textContent =
+      'Пароли не совпадают'
+
+    confirmPasswordInput.focus()
+
+    return
+  }
+
+
+  statusText.textContent =
+    'Регистрация...'
+
+
+  /*
+  Имя сохраняется в metadata пользователя Supabase.
+
+  После подтверждения почты check-account.html
+  сможет получить его через:
+
+  user.user_metadata.name
+  */
+
+  const { error } =
+    await supabase.auth.signUp({
+
+      email,
+      password,
+
+      options: {
+
+        data: {
+          name: name
+        },
+
+        emailRedirectTo:
+          'https://matmodelator.github.io/Best100/confirm.html'
+
+      }
+
+    })
+
+
+  if (error) {
+
+    statusText.textContent =
+      'Ошибка: ' + error.message
+
+    return
+  }
+
+
+  statusText.textContent =
+    'Письмо отправлено. Проверь почту.'
+
+
+  setTimeout(function () {
+
+    window.location.href =
+      'check-email.html'
+
+  }, 800)
+
+}
+
+window.signup =
+  signup
 
 </script>
 
@@ -501,7 +588,7 @@
 ======================================== -->
 
 <div id="service-console">
-коричневый фон шапки | v1.0.1
+ввод имени | v1.1.0
 </div>
 
 <div class="row" id="build-down">
