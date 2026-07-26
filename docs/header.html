@@ -2,7 +2,7 @@
 
 /*
 ========================================
-фикс зоны компаса  | v1.2.3
+скрипт СТАТУС ПОЛЬЗОВАТЕЛЯ ИЗ CHECK-ACCOUNT | v1.3.0
 ========================================
 */
 
@@ -877,3 +877,82 @@
   </div>
 
 </aside>
+
+<script>
+
+/*
+========================================
+СТАТУС ПОЛЬЗОВАТЕЛЯ ИЗ CHECK-ACCOUNT
+========================================
+*/
+
+function getUserStatus() {
+
+  return (
+    localStorage.getItem(
+      "userStatus"
+    )
+    || "Гость"
+  );
+
+}
+
+
+function renderUserStatus() {
+
+  const currentStatus =
+    getUserStatus();
+
+  document
+    .querySelectorAll(".status")
+    .forEach(function (item) {
+
+      item.classList.toggle(
+        "active",
+        item.dataset.status
+          === currentStatus
+      );
+
+    });
+
+}
+
+/*
+========================================
+КНОПКА АВТОРИЗАЦИИ
+========================================
+*/
+
+function renderUserButton() {
+
+  const button =
+    document.getElementById(
+      "headerAuthButton"
+    );
+
+  if (!button) {
+    return;
+  }
+
+  const userName =
+    localStorage.getItem(
+      "userName"
+    );
+
+  if (userName) {
+
+    button.textContent =
+      "Привет, "
+      + userName
+      + " / Редактировать профиль";
+
+  } else {
+
+    button.textContent =
+      "Вход / Регистрация";
+
+  }
+
+}
+  
+</script>
