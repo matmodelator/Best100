@@ -678,17 +678,16 @@ document
         }
       );
 
-   document
+  document
   .getElementById("compassCenter")
-  .addEventListener(
-    "click",
-    function () {
+  .addEventListener("click", function (event) {
 
-      window.location.href =
-        "../../index.html";
+    event.preventDefault();
+    event.stopPropagation();
 
-    }
-  );
+    window.location.replace("../../index.html#top21");
+
+  });
 
     document
       .getElementById("compassRight")
