@@ -895,10 +895,7 @@ console.log("commentsList =", commentsList);
     const { data, error } =
       await supabase
         .from("top21_comments")
-
-console.log("Supabase error:", error);
-console.log("Supabase data:", data);
-      
+     
         .select(
           "author_name, comment_text, created_at"
         )
@@ -914,6 +911,9 @@ console.log("Supabase data:", data);
           "created_at",
           { ascending: false }
         );
+
+    console.log("Supabase error:", error);
+    console.log("Supabase data:", data);
 
     if (error) {
       throw error;
@@ -1073,7 +1073,7 @@ function initializeReviewTabs() {
 ======================================== -->
 
 <div id="service-console">
-  console.log | v1.12.1
+fix  console.log | v1.12.2
 </div>
 
 <div
