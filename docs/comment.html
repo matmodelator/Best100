@@ -162,10 +162,23 @@
 
     <h1>Добавить комментарий</h1>
 
-    <div class="poem-info">
-      Стихотворение:
-      <strong id="poemLabel">определяется...</strong>
-    </div>
+   <div class="poem-info">
+
+  <div>
+    <strong id="poemLabel">
+      Стихотворение
+    </strong>
+  </div>
+
+  <div id="poemTitle">
+    Название определяется...
+  </div>
+
+  <div id="poemAuthor">
+    Автор определяется...
+  </div>
+
+</div>
 
     <div class="field">
       <label for="authorName">
@@ -236,6 +249,12 @@
     const poemLabel =
       document.getElementById("poemLabel");
 
+    const poemTitle =
+      document.getElementById("poemTitle");
+
+    const poemAuthor =
+      document.getElementById("poemAuthor");
+
     const submitBtn =
       document.getElementById("submitBtn");
 
@@ -245,7 +264,7 @@
     const status =
       document.getElementById("status");
 
-  /*
+/*
 ========================================
 ОПРЕДЕЛЕНИЕ НОМЕРА СТИХОТВОРЕНИЯ
 
@@ -274,8 +293,65 @@ if (!Number.isInteger(poemId) || poemId < 0) {
 
 poemLabel.textContent =
   poemId === 0
-    ? "не указано"
-    : "№" + poemId;
+    ? "Общий комментарий"
+    : "Стихотворение №" + poemId;
+
+/*
+Название и автор.
+*/
+
+if (poemId > 0) {
+
+  try {
+
+    const response =
+      await fetch(
+        "./21/poems/poem"
+        + poemId
+        + ".html"
+      );
+
+    if (response.ok) {
+
+      const html =
+        await response.text();
+
+      const doc =
+        new DOMParser()
+          .parseFromString(
+            html,
+            "text/html"
+          );
+
+      poemTitle.textContent =
+        doc.querySelector(".title")
+          ?.textContent
+          ?.trim()
+        || "Без названия";
+
+      poemAuthor.textContent =
+        doc.querySelector(".author")
+          ?.textContent
+          ?.trim()
+        || "";
+
+    }
+
+  } catch (error) {
+
+    console.error(error);
+
+  }
+
+} else {
+
+  poemTitle.textContent =
+    "Комментарий ко всему проекту";
+
+  poemAuthor.textContent =
+    "";
+
+}
 
     /*
     ========================================
@@ -470,7 +546,7 @@ poemLabel.textContent =
 ======================================== -->
 
 <div id="service-console">
-fix poemLabel & Get;| v1.3.7
+poemLabel| v1.4.0
 </div>
 
 <div class="row" id="build-down">
