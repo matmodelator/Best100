@@ -381,10 +381,28 @@ async function loadHeader() {
         history.back();
       });
 
-    document.getElementById("compassCenter")
-      .addEventListener("click", function () {
-        window.location.href = "index.html#top21";
-      });
+   document.getElementById("compassCenter")
+  .addEventListener("click", function () {
+
+    const page =
+      location.pathname.toLowerCase();
+
+    if (
+      page.endsWith("/index.html") ||
+      page.endsWith("/")
+    ) {
+
+      window.location.href =
+        "21/poems/poem1.html";
+
+    } else {
+
+      window.location.href =
+        "index.html#top21";
+
+    }
+
+  });
 
     document.getElementById("compassRight")
       .addEventListener("click", function () {
@@ -416,7 +434,7 @@ loadHeader();
 ======================================== -->
 
 <div id="service-console">
- fetch header+user menu | v3.8.0
+ compassCenter zone | v3.8.1
 </div>
 
 <div class="row" id="build-down">
