@@ -142,3 +142,97 @@ GPT from header | 1.0,0
   </button>
 
 </div>
+
+<script>
+
+/*
+========================================
+ТЕКУЩИЙ СТАТУС ПОЛЬЗОВАТЕЛЯ
+========================================
+*/
+
+function getMenuUserStatus() {
+
+  return (
+    localStorage.getItem("userStatus")
+    || "Гость"
+  );
+
+}
+
+
+/*
+========================================
+ПОДСВЕТКА ТЕКУЩЕГО СТАТУСА
+========================================
+*/
+
+function renderMenuUserStatus() {
+
+  const currentStatus =
+    getMenuUserStatus();
+
+  document
+    .querySelectorAll(
+      "#menuContainer .status"
+    )
+    .forEach(function (statusElement) {
+
+      statusElement.classList.toggle(
+        "active",
+        statusElement.dataset.status
+          === currentStatus
+      );
+
+    });
+
+}
+
+
+/*
+========================================
+ПЕРЕХОД НА ВХОД / РЕГИСТРАЦИЮ
+========================================
+*/
+
+function initializeMenuAuthButton() {
+
+  const authButton =
+    document.getElementById(
+      "headerAuthButton"
+    );
+
+  if (!authButton) {
+    return;
+  }
+
+  authButton.addEventListener(
+    "click",
+    function () {
+
+      const isPoemPage =
+        location.pathname.includes(
+          "/21/poems/"
+        );
+
+      window.location.href =
+        isPoemPage
+          ? "../../sign.html"
+          : "sign.html";
+
+    }
+  );
+
+}
+
+
+/*
+========================================
+ЗАПУСК МЕНЮ
+========================================
+*/
+
+renderMenuUserStatus();
+initializeMenuAuthButton();
+
+</script>
