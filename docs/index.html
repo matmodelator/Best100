@@ -333,6 +333,31 @@ async function loadComponent(containerId, componentPath) {
   const fragment =
     document.createDocumentFragment();
 
+
+  /*
+  Стили из head.
+  */
+
+  componentDocument.head
+    .querySelectorAll(
+      "style, link[rel='stylesheet']"
+    )
+    .forEach(function (node) {
+
+      fragment.appendChild(
+        document.importNode(
+          node,
+          true
+        )
+      );
+
+    });
+
+
+  /*
+  Разметка из body.
+  */
+
   Array.from(
     componentDocument.body.childNodes
   ).forEach(function (node) {
@@ -345,6 +370,7 @@ async function loadComponent(containerId, componentPath) {
     );
 
   });
+
 
   container.replaceChildren(fragment);
 
@@ -430,7 +456,7 @@ loadHeader();
 ======================================== -->
 
 <div id="service-console">
- Убрана лишние функции | v5.1.1
+ fix loadcomponent func | v5.1.2
 </div>
 
 <div class="row" id="build-down">
