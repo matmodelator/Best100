@@ -16,13 +16,6 @@
 
 /*
 ========================================
-HEADER + REVIEW + MENU | v3.0.0
-========================================
-*/
-
-
-/*
-========================================
 ВЕРХНЯЯ ШАПКА
 ========================================
 */
@@ -1962,6 +1955,78 @@ window.closeAllSidePanels =
   closeAllSidePanels;
 
 </script>
+
+
+<!-- ========================================
+     SERVICE CONSOLE
+======================================== -->
+
+<div id="service-console">
+new architecture | v3.0.0
+</div>
+
+
+<div
+  class="row"
+  id="build-down"
+>
+  deploy: --
+</div>
+
+
+<script>
+
+(function () {
+
+  const now =
+    new Date();
+
+
+  const pad =
+    number =>
+      String(number)
+        .padStart(
+          2,
+          "0"
+        );
+
+
+  const date =
+      pad(
+        now.getDate()
+      )
+    + "."
+    + pad(
+        now.getMonth() + 1
+      )
+    + "."
+    + now.getFullYear();
+
+
+  const time =
+      pad(
+        now.getHours()
+      )
+    + ":"
+    + pad(
+        now.getMinutes()
+      );
+
+
+  document
+    .getElementById(
+      "build-down"
+    )
+    .textContent =
+      "deploy: "
+      + date
+      + " "
+      + time;
+
+})();
+
+</script>
+
 
 </body>
 
