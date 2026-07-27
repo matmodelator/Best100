@@ -129,7 +129,7 @@ error
 }=
 await supabase
 .from("top21_accounts")
-.select("status")
+.select("status, name")
 .eq(
 "user_id",
 user.id
@@ -181,6 +181,11 @@ localStorage.setItem(
 data.status
 );
 
+localStorage.setItem(
+  "userName",
+  data.name || ""
+);
+      
 statusBox.textContent=
 "Статус: "
 + data.status;
@@ -196,7 +201,7 @@ location.href="index.html";
 </script>
 
 <div id="service-console">
-GPT | v1.0.0
+возврат name| v1.0.1
 </div>
 
 <div id="build-down">
