@@ -292,7 +292,7 @@ renderTop21();
 ========================================
 СТАТУС ПОЛЬЗОВАТЕЛЯ ИЗ CHECK-ACCOUNT
 ========================================
-*/
+
 
 function getUserStatus() {
 
@@ -324,7 +324,7 @@ function renderUserStatus() {
     });
 
 }
-
+*/
 </script>
 
 
@@ -410,19 +410,6 @@ async function loadHeader() {
     document.getElementById("headerTop21Link").href =
       "index.html#top21";
 
-    const userPanel =
-      document.getElementById("userPanel");
-
-    document.getElementById("openUserPanelButton")
-      .addEventListener("click", function () {
-        userPanel.classList.add("open");
-      });
-
-    document.getElementById("closeUserPanelButton")
-      .addEventListener("click", function () {
-        userPanel.classList.remove("open");
-      });
-
     document.getElementById("headerAuthButton")
       .addEventListener("click", function () {
         window.location.href = "sign.html";
@@ -486,7 +473,7 @@ loadHeader();
 ======================================== -->
 
 <div id="service-console">
- innerHTML больше нигде не используется | v5.0.0
+ Убрана логика боковых панелей | v5.1.0
 </div>
 
 <div class="row" id="build-down">
