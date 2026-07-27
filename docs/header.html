@@ -16,12 +16,6 @@
 
 /*
 ========================================
-menu.html separatly | v2.0.0
-========================================
-*/
-
-/*
-========================================
 ВЕРХНЯЯ ШАПКА
 ========================================
 */
@@ -843,7 +837,36 @@ function initHeaderPanels() {
 ----------------------------------------
 */
 
-initHeaderPanels();
+/*
+----------------------------------------
+ЗАГРУЗКА ВНУТРЕННИХ КОМПОНЕНТОВ
+----------------------------------------
+*/
+
+async function loadHeaderContent() {
+
+  await loadComponent(
+    "menuContainer",
+    "menu.html"
+  );
+
+  await loadComponent(
+    "reviewContainer",
+    "review.html"
+  );
+
+}
+  
+async function initHeader() {
+
+  await loadHeaderContent();
+
+  initHeaderPanels();
+
+}
+
+
+initHeader();
 
 </script>
 
@@ -852,7 +875,7 @@ initHeaderPanels();
 ======================================== -->
 
 <div id="service-console">
-full HTML with script | v4.0.0
+ЗАГРУЗКА ВНУТРЕННИХ КОМПОНЕНТОВ | v4.1.0
 </div>
 
 
