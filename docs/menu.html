@@ -1,6 +1,6 @@
 /*
 ========================================
-скрипт | 1.1.0
+фикс кнопка рег\ статус и имя  | 1.1.1
 ========================================
 */
 
@@ -147,92 +147,75 @@
 
 /*
 ========================================
-ТЕКУЩИЙ СТАТУС ПОЛЬЗОВАТЕЛЯ
+ДАННЫЕ ПОЛЬЗОВАТЕЛЯ
 ========================================
 */
 
-function getMenuUserStatus() {
+const userStatus =
+  localStorage.getItem("userStatus")
+  || "Гость";
 
-  return (
-    localStorage.getItem("userStatus")
-    || "Гость"
-  );
-
-}
+const userName =
+  localStorage.getItem("userName")
+  || "";
 
 
 /*
 ========================================
-ПОДСВЕТКА ТЕКУЩЕГО СТАТУСА
+ПОДСВЕТКА СТАТУСА
 ========================================
 */
 
-function renderMenuUserStatus() {
+document
+  .querySelectorAll(".status")
+  .forEach(function (statusElement) {
 
-  const currentStatus =
-    getMenuUserStatus();
-
-  document
-    .querySelectorAll(
-      "#menuContainer .status"
-    )
-    .forEach(function (statusElement) {
-
-      statusElement.classList.toggle(
-        "active",
-        statusElement.dataset.status
-          === currentStatus
-      );
-
-    });
-
-}
-
-
-/*
-========================================
-ПЕРЕХОД НА ВХОД / РЕГИСТРАЦИЮ
-========================================
-*/
-
-function initializeMenuAuthButton() {
-
-  const authButton =
-    document.getElementById(
-      "headerAuthButton"
+    statusElement.classList.toggle(
+      "active",
+      statusElement.dataset.status
+        === userStatus
     );
 
-  if (!authButton) {
-    return;
-  }
-
-  authButton.addEventListener(
-    "click",
-    function () {
-
-      const isPoemPage =
-        location.pathname.includes(
-          "/21/poems/"
-        );
-
-      window.location.href =
-        isPoemPage
-          ? "../../sign.html"
-          : "sign.html";
-
-    }
-  );
-
-}
+  });
 
 
 /*
 ========================================
-ЗАПУСК МЕНЮ
+ТЕКСТ КНОПКИ
 ========================================
 */
 
-renderMenuUserStatus();
-initializeMenuAuthButton();
+const authButton =
+  document.getElementById(
+    "headerAuthButton"
+  );
 
+if (authButton) {
+
+  if (userStatus === "Гость") {
+
+    authButton.textContent =
+      "Вход / Регистрация";
+
+  } else {
+
+    authButton.innerHTML = `
+      Hello${userName ? ", " + userName : ""}
+      <br>
+      Редактировать профиль
+    `;
+
+    authButton.addEventListener(
+      "click",
+      function () {
+
+        location.href =
+          "profile.html";
+
+      }
+    );
+
+  }
+
+}
 </script>
