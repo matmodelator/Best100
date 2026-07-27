@@ -2,10 +2,9 @@
 
 /*
 ========================================
-скрипт СТАТУС ПОЛЬЗОВАТЕЛЯ ИЗ CHECK-ACCOUNT | v1.3.0
+menu.html separatly | v2.0.0
 ========================================
 */
-
 
 /*
 ========================================
@@ -49,7 +48,6 @@
   line-height: 1.15;
 }
 
-
 /*
 ========================================
 КОМПАС / ЛОГОТИП
@@ -73,7 +71,6 @@
   user-select: none;
   pointer-events: none;
 }
-
 
 /*
 ========================================
@@ -116,7 +113,7 @@
 
 .compass-center {
   left: 33%;
-  top: 66%;
+  top: 60%;
 
   width: 34%;
   height: 16%;
@@ -144,7 +141,6 @@
   outline:
     1px solid rgba(255, 196, 70, 0.8);
 }
-
 
 /*
 ========================================
@@ -186,7 +182,6 @@
   color: #d1d5db;
 }
 
-
 /*
 ========================================
 ОБЩИЙ СТИЛЬ БОКОВЫХ КНОПОК
@@ -217,7 +212,6 @@
   background: #4b5563;
 }
 
-
 /*
 ========================================
 КНОПКА ЛЕВОЙ ПАНЕЛИ
@@ -228,7 +222,6 @@
   left: 16px;
 }
 
-
 /*
 ========================================
 КНОПКА ПРАВОЙ ПАНЕЛИ
@@ -238,7 +231,6 @@
 .user-btn {
   right: 16px;
 }
-
 
 /*
 ========================================
@@ -271,7 +263,6 @@
   z-index: 1000;
 }
 
-
 /*
 ========================================
 ЛЕВАЯ ПАНЕЛЬ
@@ -291,7 +282,6 @@
   left: 0;
 }
 
-
 /*
 ========================================
 ПРАВАЯ ПАНЕЛЬ
@@ -310,7 +300,6 @@
 .user-panel.open {
   right: 0;
 }
-
 
 /*
 ========================================
@@ -333,7 +322,6 @@
   display: block;
 }
 
-
 /*
 ========================================
 ШАПКА БОКОВОЙ ПАНЕЛИ
@@ -354,7 +342,6 @@
 .panel-header h3 {
   margin: 0;
 }
-
 
 /*
 ========================================
@@ -381,121 +368,6 @@
 .close-btn:hover {
   color: #7c2d12;
 }
-
-
-/*
-========================================
-СТАТУСЫ ПОЛЬЗОВАТЕЛЯ
-========================================
-*/
-
-.status-list {
-  display: flex;
-  flex-direction: column;
-
-  gap: 10px;
-}
-
-.status {
-  position: relative;
-
-  padding: 8px 12px;
-
-  background: #f4efe7;
-
-  border-radius: 8px;
-
-  cursor: help;
-}
-
-.status.active {
-  background: #7c2d12;
-  color: white;
-}
-
-
-/*
-========================================
-ПОДСКАЗКИ СТАТУСОВ
-========================================
-
-
-.status::after {
-  content: attr(data-tooltip);
-
-  position: absolute;
-
-  left: 0;
-  top: calc(100% + 6px);
-
-  width: 220px;
-
-  padding: 10px 12px;
-
-  background: #111827;
-  color: white;
-
-  border-radius: 7px;
-
-  box-shadow:
-    0 4px 12px rgba(0, 0, 0, 0.2);
-
-  font-family: Arial, sans-serif;
-  font-size: 12px;
-  line-height: 1.35;
-
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-
-  transition: opacity 0.15s;
-
-  z-index: 1100;
-}
-
-.status:hover::after {
-  opacity: 1;
-  visibility: visible;
-}
-*/
-
-/*
-========================================
-КНОПКА ВХОД / РЕГИСТРАЦИЯ
-========================================
-*/
-
-.user-actions {
-  display: flex;
-  flex-direction: column;
-
-  gap: 10px;
-
-  margin-top: auto;
-  padding-top: 20px;
-}
-
-.auth-btn {
-  width: 100%;
-
-  padding: 14px;
-
-  background: #7c2d12;
-  color: white;
-
-  border: 1px solid #7c2d12;
-  border-radius: 8px;
-
-  font-size: 16px;
-  font-weight: bold;
-
-  cursor: pointer;
-}
-
-.auth-btn:hover {
-  filter: brightness(1.12);
-}
-
 
 /*
 ========================================
@@ -793,7 +665,7 @@
 <!-- ========================================
      ПРАВАЯ ПАНЕЛЬ
 
-     МЕНЮ ПОЛЬЗОВАТЕЛЯ
+     Содержимое загружается из menu.html
 ======================================== -->
 
 <aside
@@ -803,9 +675,9 @@
 
   <div class="panel-header">
 
-    <h3>
-      Статус пользователя
-    </h3>
+    <h2>
+      Меню пользователя
+    </h2>
 
     <button
       id="closeUserPanelButton"
@@ -818,141 +690,8 @@
 
   </div>
 
-
-  <div class="status-list">
-
-    <div
-      class="status active"
-      data-status="Гость"
-      data-tooltip="Посетитель без регистрации. Может читать и голосовать."
-    >
-      Гость
-    </div>
-
-    <div
-      class="status"
-      data-status="Читатель"
-      data-tooltip="Пользователь, который проголосовал хотя бы за одно стихотворение."
-    >
-      Читатель
-    </div>
-
-    <div
-      class="status"
-      data-status="Критик"
-      data-tooltip="Зарегистрированный пользователь, оставивший содержательный отзыв."
-    >
-      Критик
-    </div>
-
-    <div
-      class="status"
-      data-status="Эксперт"
-      data-tooltip="Пользователь, получивший право расширенной оценки стихотворений."
-    >
-      Эксперт
-    </div>
-
-    <div
-      class="status author-status"
-      data-status="Автор"
-      data-tooltip="Поэт, чьё стихотворение включено в Антологию XXI и одобрено редакцией."
-    >
-      Автор
-    </div>
-
-  </div>
-
-
-  <div class="user-actions">
-
-    <button
-      id="headerAuthButton"
-      class="auth-btn"
-      type="button"
-    >
-      Вход / Регистрация
-    </button>
-
+  <div id="menuContainer">
+    Загрузка...
   </div>
 
 </aside>
-
-<script>
-
-/*
-========================================
-СТАТУС ПОЛЬЗОВАТЕЛЯ ИЗ CHECK-ACCOUNT
-========================================
-*/
-
-function getUserStatus() {
-
-  return (
-    localStorage.getItem(
-      "userStatus"
-    )
-    || "Гость"
-  );
-
-}
-
-
-function renderUserStatus() {
-
-  const currentStatus =
-    getUserStatus();
-
-  document
-    .querySelectorAll(".status")
-    .forEach(function (item) {
-
-      item.classList.toggle(
-        "active",
-        item.dataset.status
-          === currentStatus
-      );
-
-    });
-
-}
-
-/*
-========================================
-КНОПКА АВТОРИЗАЦИИ
-========================================
-*/
-
-function renderUserButton() {
-
-  const button =
-    document.getElementById(
-      "headerAuthButton"
-    );
-
-  if (!button) {
-    return;
-  }
-
-  const userName =
-    localStorage.getItem(
-      "userName"
-    );
-
-  if (userName) {
-
-    button.textContent =
-      "Привет, "
-      + userName
-      + " / Редактировать профиль";
-
-  } else {
-
-    button.textContent =
-      "Вход / Регистрация";
-
-  }
-
-}
-  
-</script>
