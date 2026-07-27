@@ -288,43 +288,7 @@ renderTop21();
 </script>
 <script>
 
-/*
-========================================
-СТАТУС ПОЛЬЗОВАТЕЛЯ ИЗ CHECK-ACCOUNT
-========================================
 
-
-function getUserStatus() {
-
-  return (
-    localStorage.getItem(
-      "userStatus"
-    )
-    || "Гость"
-  );
-
-}
-
-
-function renderUserStatus() {
-
-  const currentStatus =
-    getUserStatus();
-
-  document
-    .querySelectorAll(".status")
-    .forEach(function (item) {
-
-      item.classList.toggle(
-        "active",
-        item.dataset.status
-          === currentStatus
-      );
-
-    });
-
-}
-*/
 </script>
 
 
@@ -410,11 +374,6 @@ async function loadHeader() {
     document.getElementById("headerTop21Link").href =
       "index.html#top21";
 
-    document.getElementById("headerAuthButton")
-      .addEventListener("click", function () {
-        window.location.href = "sign.html";
-      });
-
     document.getElementById("compassLeft")
       .addEventListener("click", function () {
         history.back();
@@ -448,8 +407,6 @@ async function loadHeader() {
         history.forward();
       });
 
-    renderUserStatus();
-
   } catch (error) {
 
     console.error(
@@ -473,7 +430,7 @@ loadHeader();
 ======================================== -->
 
 <div id="service-console">
- Убрана логика боковых панелей | v5.1.0
+ Убрана лишние функции | v5.1.1
 </div>
 
 <div class="row" id="build-down">
