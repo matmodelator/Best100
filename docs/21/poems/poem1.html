@@ -453,11 +453,16 @@ async function loadComponent(
       "text/html"
     );
 
-  const componentUrl =
-    new URL(
-      componentPath,
-      location.href
-    );
+  const parentComponentUrl =
+  document.currentScript
+    ?.dataset.componentUrl
+  || location.href;
+
+const componentUrl =
+  new URL(
+    componentPath,
+    parentComponentUrl
+  );
 
 
   /*
@@ -552,6 +557,9 @@ async function loadComponent(
         "script"
       );
 
+script.dataset.componentUrl =
+  componentUrl.href;
+    
     Array.from(
       sourceScript.attributes
     )
@@ -1032,7 +1040,7 @@ function initializeReviewTabs() {
 ======================================== -->
 
 <div id="service-console">
- новая логика | v2.0.0
+ пути к хидеру | v2.0.1
 </div>
 
 <div
