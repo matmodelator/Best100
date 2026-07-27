@@ -402,6 +402,217 @@ function toggleVotePanel() {
   Рифмы века © 2026
 </footer>
 
+ <script>
+
+/*
+========================================
+ЗАГРУЗКА HTML-КОМПОНЕНТА
+========================================
+*/
+
+async function loadComponent(
+  containerId,
+  componentPath
+) {
+
+  const container =
+    document.getElementById(
+      containerId
+    );
+
+  if (!container) {
+
+    throw new Error(
+      "Контейнер не найден: "
+      + containerId
+    );
+
+  }
+
+  const response =
+    await fetch(
+      componentPath,
+      {
+        cache: "no-store"
+      }
+    );
+
+  if (!response.ok) {
+
+    throw new Error(
+      componentPath
+      + ": HTTP "
+      + response.status
+    );
+
+  }
+
+  const componentDocument =
+    new DOMParser().parseFromString(
+      await response.text(),
+      "text/html"
+    );
+
+  const componentUrl =
+    new URL(
+      componentPath,
+      location.href
+    );
+
+
+  /*
+  Подключаем стили компонента.
+  */
+
+  componentDocument.head
+    .querySelectorAll(
+      'style, link[rel="stylesheet"]'
+    )
+    .forEach(function (sourceStyle) {
+
+      const style =
+        document.importNode(
+          sourceStyle,
+          true
+        );
+
+      if (
+        style.tagName === "LINK"
+        &&
+        style.hasAttribute("href")
+      ) {
+
+        style.href =
+          new URL(
+            style.getAttribute("href"),
+            componentUrl
+          ).href;
+
+      }
+
+      document.head.appendChild(
+        style
+      );
+
+    });
+
+
+  /*
+  Вставляем разметку компонента.
+  */
+
+  container.replaceChildren();
+
+  Array.from(
+    componentDocument.body.childNodes
+  )
+    .forEach(function (node) {
+
+      if (
+        node.nodeType
+          === Node.ELEMENT_NODE
+        &&
+        node.tagName
+          === "SCRIPT"
+      ) {
+
+        return;
+
+      }
+
+      container.appendChild(
+        document.importNode(
+          node,
+          true
+        )
+      );
+
+    });
+
+
+  /*
+  Выполняем внутренние скрипты.
+  */
+
+  const scripts = [
+    ...componentDocument.head
+      .querySelectorAll("script"),
+
+    ...componentDocument.body
+      .querySelectorAll("script")
+  ];
+
+  for (
+    const sourceScript
+    of scripts
+  ) {
+
+    const script =
+      document.createElement(
+        "script"
+      );
+
+    Array.from(
+      sourceScript.attributes
+    )
+      .forEach(function (attribute) {
+
+        if (attribute.name !== "src") {
+
+          script.setAttribute(
+            attribute.name,
+            attribute.value
+          );
+
+        }
+
+      });
+
+    if (
+      sourceScript.hasAttribute("src")
+    ) {
+
+      script.src =
+        new URL(
+          sourceScript.getAttribute("src"),
+          componentUrl
+        ).href;
+
+      await new Promise(
+        function (resolve, reject) {
+
+          script.onload =
+            resolve;
+
+          script.onerror =
+            reject;
+
+          document.body.appendChild(
+            script
+          );
+
+        }
+      );
+
+    } else {
+
+      script.textContent =
+        sourceScript.textContent;
+
+      document.body.appendChild(
+        script
+      );
+
+    }
+
+  }
+
+  return container;
+
+}
+
+
+</script> 
 
 <!-- ========================================
      ЗАГРУЗКА ОБЩЕГО HEADER
@@ -416,21 +627,11 @@ async function loadHeader() {
 
   try {
 
-    const response =
-      await fetch("../../header.html");
-
-    if (!response.ok) {
-      throw new Error(
-        "HTTP " + response.status
-      );
-    }
-
-    headerContainer.innerHTML =
-      await response.text();
-
-   renderUserStatus();
-   renderUserButton(); 
-
+await loadComponent(
+  "headerContainer",
+  "../../header.html"
+);
+    
     /*
     Пути для страницы стиха.
     */
@@ -449,208 +650,6 @@ async function loadHeader() {
       .getElementById("headerTop21Link")
       .href =
         "../../index.html#top21";
-
-
-    /*
-========================================
-БОКОВЫЕ ПАНЕЛИ
-========================================
-*/
-
-const reviewPanel =
-  document.getElementById(
-    "reviewPanel"
-  );
-
-const userPanel =
-  document.getElementById(
-    "userPanel"
-  );
-
-const panelOverlay =
-  document.getElementById(
-    "panelOverlay"
-  );
-
-const openReviewPanelButton =
-  document.getElementById(
-    "openReviewPanelButton"
-  );
-
-const closeReviewPanelButton =
-  document.getElementById(
-    "closeReviewPanelButton"
-  );
-
-const openUserPanelButton =
-  document.getElementById(
-    "openUserPanelButton"
-  );
-
-const closeUserPanelButton =
-  document.getElementById(
-    "closeUserPanelButton"
-  );
-
-
-/*
-========================================
-ЗАКРЫТИЕ ОБЕИХ ПАНЕЛЕЙ
-========================================
-*/
-
-function closeAllSidePanels() {
-
-  reviewPanel.classList.remove(
-    "open"
-  );
-
-  userPanel.classList.remove(
-    "open"
-  );
-
-  panelOverlay.classList.remove(
-    "open"
-  );
-
-}
-
-
-/*
-========================================
-ОТКРЫТИЕ ЛЕВОЙ ПАНЕЛИ
-========================================
-*/
-
-openReviewPanelButton.addEventListener(
-  "click",
-  function () {
-
-    /*
-    Правая панель закрывается,
-    если она была открыта.
-    */
-
-    userPanel.classList.remove(
-      "open"
-    );
-
-    reviewPanel.classList.add(
-      "open"
-    );
-
-    panelOverlay.classList.add(
-      "open"
-    );
-
-  }
-);
-
-
-/*
-========================================
-ЗАКРЫТИЕ ЛЕВОЙ ПАНЕЛИ
-========================================
-*/
-
-closeReviewPanelButton.addEventListener(
-  "click",
-  closeAllSidePanels
-);
-
-
-/*
-========================================
-ОТКРЫТИЕ ПРАВОЙ ПАНЕЛИ
-========================================
-*/
-
-openUserPanelButton.addEventListener(
-  "click",
-  function () {
-
-    /*
-    Левая панель закрывается,
-    если она была открыта.
-    */
-
-    reviewPanel.classList.remove(
-      "open"
-    );
-
-    userPanel.classList.add(
-      "open"
-    );
-
-    panelOverlay.classList.add(
-      "open"
-    );
-
-  }
-);
-
-
-/*
-========================================
-ЗАКРЫТИЕ ПРАВОЙ ПАНЕЛИ
-========================================
-*/
-
-closeUserPanelButton.addEventListener(
-  "click",
-  closeAllSidePanels
-);
-
-
-/*
-========================================
-ЗАКРЫТИЕ ПО ЗАТЕМНЕНИЮ
-========================================
-*/
-
-panelOverlay.addEventListener(
-  "click",
-  closeAllSidePanels
-);
-
-
-/*
-========================================
-ЗАКРЫТИЕ ПО ESCAPE
-========================================
-*/
-
-document.addEventListener(
-  "keydown",
-  function (event) {
-
-    if (event.key === "Escape") {
-      closeAllSidePanels();
-    }
-
-  }
-);
-
-
-/*
-========================================
-ВХОД / РЕГИСТРАЦИЯ
-========================================
-*/
-
-document
-  .getElementById(
-    "headerAuthButton"
-  )
-  .addEventListener(
-    "click",
-    function () {
-
-      window.location.href =
-        "../../sign.html";
-
-    }
-  );
 
 
 /*
@@ -711,6 +710,14 @@ document
         }
       );
 
+/*
+========================================
+НАСТРОЙКА REVIEW ТЕКУЩЕГО СТИХА
+========================================
+*/
+
+await initializePoemReview();
+    
   } catch (error) {
 
     console.error(
@@ -722,144 +729,94 @@ document
       "Не удалось загрузить верхнюю панель.";
 
   }
-
-
-    await loadReview();
-
-}
+    }
 
 loadHeader();
 
 </script>
 
- <!-- ========================================
-     ЗАГРУЗКА REVIEW.HTML
-
-     Текущий файл:
-     docs/21/poems/poem1.html
-
-     Review:
-     docs/review.html
-
-     Поэтому путь:
-     ../../review.html
+<!-- ========================================
+     НАСТРОЙКА REVIEW ДЛЯ ТЕКУЩЕГО СТИХА
 ======================================== -->
 
 <script>
 
-async function loadReview() {
+/*
+========================================
+ИНФОРМАЦИЯ О ТЕКУЩЕМ СТИХОТВОРЕНИИ
+========================================
+*/
 
-  const reviewContainer =
+async function initializePoemReview() {
+
+  /*
+  Переход к форме комментария.
+  */
+
+  const openCommentPageButton =
     document.getElementById(
-      "reviewContainer"
+      "openCommentPageButton"
     );
 
-  try {
+  if (openCommentPageButton) {
 
-    const response =
+    openCommentPageButton.addEventListener(
+      "click",
+      function () {
+
+        window.location.href =
+          "../../comment.html?poem="
+          + poemNumber;
+
+      }
+    );
+
+  }
+
+
+  /*
+  Индивидуальный разбор стихотворения.
+  */
+
+  const aiReviewContainer =
+    document.getElementById(
+      "aiReviewContent"
+    );
+
+  if (aiReviewContainer) {
+
+    const aiResponse =
       await fetch(
-        "../../review.html"
+        "../reviews/review"
+        + poemNumber
+        + ".html"
       );
 
-    if (!response.ok) {
+    if (aiResponse.ok) {
 
-      throw new Error(
-        "HTTP "
-        + response.status
-      );
+      aiReviewContainer.innerHTML =
+        await aiResponse.text();
+
+    } else {
+
+      aiReviewContainer.textContent =
+        "Разбор пока отсутствует.";
 
     }
 
-    reviewContainer.innerHTML =
-      await response.text();
-
-/*
-========================================
-ПЕРЕХОД К ФОРМЕ КОММЕНТАРИЯ
-
-Передаём номер текущего стихотворения:
-
-poem1.html → comment.html?poem=1
-poem2.html → comment.html?poem=2
-...
-========================================
-*/
-
-const openCommentPageButton =
-  document.getElementById(
-    "openCommentPageButton"
-  );
-
-if (openCommentPageButton) {
-
-  openCommentPageButton.addEventListener(
-    "click",
-    function () {
-
-      window.location.href =
-        "../../comment.html?poem="
-        + poemNumber;
-
-    }
-  );
-
-}
-    
-/*
-========================================
-ЗАГРУЗКА РАЗБОРА ДЛЯ ТЕКУЩЕГО СТИХА
-
-poem1.html  → review1.html
-poem2.html  → review2.html
-...
-========================================
-*/
-
-const aiReviewContainer =
-  document.getElementById(
-    "aiReviewContent"
-  );
-
-if (aiReviewContainer) {
-
-  const aiResponse =
-    await fetch(
-      "../reviews/review"
-      + poemNumber
-      + ".html"
-    );
-
-  if (aiResponse.ok) {
-
-    aiReviewContainer.innerHTML =
-      await aiResponse.text();
-
-  } else {
-
-    aiReviewContainer.innerHTML =
-      "Разбор пока отсутствует.";
-
   }
 
-}
-    
-    initializeReviewTabs();
-    await loadComments();
 
-  } catch (error) {
+  /*
+  Вкладки и комментарии.
+  */
 
-    console.error(
-      "Ошибка загрузки review.html:",
-      error
-    );
+  initializeReviewTabs();
 
-    reviewContainer.textContent =
-      "Не удалось загрузить разбор.";
-
-  }
+  await loadComments();
 
 }
-
+  
 /*
 ========================================
 ЗАГРУЗКА ОДОБРЕННЫХ КОММЕНТАРИЕВ
@@ -1075,7 +1032,7 @@ function initializeReviewTabs() {
 ======================================== -->
 
 <div id="service-console">
- renderUserStatus | v1.12.4
+ новая логика | v2.0.0
 </div>
 
 <div
