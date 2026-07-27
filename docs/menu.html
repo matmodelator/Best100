@@ -1,6 +1,6 @@
 /*
 ========================================
-фикс кнопка рег\ статус и имя  | 1.1.1
+fix sign  | 1.1.2
 ========================================
 */
 
@@ -152,22 +152,28 @@
 */
 
 const userStatus =
-  localStorage.getItem("userStatus")
+  localStorage.getItem(
+    "userStatus"
+  )
   || "Гость";
 
 const userName =
-  localStorage.getItem("userName")
+  localStorage.getItem(
+    "userName"
+  )
   || "";
 
 
 /*
 ========================================
-ПОДСВЕТКА СТАТУСА
+ПОДСВЕТКА ТЕКУЩЕГО СТАТУСА
 ========================================
 */
 
 document
-  .querySelectorAll(".status")
+  .querySelectorAll(
+    ".status"
+  )
   .forEach(function (statusElement) {
 
     statusElement.classList.toggle(
@@ -181,7 +187,7 @@ document
 
 /*
 ========================================
-ТЕКСТ КНОПКИ
+КНОПКА ПОЛЬЗОВАТЕЛЯ
 ========================================
 */
 
@@ -192,15 +198,39 @@ const authButton =
 
 if (authButton) {
 
+  /*
+  Гость:
+  вход или регистрация.
+  */
+
   if (userStatus === "Гость") {
 
     authButton.textContent =
       "Вход / Регистрация";
 
-  } else {
+    authButton.addEventListener(
+      "click",
+      function () {
+
+        window.location.href =
+          "sign.html";
+
+      }
+    );
+
+  }
+
+  /*
+  Авторизованный пользователь:
+  имя и редактирование профиля.
+  */
+
+  else {
 
     authButton.innerHTML = `
-      Hello${userName ? ", " + userName : ""}
+      Hello${userName
+        ? ", " + userName
+        : ""}
       <br>
       Редактировать профиль
     `;
@@ -209,7 +239,7 @@ if (authButton) {
       "click",
       function () {
 
-        location.href =
+        window.location.href =
           "profile.html";
 
       }
@@ -218,4 +248,5 @@ if (authButton) {
   }
 
 }
+
 </script>
