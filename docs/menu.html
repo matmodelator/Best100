@@ -1,6 +1,6 @@
 /*
 ========================================
-fix sign  | 1.1.2
+fix переход на профиль | 1.1.3
 ========================================
 */
 
@@ -212,8 +212,10 @@ if (authButton) {
       "click",
       function () {
 
-        window.location.href =
-          "sign.html";
+          window.location.href =
+        isPoemPage
+          ? "../../sign.html"
+          : "sign.html";
 
       }
     );
