@@ -296,73 +296,180 @@ renderTop21();
 
 /*
 ========================================
-ЗАГРУЗКА ОБЩЕГО HEADER
+ЗАГРУЗКА ПОЛНОЦЕННОГО HTML-КОМПОНЕНТА
 ========================================
 */
 
-async function loadComponent(containerId, componentPath) {
+async function loadComponent(
+  containerId,
+  componentPath
+) {
 
   const container =
-    document.getElementById(containerId);
+    document.getElementById(
+      containerId
+    );
 
   if (!container) {
+
     throw new Error(
-      "Контейнер не найден: " + containerId
+      "Контейнер не найден: "
+      + containerId
     );
+
   }
 
+
+  /*
+  Загружаем HTML-файл.
+  */
+
   const response =
-    await fetch(componentPath, {
-      cache: "no-store"
-    });
+    await fetch(
+      componentPath,
+      {
+        cache: "no-store"
+      }
+    );
 
   if (!response.ok) {
+
     throw new Error(
       componentPath
       + ": HTTP "
       + response.status
     );
+
   }
-
-  const componentDocument =
-    new DOMParser().parseFromString(
-      await response.text(),
-      "text/html"
-    );
-
-  const fragment =
-    document.createDocumentFragment();
 
 
   /*
-  Стили из head.
+  Превращаем загруженный текст
+  в полноценный HTML-документ.
+  */
+
+  const html =
+    await response.text();
+
+  const componentDocument =
+    new DOMParser().parseFromString(
+      html,
+      "text/html"
+    );
+
+
+  /*
+  Абсолютный адрес компонента.
+
+  Нужен для правильной загрузки
+  относительных CSS и JS-файлов.
+  */
+
+  const componentUrl =
+    new URL(
+      componentPath,
+      location.href
+    );
+
+
+  /*
+  Удаляем ранее подключённые стили
+  этого компонента.
+  */
+
+  document
+    .querySelectorAll(
+      '[data-component-style="'
+      + componentUrl.href
+      + '"]'
+    )
+    .forEach(function (element) {
+
+      element.remove();
+
+    });
+
+
+  /*
+  Переносим стили из head.
   */
 
   componentDocument.head
     .querySelectorAll(
-      "style, link[rel='stylesheet']"
+      'style, link[rel="stylesheet"]'
     )
-    .forEach(function (node) {
+    .forEach(function (sourceStyle) {
 
-      fragment.appendChild(
+      const style =
         document.importNode(
-          node,
+          sourceStyle,
           true
-        )
+        );
+
+      style.setAttribute(
+        "data-component-style",
+        componentUrl.href
+      );
+
+
+      /*
+      Исправляем относительный href
+      внешнего CSS-файла.
+      */
+
+      if (
+        style.tagName === "LINK"
+        &&
+        style.hasAttribute("href")
+      ) {
+
+        style.href =
+          new URL(
+            style.getAttribute("href"),
+            componentUrl
+          ).href;
+
+      }
+
+      document.head.appendChild(
+        style
       );
 
     });
 
 
   /*
-  Разметка из body.
+  Очищаем контейнер.
+  */
+
+  container.replaceChildren();
+
+
+  /*
+  Переносим HTML из body.
+
+  Скрипты пока пропускаем:
+  они будут выполнены отдельно
+  после появления разметки.
   */
 
   Array.from(
     componentDocument.body.childNodes
   ).forEach(function (node) {
 
-    fragment.appendChild(
+    if (
+      node.nodeType
+        === Node.ELEMENT_NODE
+      &&
+      node.tagName
+        === "SCRIPT"
+    ) {
+
+      return;
+
+    }
+
+    container.appendChild(
       document.importNode(
         node,
         true
@@ -372,10 +479,135 @@ async function loadComponent(containerId, componentPath) {
   });
 
 
-  container.replaceChildren(fragment);
+  /*
+  Собираем скрипты из head и body
+  в исходном порядке разделов.
+  */
+
+  const scripts = [
+    ...componentDocument.head
+      .querySelectorAll("script"),
+
+    ...componentDocument.body
+      .querySelectorAll("script")
+  ];
+
+
+  /*
+  Выполняем каждый скрипт.
+  */
+
+  for (
+    const sourceScript
+    of scripts
+  ) {
+
+    const script =
+      document.createElement(
+        "script"
+      );
+
+
+    /*
+    Копируем атрибуты:
+    type, defer, async и другие.
+    */
+
+    Array.from(
+      sourceScript.attributes
+    )
+    .forEach(function (attribute) {
+
+      if (attribute.name !== "src") {
+
+        script.setAttribute(
+          attribute.name,
+          attribute.value
+        );
+
+      }
+
+    });
+
+
+    /*
+    Внешний JS-файл.
+    */
+
+    if (
+      sourceScript.hasAttribute("src")
+    ) {
+
+      script.src =
+        new URL(
+          sourceScript.getAttribute(
+            "src"
+          ),
+          componentUrl
+        ).href;
+
+      await new Promise(
+        function (resolve, reject) {
+
+          script.addEventListener(
+            "load",
+            resolve,
+            {
+              once: true
+            }
+          );
+
+          script.addEventListener(
+            "error",
+            function () {
+
+              reject(
+                new Error(
+                  "Не удалось загрузить скрипт: "
+                  + script.src
+                )
+              );
+
+            },
+            {
+              once: true
+            }
+          );
+
+          container.appendChild(
+            script
+          );
+
+        }
+      );
+
+    } else {
+
+      /*
+      Внутренний script.
+      */
+
+      script.textContent =
+        sourceScript.textContent;
+
+      container.appendChild(
+        script
+      );
+
+    }
+
+  }
 
   return container;
+
 }
+
+
+/*
+========================================
+ЗАГРУЗКА HEADER
+========================================
+*/
 
 async function loadHeader() {
 
@@ -391,47 +623,96 @@ async function loadHeader() {
       "header.html"
     );
 
-    document.getElementById("headerLogo").src =
+
+    /*
+    Пути главной страницы.
+    */
+
+    document.getElementById(
+      "headerLogo"
+    ).src =
       "21/images/logo.svg";
 
-    document.getElementById("headerHomeLink").href =
+    document.getElementById(
+      "headerHomeLink"
+    ).href =
       "index.html";
 
-    document.getElementById("headerTop21Link").href =
+    document.getElementById(
+      "headerTop21Link"
+    ).href =
       "index.html#top21";
 
-    document.getElementById("compassLeft")
-      .addEventListener("click", function () {
+
+    /*
+    Левая стрелка компаса.
+    */
+
+    document.getElementById(
+      "compassLeft"
+    )
+    .addEventListener(
+      "click",
+      function () {
+
         history.back();
-      });
 
-   document.getElementById("compassCenter")
-  .addEventListener("click", function () {
+      }
+    );
 
-    const page =
-      location.pathname.toLowerCase();
 
-    if (
-      page.endsWith("/index.html") ||
-      page.endsWith("/")
-    ) {
+    /*
+    Центральная кнопка компаса.
+    */
 
-      window.location.href =
-        "21/poems/poem1.html";
+    document.getElementById(
+      "compassCenter"
+    )
+    .addEventListener(
+      "click",
+      function () {
 
-    } else {
+        const page =
+          location.pathname
+            .toLowerCase();
 
-      window.location.href =
-        "index.html#top21";
+        if (
+          page.endsWith(
+            "/index.html"
+          )
+          ||
+          page.endsWith("/")
+        ) {
 
-    }
+          window.location.href =
+            "21/poems/poem1.html";
 
-  });
+        } else {
 
-    document.getElementById("compassRight")
-      .addEventListener("click", function () {
+          window.location.href =
+            "index.html#top21";
+
+        }
+
+      }
+    );
+
+
+    /*
+    Правая стрелка компаса.
+    */
+
+    document.getElementById(
+      "compassRight"
+    )
+    .addEventListener(
+      "click",
+      function () {
+
         history.forward();
-      });
+
+      }
+    );
 
   } catch (error) {
 
@@ -447,16 +728,25 @@ async function loadHeader() {
 
 }
 
+
 loadHeader();
 
 </script>
+
+
 
 <!-- ========================================
      SERVICE CONSOLE
 ======================================== -->
 
 <div id="service-console">
- fix loadcomponent func | v5.1.2
+ loadComponent() делает всё необходимое:
+
+Загружает полноценный header.html.
+Переносит CSS из <head>.
+Вставляет разметку из <body>.
+После вставки разметки выполняет внутренние <script>.
+Загружает внешние скрипты с правильными относительными путями. | v5.2.0
 </div>
 
 <div class="row" id="build-down">
