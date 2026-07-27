@@ -1,10 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>Рифмы века — Header</title>
+
 <style>
 
 /*
 ========================================
-menu.html separatly | v2.0.0
+HEADER + REVIEW + MENU | v3.0.0
 ========================================
 */
+
 
 /*
 ========================================
@@ -48,6 +63,7 @@ menu.html separatly | v2.0.0
   line-height: 1.15;
 }
 
+
 /*
 ========================================
 КОМПАС / ЛОГОТИП
@@ -71,6 +87,7 @@ menu.html separatly | v2.0.0
   user-select: none;
   pointer-events: none;
 }
+
 
 /*
 ========================================
@@ -142,6 +159,7 @@ menu.html separatly | v2.0.0
     1px solid rgba(255, 196, 70, 0.8);
 }
 
+
 /*
 ========================================
 НИЖНЕЕ МЕНЮ
@@ -182,6 +200,7 @@ menu.html separatly | v2.0.0
   color: #d1d5db;
 }
 
+
 /*
 ========================================
 ОБЩИЙ СТИЛЬ БОКОВЫХ КНОПОК
@@ -212,6 +231,7 @@ menu.html separatly | v2.0.0
   background: #4b5563;
 }
 
+
 /*
 ========================================
 КНОПКА ЛЕВОЙ ПАНЕЛИ
@@ -222,6 +242,7 @@ menu.html separatly | v2.0.0
   left: 16px;
 }
 
+
 /*
 ========================================
 КНОПКА ПРАВОЙ ПАНЕЛИ
@@ -231,6 +252,7 @@ menu.html separatly | v2.0.0
 .user-btn {
   right: 16px;
 }
+
 
 /*
 ========================================
@@ -263,6 +285,7 @@ menu.html separatly | v2.0.0
   z-index: 1000;
 }
 
+
 /*
 ========================================
 ЛЕВАЯ ПАНЕЛЬ
@@ -281,6 +304,7 @@ menu.html separatly | v2.0.0
 .review-panel.open {
   left: 0;
 }
+
 
 /*
 ========================================
@@ -301,6 +325,7 @@ menu.html separatly | v2.0.0
   right: 0;
 }
 
+
 /*
 ========================================
 ЗАТЕМНЕНИЕ СТРАНИЦЫ
@@ -313,7 +338,8 @@ menu.html separatly | v2.0.0
 
   display: none;
 
-  background: rgba(17, 24, 39, 0.42);
+  background:
+    rgba(17, 24, 39, 0.42);
 
   z-index: 900;
 }
@@ -321,6 +347,7 @@ menu.html separatly | v2.0.0
 .panel-overlay.open {
   display: block;
 }
+
 
 /*
 ========================================
@@ -342,6 +369,7 @@ menu.html separatly | v2.0.0
 .panel-header h3 {
   margin: 0;
 }
+
 
 /*
 ========================================
@@ -368,6 +396,31 @@ menu.html separatly | v2.0.0
 .close-btn:hover {
   color: #7c2d12;
 }
+
+
+/*
+========================================
+СООБЩЕНИЯ ЗАГРУЗКИ КОМПОНЕНТОВ
+========================================
+*/
+
+.component-loading,
+.component-error {
+  padding: 12px;
+
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.component-loading {
+  color: #6b7280;
+}
+
+.component-error {
+  color: #991b1b;
+}
+
 
 /*
 ========================================
@@ -491,6 +544,10 @@ menu.html separatly | v2.0.0
 
 </style>
 
+</head>
+
+<body>
+
 
 <!-- ========================================
      ВЕРХНЯЯ ПАНЕЛЬ
@@ -594,11 +651,17 @@ menu.html separatly | v2.0.0
       Антология XXI
     </a>
 
-    <a href="#">
+    <a
+      id="headerAuthorsLink"
+      href="#"
+    >
       Авторы
     </a>
 
-    <a href="#">
+    <a
+      id="headerAboutLink"
+      href="#"
+    >
       О проекте
     </a>
 
@@ -626,6 +689,7 @@ menu.html separatly | v2.0.0
   id="panelOverlay"
   class="panel-overlay"
 ></div>
+
 
 <!-- ========================================
      ЛЕВАЯ ПАНЕЛЬ
@@ -655,7 +719,11 @@ menu.html separatly | v2.0.0
 
   </div>
 
-  <div id="reviewContainer">
+
+  <div
+    id="reviewContainer"
+    class="component-loading"
+  >
     Загрузка...
   </div>
 
@@ -690,8 +758,1211 @@ menu.html separatly | v2.0.0
 
   </div>
 
-  <div id="menuContainer">
+
+  <div
+    id="menuContainer"
+    class="component-loading"
+  >
     Загрузка...
   </div>
 
 </aside>
+
+
+<!-- ========================================
+     ЛОГИКА ОБЩЕГО HEADER
+======================================== -->
+
+<script type="module">
+
+/*
+========================================
+ЗАГРУЗКА КОМПОНЕНТА
+
+Поддерживает:
+
+— HTML-фрагменты;
+— полноценные HTML-документы;
+— STYLE внутри компонента;
+— обычные SCRIPT;
+— SCRIPT TYPE="MODULE";
+— внешние SCRIPT SRC.
+
+Скрипты выполняются последовательно.
+========================================
+*/
+
+async function loadComponent(
+  containerId,
+  file
+) {
+
+  const container =
+    document.getElementById(
+      containerId
+    );
+
+
+  if (!container) {
+
+    throw new Error(
+      "Не найден контейнер: "
+      + containerId
+    );
+
+  }
+
+
+  container.classList.add(
+    "component-loading"
+  );
+
+  container.classList.remove(
+    "component-error"
+  );
+
+  container.textContent =
+    "Загрузка...";
+
+
+  const response =
+    await fetch(file);
+
+
+  if (!response.ok) {
+
+    throw new Error(
+      file
+      + ": HTTP "
+      + response.status
+    );
+
+  }
+
+
+  const html =
+    await response.text();
+
+
+  const componentDocument =
+    new DOMParser()
+      .parseFromString(
+        html,
+        "text/html"
+      );
+
+
+  /*
+  Если загружен полноценный HTML-документ,
+  берём содержимое BODY.
+
+  Если загружен HTML-фрагмент,
+  DOMParser также помещает его в BODY.
+  */
+
+  const bodyNodes =
+    Array.from(
+      componentDocument
+        .body
+        .childNodes
+    );
+
+
+  /*
+  STYLE и LINK STYLESHEET могут находиться
+  как в HEAD полноценного документа,
+  так и внутри HTML-фрагмента.
+  */
+
+  const headStyles =
+    Array.from(
+      componentDocument
+        .head
+        .querySelectorAll(
+          'style, link[rel="stylesheet"]'
+        )
+    );
+
+
+  const bodyStyles =
+    Array.from(
+      componentDocument
+        .body
+        .querySelectorAll(
+          'style, link[rel="stylesheet"]'
+        )
+    );
+
+
+  const allStyles = [
+    ...headStyles,
+    ...bodyStyles
+  ];
+
+
+  /*
+  Скрипты временно исключаем из разметки.
+
+  После вставки HTML они будут созданы
+  заново и выполнены.
+  */
+
+  const scripts =
+    Array.from(
+      componentDocument
+        .querySelectorAll(
+          "script"
+        )
+    );
+
+
+  scripts.forEach(
+    function (script) {
+
+      script.remove();
+
+    }
+  );
+
+
+  /*
+  Стили из BODY тоже извлекаем,
+  чтобы не оставлять их внутри панели.
+  */
+
+  bodyStyles.forEach(
+    function (styleNode) {
+
+      styleNode.remove();
+
+    }
+  );
+
+
+  /*
+  Очищаем контейнер и вставляем
+  содержимое компонента.
+  */
+
+  container.replaceChildren();
+
+
+  const componentFragment =
+    document.createDocumentFragment();
+
+
+  Array.from(
+    componentDocument
+      .body
+      .childNodes
+  )
+    .forEach(
+      function (node) {
+
+        componentFragment.appendChild(
+          document.importNode(
+            node,
+            true
+          )
+        );
+
+      }
+    );
+
+
+  container.appendChild(
+    componentFragment
+  );
+
+
+  container.classList.remove(
+    "component-loading"
+  );
+
+
+  /*
+  Подключаем стили компонента.
+
+  Для каждого файла создаётся отдельный
+  маркер data-component-style, чтобы
+  один и тот же стиль не добавлялся
+  повторно.
+  */
+
+  const absoluteFileUrl =
+    new URL(
+      file,
+      window.location.href
+    ).href;
+
+
+  allStyles.forEach(
+    function (oldStyle) {
+
+      const styleType =
+        oldStyle.tagName
+          .toLowerCase();
+
+
+      if (
+        styleType === "style"
+      ) {
+
+        const styleKey =
+          absoluteFileUrl
+          + "::inline::"
+          + oldStyle.textContent;
+
+
+        const exists =
+          Array.from(
+            document.head
+              .querySelectorAll(
+                "style[data-component-style]"
+              )
+          )
+            .some(
+              function (styleElement) {
+
+                return (
+                  styleElement.dataset
+                    .componentStyle
+                  === styleKey
+                );
+
+              }
+            );
+
+
+        if (exists) {
+          return;
+        }
+
+
+        const newStyle =
+          document.createElement(
+            "style"
+          );
+
+
+        newStyle.dataset.componentStyle =
+          styleKey;
+
+
+        newStyle.textContent =
+          oldStyle.textContent;
+
+
+        document.head.appendChild(
+          newStyle
+        );
+
+      }
+
+
+      if (
+        styleType === "link"
+      ) {
+
+        const source =
+          oldStyle.getAttribute(
+            "href"
+          );
+
+
+        if (!source) {
+          return;
+        }
+
+
+        const absoluteStyleUrl =
+          new URL(
+            source,
+            absoluteFileUrl
+          ).href;
+
+
+        const exists =
+          document.head
+            .querySelector(
+              'link[data-component-style="'
+              + CSS.escape(
+                  absoluteStyleUrl
+                )
+              + '"]'
+            );
+
+
+        if (exists) {
+          return;
+        }
+
+
+        const newLink =
+          document.createElement(
+            "link"
+          );
+
+
+        newLink.rel =
+          "stylesheet";
+
+
+        newLink.href =
+          absoluteStyleUrl;
+
+
+        newLink.dataset.componentStyle =
+          absoluteStyleUrl;
+
+
+        document.head.appendChild(
+          newLink
+        );
+
+      }
+
+    }
+  );
+
+
+  /*
+  Выполняем скрипты компонента
+  последовательно.
+  */
+
+  for (
+    const oldScript
+    of scripts
+  ) {
+
+    const newScript =
+      document.createElement(
+        "script"
+      );
+
+
+    Array.from(
+      oldScript.attributes
+    )
+      .forEach(
+        function (attribute) {
+
+          if (
+            attribute.name === "src"
+          ) {
+
+            return;
+
+          }
+
+
+          newScript.setAttribute(
+            attribute.name,
+            attribute.value
+          );
+
+        }
+      );
+
+
+    const source =
+      oldScript.getAttribute(
+        "src"
+      );
+
+
+    if (source) {
+
+      newScript.src =
+        new URL(
+          source,
+          absoluteFileUrl
+        ).href;
+
+    } else {
+
+      newScript.textContent =
+        oldScript.textContent;
+
+    }
+
+
+    const mustWait =
+      Boolean(source)
+      ||
+      newScript.type === "module";
+
+
+    let scriptPromise =
+      Promise.resolve();
+
+
+    if (mustWait) {
+
+      scriptPromise =
+        new Promise(
+          function (
+            resolve,
+            reject
+          ) {
+
+            newScript.addEventListener(
+              "load",
+              resolve,
+              {
+                once: true
+              }
+            );
+
+
+            newScript.addEventListener(
+              "error",
+              function () {
+
+                reject(
+                  new Error(
+                    "Ошибка выполнения script из "
+                    + file
+                  )
+                );
+
+              },
+              {
+                once: true
+              }
+            );
+
+          }
+        );
+
+    }
+
+
+    document.body.appendChild(
+      newScript
+    );
+
+
+    await scriptPromise;
+
+  }
+
+
+  /*
+  Сообщаем компоненту,
+  что его разметка уже находится
+  в основном документе.
+  */
+
+  document.dispatchEvent(
+    new CustomEvent(
+      "component-loaded",
+      {
+        detail: {
+          containerId,
+          file,
+          absoluteFileUrl
+        }
+      }
+    )
+  );
+
+}
+
+
+/*
+========================================
+ЗАКРЫТИЕ ОБЕИХ ПАНЕЛЕЙ
+========================================
+*/
+
+function closeAllSidePanels() {
+
+  const reviewPanel =
+    document.getElementById(
+      "reviewPanel"
+    );
+
+
+  const userPanel =
+    document.getElementById(
+      "userPanel"
+    );
+
+
+  const panelOverlay =
+    document.getElementById(
+      "panelOverlay"
+    );
+
+
+  reviewPanel?.classList.remove(
+    "open"
+  );
+
+
+  userPanel?.classList.remove(
+    "open"
+  );
+
+
+  panelOverlay?.classList.remove(
+    "open"
+  );
+
+}
+
+
+/*
+========================================
+ОТКРЫТИЕ ЛЕВОЙ ПАНЕЛИ
+========================================
+*/
+
+function openReviewPanel() {
+
+  const reviewPanel =
+    document.getElementById(
+      "reviewPanel"
+    );
+
+
+  const userPanel =
+    document.getElementById(
+      "userPanel"
+    );
+
+
+  const panelOverlay =
+    document.getElementById(
+      "panelOverlay"
+    );
+
+
+  userPanel?.classList.remove(
+    "open"
+  );
+
+
+  reviewPanel?.classList.add(
+    "open"
+  );
+
+
+  panelOverlay?.classList.add(
+    "open"
+  );
+
+}
+
+
+/*
+========================================
+ОТКРЫТИЕ ПРАВОЙ ПАНЕЛИ
+========================================
+*/
+
+function openUserPanel() {
+
+  const reviewPanel =
+    document.getElementById(
+      "reviewPanel"
+    );
+
+
+  const userPanel =
+    document.getElementById(
+      "userPanel"
+    );
+
+
+  const panelOverlay =
+    document.getElementById(
+      "panelOverlay"
+    );
+
+
+  reviewPanel?.classList.remove(
+    "open"
+  );
+
+
+  userPanel?.classList.add(
+    "open"
+  );
+
+
+  panelOverlay?.classList.add(
+    "open"
+  );
+
+}
+
+
+/*
+========================================
+НАСТРОЙКА ССЫЛОК
+========================================
+*/
+
+function initializeHeaderLinks(
+  context
+) {
+
+  const headerLogo =
+    document.getElementById(
+      "headerLogo"
+    );
+
+
+  const headerHomeLink =
+    document.getElementById(
+      "headerHomeLink"
+    );
+
+
+  const headerTop21Link =
+    document.getElementById(
+      "headerTop21Link"
+    );
+
+
+  const headerAuthorsLink =
+    document.getElementById(
+      "headerAuthorsLink"
+    );
+
+
+  const headerAboutLink =
+    document.getElementById(
+      "headerAboutLink"
+    );
+
+
+  if (headerLogo) {
+
+    headerLogo.src =
+      context.logoPath
+      || "";
+
+  }
+
+
+  if (headerHomeLink) {
+
+    headerHomeLink.href =
+      context.homePath
+      || "#";
+
+  }
+
+
+  if (headerTop21Link) {
+
+    headerTop21Link.href =
+      context.top21Path
+      || "#";
+
+  }
+
+
+  if (headerAuthorsLink) {
+
+    headerAuthorsLink.href =
+      context.authorsPath
+      || "#";
+
+  }
+
+
+  if (headerAboutLink) {
+
+    headerAboutLink.href =
+      context.aboutPath
+      || "#";
+
+  }
+
+}
+
+
+/*
+========================================
+НАСТРОЙКА БОКОВЫХ ПАНЕЛЕЙ
+========================================
+*/
+
+function initializeSidePanels() {
+
+  const openReviewPanelButton =
+    document.getElementById(
+      "openReviewPanelButton"
+    );
+
+
+  const closeReviewPanelButton =
+    document.getElementById(
+      "closeReviewPanelButton"
+    );
+
+
+  const openUserPanelButton =
+    document.getElementById(
+      "openUserPanelButton"
+    );
+
+
+  const closeUserPanelButton =
+    document.getElementById(
+      "closeUserPanelButton"
+    );
+
+
+  const panelOverlay =
+    document.getElementById(
+      "panelOverlay"
+    );
+
+
+  openReviewPanelButton
+    ?.addEventListener(
+      "click",
+      openReviewPanel
+    );
+
+
+  closeReviewPanelButton
+    ?.addEventListener(
+      "click",
+      closeAllSidePanels
+    );
+
+
+  openUserPanelButton
+    ?.addEventListener(
+      "click",
+      openUserPanel
+    );
+
+
+  closeUserPanelButton
+    ?.addEventListener(
+      "click",
+      closeAllSidePanels
+    );
+
+
+  panelOverlay
+    ?.addEventListener(
+      "click",
+      closeAllSidePanels
+    );
+
+
+  document.addEventListener(
+    "keydown",
+    function (event) {
+
+      if (
+        event.key === "Escape"
+      ) {
+
+        closeAllSidePanels();
+
+      }
+
+    }
+  );
+
+}
+
+
+/*
+========================================
+НАСТРОЙКА КОМПАСА
+========================================
+*/
+
+function initializeCompass(
+  context
+) {
+
+  const compassLeft =
+    document.getElementById(
+      "compassLeft"
+    );
+
+
+  const compassCenter =
+    document.getElementById(
+      "compassCenter"
+    );
+
+
+  const compassRight =
+    document.getElementById(
+      "compassRight"
+    );
+
+
+  /*
+  ГЛАВНАЯ СТРАНИЦА.
+
+  ← история назад
+  XXI первый стих
+  → история вперёд
+  */
+
+  if (
+    context.pageType === "index"
+  ) {
+
+    compassLeft
+      ?.addEventListener(
+        "click",
+        function () {
+
+          history.back();
+
+        }
+      );
+
+
+    compassCenter
+      ?.addEventListener(
+        "click",
+        function () {
+
+          window.location.href =
+            context.firstPoemPath
+            || "21/poems/poem1.html";
+
+        }
+      );
+
+
+    compassRight
+      ?.addEventListener(
+        "click",
+        function () {
+
+          history.forward();
+
+        }
+      );
+
+
+    return;
+
+  }
+
+
+  /*
+  СТРАНИЦА СТИХОТВОРЕНИЯ.
+
+  ← предыдущий стих
+  XXI главная Антология XXI
+  → следующий стих
+  */
+
+  if (
+    context.pageType === "poem"
+  ) {
+
+    const poemNumber =
+      Number(
+        context.poemNumber
+      );
+
+
+    const poemsCount =
+      Number(
+        context.poemsCount
+      )
+      || 21;
+
+
+    const poemsBasePath =
+      context.poemsBasePath
+      || "";
+
+
+    const previousNumber =
+      poemNumber <= 1
+        ? poemsCount
+        : poemNumber - 1;
+
+
+    const nextNumber =
+      poemNumber >= poemsCount
+        ? 1
+        : poemNumber + 1;
+
+
+    compassLeft
+      ?.addEventListener(
+        "click",
+        function () {
+
+          window.location.href =
+            poemsBasePath
+            + "poem"
+            + previousNumber
+            + ".html";
+
+        }
+      );
+
+
+    compassCenter
+      ?.addEventListener(
+        "click",
+        function () {
+
+          window.location.href =
+            context.top21Path
+            || "../../index.html#top21";
+
+        }
+      );
+
+
+    compassRight
+      ?.addEventListener(
+        "click",
+        function () {
+
+          window.location.href =
+            poemsBasePath
+            + "poem"
+            + nextNumber
+            + ".html";
+
+        }
+      );
+
+
+    return;
+
+  }
+
+
+  /*
+  РЕЗЕРВНЫЙ РЕЖИМ.
+
+  Если тип страницы не передан,
+  используются история браузера
+  и ссылка на Антологию XXI.
+  */
+
+  compassLeft
+    ?.addEventListener(
+      "click",
+      function () {
+
+        history.back();
+
+      }
+    );
+
+
+  compassCenter
+    ?.addEventListener(
+      "click",
+      function () {
+
+        window.location.href =
+          context.top21Path
+          || "#";
+
+      }
+    );
+
+
+  compassRight
+    ?.addEventListener(
+      "click",
+      function () {
+
+        history.forward();
+
+      }
+    );
+
+}
+
+
+/*
+========================================
+ОШИБКА ЗАГРУЗКИ КОМПОНЕНТА
+========================================
+*/
+
+function showComponentError(
+  containerId,
+  message
+) {
+
+  const container =
+    document.getElementById(
+      containerId
+    );
+
+
+  if (!container) {
+    return;
+  }
+
+
+  container.classList.remove(
+    "component-loading"
+  );
+
+
+  container.classList.add(
+    "component-error"
+  );
+
+
+  container.textContent =
+    message;
+
+}
+
+
+/*
+========================================
+ИНИЦИАЛИЗАЦИЯ HEADER
+========================================
+*/
+
+async function initializeHeader(
+  context = {}
+) {
+
+  initializeHeaderLinks(
+    context
+  );
+
+
+  initializeSidePanels();
+
+
+  initializeCompass(
+    context
+  );
+
+
+  /*
+  Левая и правая панели загружаются
+  независимо.
+
+  Ошибка одного компонента не должна
+  блокировать второй компонент.
+  */
+
+  const componentResults =
+    await Promise.allSettled([
+
+      loadComponent(
+        "reviewContainer",
+        context.reviewPath
+        || "review.html"
+      ),
+
+      loadComponent(
+        "menuContainer",
+        context.menuPath
+        || "menu.html"
+      )
+
+    ]);
+
+
+  if (
+    componentResults[0].status
+    === "rejected"
+  ) {
+
+    console.error(
+      "Ошибка загрузки review.html:",
+      componentResults[0].reason
+    );
+
+
+    showComponentError(
+      "reviewContainer",
+      "Не удалось загрузить разбор."
+    );
+
+  }
+
+
+  if (
+    componentResults[1].status
+    === "rejected"
+  ) {
+
+    console.error(
+      "Ошибка загрузки menu.html:",
+      componentResults[1].reason
+    );
+
+
+    showComponentError(
+      "menuContainer",
+      "Не удалось загрузить меню."
+    );
+
+  }
+
+
+  /*
+  Сообщаем основной странице,
+  что header и обе панели
+  завершили инициализацию.
+  */
+
+  document.dispatchEvent(
+    new CustomEvent(
+      "header-initialized",
+      {
+        detail: {
+          context,
+          reviewLoaded:
+            componentResults[0].status
+            === "fulfilled",
+          menuLoaded:
+            componentResults[1].status
+            === "fulfilled"
+        }
+      }
+    )
+  );
+
+}
+
+
+/*
+========================================
+ЭКСПОРТ ФУНКЦИЙ HEADER
+========================================
+*/
+
+window.loadComponent =
+  loadComponent;
+
+
+window.initializeHeader =
+  initializeHeader;
+
+
+window.closeAllSidePanels =
+  closeAllSidePanels;
+
+</script>
+
+</body>
+
+</html>
