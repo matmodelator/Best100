@@ -429,13 +429,19 @@ async function loadComponent(
 
   }
 
-  const response =
-    await fetch(
-      componentPath,
-      {
-        cache: "no-store"
-      }
-    );
+  const resolvedPath =
+  componentPath === "menu.html"
+  || componentPath === "review.html"
+    ? "../../" + componentPath
+    : componentPath;
+
+const response =
+  await fetch(
+    resolvedPath,
+    {
+      cache: "no-store"
+    }
+  );
 
   if (!response.ok) {
 
@@ -460,10 +466,9 @@ async function loadComponent(
 
 const componentUrl =
   new URL(
-    componentPath,
-    parentComponentUrl
+    resolvedPath,
+    location.href
   );
-
 
   /*
   Подключаем стили компонента.
