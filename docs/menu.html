@@ -1,0 +1,144 @@
+/*
+========================================
+GPT from header | 1.0,0
+========================================
+*/
+
+
+<style>
+
+/*
+========================================
+СТАТУСЫ ПОЛЬЗОВАТЕЛЯ
+========================================
+*/
+
+.status-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.status {
+  position: relative;
+
+  padding: 8px 12px;
+
+  background: #f4efe7;
+
+  border-radius: 8px;
+
+  cursor: help;
+}
+
+.status.active {
+  background: #7c2d12;
+  color: white;
+}
+
+
+/*
+========================================
+КНОПКА ВХОД / РЕГИСТРАЦИЯ
+========================================
+*/
+
+.user-actions {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+.auth-btn {
+  width: 100%;
+
+  padding: 14px;
+
+  background: #7c2d12;
+  color: white;
+
+  border: 1px solid #7c2d12;
+  border-radius: 8px;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.auth-btn:hover {
+  filter: brightness(1.12);
+}
+
+</style>
+
+
+<!-- ========================================
+     СТАТУСЫ ПОЛЬЗОВАТЕЛЯ
+======================================== -->
+
+<div class="status-list">
+
+  <div
+    class="status active"
+    data-status="Гость"
+    data-tooltip="Посетитель без регистрации. Может читать и голосовать."
+  >
+    Гость
+  </div>
+
+  <div
+    class="status"
+    data-status="Читатель"
+    data-tooltip="Авторизованный пользователь, который может оставлять комментарии."
+  >
+    Читатель
+  </div>
+
+  <div
+    class="status"
+    data-status="Критик"
+    data-tooltip="Зарегистрированный пользователь, оставивший содержательный отзыв."
+  >
+    Критик
+  </div>
+
+  <div
+    class="status"
+    data-status="Эксперт"
+    data-tooltip="Пользователь, получивший право расширенной оценки стихотворений."
+  >
+    Эксперт
+  </div>
+
+  <div
+    class="status author-status"
+    data-status="Автор"
+    data-tooltip="Поэт, чьё стихотворение включено в Антологию XXI и одобрено редакцией."
+  >
+    Автор
+  </div>
+
+</div>
+
+
+<!-- ========================================
+     КНОПКА ПОЛЬЗОВАТЕЛЯ
+======================================== -->
+
+<div class="user-actions">
+
+  <button
+    id="headerAuthButton"
+    class="auth-btn"
+    type="button"
+  >
+    Вход / Регистрация
+  </button>
+
+</div>
