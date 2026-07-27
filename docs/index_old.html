@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Рифмы века — top21</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: Georgia, "Times New Roman", serif;
+  background: #f4efe7;
+  color: #1f1f1f;
+}
+
+.container {
+  max-width: 1160px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 10px 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.section-title {
+  margin: 0 0 8px;
+  font-size: 26px;
+}
+
+.controls {
+  margin-bottom: 8px;
+}
+
+.controls input {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #c7c7c7;
+  border-radius: 8px;
+}
+
+.top-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 6px;
+  flex: 1;
+  min-height: 0;
+}
+
+.poem-card {
+  background: white;
+  padding: 6px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.poem-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,.18);
+}
+
+.poem-card h3 {
+  margin: 0 0 3px;
+  font-size: 12px;
+  line-height: 1.1;
+}
+
+.poem-info {
+  flex-shrink: 0;
+}
+  
+.poem-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 120px;
+  object-fit: contain;
+  border-radius: 6px;
+  margin-bottom: 5px;
+  flex-shrink: 0;
+}
+  
+.author {
+  font-size: 12px;
+  color: #7c2d12;
+  font-weight: bold;
+  margin: 3px 0;
+}
+
+.excerpt {
+  font-size: 11px;
+  line-height: 1.15;
+  white-space: pre-line;
+  overflow: hidden;
+}
+
+.meta {
+  margin-top: 4px;
+  font-size: 10px;
+  color: #777;
+}
+
+footer {
+  margin-top: 0;
+  background: #1f2933;
+  color: #d1d5db;
+  text-align: center;
+  padding: 12px;
+  font-family: Arial, sans-serif;
+}
+
+@media (max-width: 1024px) {
+  .top-grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+  }
+.poem-card {
+    padding: 5px;
+  }
+
+  .poem-card h3 {
+    font-size: 12px;
+  }
+
+  .poem-photo {
+    height: 40px;
+  }
+  
+  .author {
+    font-size: 11px;
+  }
+
+  .excerpt {
+    font-size: 10px;
+  }
+
+  .meta {
+    font-size: 9px;
+  }
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="headerContainer"></div>
+
+<div class="container">
+<h2 class="section-title" id="top21">
+    Антология XXI
+  </h2>
+
+  <div class="controls">
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Поиск по названию или автору..."
+      oninput="renderTop21()"
+    >
+  </div>
+
+  <div class="top-grid" id="topGrid"></div>
+
+</div>
+
+<footer>
+  Рифмы века © 2026
+</footer>
+
+<script>
+
+  const poems = [
+  "21/poems/poem1.html",
+  "21/poems/poem2.html",
+  "21/poems/poem3.html",
+  "21/poems/poem4.html",
+  "21/poems/poem5.html",
+  "21/poems/poem6.html",
+  "21/poems/poem7.html",
+  "21/poems/poem8.html",
+  "21/poems/poem9.html",
+  "21/poems/poem10.html",
+  "21/poems/poem11.html",
+  "21/poems/poem12.html",
+  "21/poems/poem13.html",
+  "21/poems/poem14.html",
+  "21/poems/poem15.html",
+  "21/poems/poem16.html",
+  "21/poems/poem17.html",
+  "21/poems/poem18.html",
+  "21/poems/poem19.html",
+  "21/poems/poem20.html",
+  "21/poems/poem21.html"
+];
+
+async function loadPoem(page) {
+  const response = await fetch(page);
+  const html = await response.text();
+
+  const doc = new DOMParser().parseFromString(html, "text/html");
+
+  const imageElement = doc.querySelector(".photo img");
+  const imageSrc = imageElement?.getAttribute("src") || "";
+
+  const image = imageSrc
+    ? new URL(imageSrc, new URL(page, location.href)).href
+    : "";
+
+  return {
+    page,
+    title: doc.querySelector(".title")?.textContent.trim() || "",
+    author: doc.querySelector(".author")?.textContent.trim() || "",
+    year: doc.querySelector(".year")?.textContent.trim() || "",
+    excerpt: doc.querySelector(".excerpt")?.textContent.trim() || "",
+    image
+  };
+}
+  
+function createCard(poem) {
+  const card = document.createElement("div");
+  card.className = "poem-card";
+  card.title = "Войди, чтобы прочитать и проголосовать";
+  card.innerHTML = `
+    ${
+      poem.image
+        ? `<img class="poem-photo" src="${poem.image}" alt="">`
+        : ""
+    }
+
+    <div class="poem-info">
+      <h3>${poem.title}</h3>
+      <div class="author">${poem.author}</div>
+      <div class="excerpt">${poem.excerpt}</div>
+      <div class="meta">${poem.year}</div>
+    </div>
+  `;
+
+  card.onclick = () => location.href = poem.page;
+
+  return card;
+}
+
+async function renderTop21() {
+  const topGrid = document.getElementById("topGrid");
+  const search = document.getElementById("searchInput").value.toLowerCase();
+
+  topGrid.innerHTML = "";
+
+  const loadedPoems = await Promise.all(poems.map(loadPoem));
+
+  loadedPoems
+    .filter(poem =>
+      poem.title.toLowerCase().includes(search) ||
+      poem.author.toLowerCase().includes(search)
+    )
+    .forEach(poem => {
+      topGrid.appendChild(createCard(poem));
+    });
+}
+
+renderTop21();
+  
+</script>
+<script>
+
+/*
+========================================
+СТАТУС ПОЛЬЗОВАТЕЛЯ ИЗ CHECK-ACCOUNT
+========================================
+*/
+
+function getUserStatus() {
+
+  return (
+    localStorage.getItem(
+      "userStatus"
+    )
+    || "Гость"
+  );
+
+}
+
+
+function renderUserStatus() {
+
+  const currentStatus =
+    getUserStatus();
+
+  document
+    .querySelectorAll(".status")
+    .forEach(function (item) {
+
+      item.classList.toggle(
+        "active",
+        item.dataset.status
+          === currentStatus
+      );
+
+    });
+
+}
+
+</script>
+
+
+<script>
+
+/*
+========================================
+ЗАГРУЗКА ОБЩЕГО HEADER
+========================================
+*/
+
+async function loadHeader() {
+
+  const headerContainer =
+    document.getElementById("headerContainer");
+
+  try {
+
+    const response =
+      await fetch("header.html");
+
+    if (!response.ok) {
+      throw new Error(
+        "HTTP " + response.status
+      );
+    }
+
+    headerContainer.innerHTML =
+      await response.text();
+
+    document.getElementById("headerLogo").src =
+      "21/images/logo.svg";
+
+    document.getElementById("headerHomeLink").href =
+      "index.html";
+
+    document.getElementById("headerTop21Link").href =
+      "index.html#top21";
+
+    const userPanel =
+      document.getElementById("userPanel");
+
+    document.getElementById("openUserPanelButton")
+      .addEventListener("click", function () {
+        userPanel.classList.add("open");
+      });
+
+    document.getElementById("closeUserPanelButton")
+      .addEventListener("click", function () {
+        userPanel.classList.remove("open");
+      });
+
+    document.getElementById("headerAuthButton")
+      .addEventListener("click", function () {
+        window.location.href = "sign.html";
+      });
+
+    document.getElementById("compassLeft")
+      .addEventListener("click", function () {
+        history.back();
+      });
+
+   document.getElementById("compassCenter")
+  .addEventListener("click", function () {
+
+    const page =
+      location.pathname.toLowerCase();
+
+    if (
+      page.endsWith("/index.html") ||
+      page.endsWith("/")
+    ) {
+
+      window.location.href =
+        "21/poems/poem1.html";
+
+    } else {
+
+      window.location.href =
+        "index.html#top21";
+
+    }
+
+  });
+
+    document.getElementById("compassRight")
+      .addEventListener("click", function () {
+        history.forward();
+      });
+
+    renderUserStatus();
+
+  } catch (error) {
+
+    console.error(
+      "Ошибка загрузки header.html:",
+      error
+    );
+
+    headerContainer.textContent =
+      "Не удалось загрузить верхнюю панель.";
+
+  }
+
+}
+
+loadHeader();
+
+</script>
+
+<!-- ========================================
+     SERVICE CONSOLE
+======================================== -->
+
+<div id="service-console">
+ СТАТУС ПОЛЬЗОВАТЕЛЯ ИЗ CHECK-ACCOUNT | v3.9.0
+</div>
+
+<div class="row" id="build-down">
+deploy: --
+</div>
+
+<script>
+(function () {
+  const now = new Date();
+
+  const pad = n =>
+    String(n).padStart(2, "0");
+
+  const date =
+      pad(now.getDate())
+    + "."
+    + pad(now.getMonth() + 1)
+    + "."
+    + now.getFullYear();
+
+  const time =
+      pad(now.getHours())
+    + ":"
+    + pad(now.getMinutes());
+
+  document
+    .getElementById("build-down")
+    .textContent =
+      "deploy: "
+      + date
+      + " "
+      + time;
+})();
+</script>
+
+
+</body>
+</html>
+  
