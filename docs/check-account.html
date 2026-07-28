@@ -66,12 +66,12 @@ header h1{
 ======================================== */
 
 .container{
-    width:calc(100% - 32px);
-    max-width:500px;
+    width:360px;
+    max-width:calc(100% - 24px);
 
-    margin:42px auto;
+    margin:32px auto;
 
-    padding:30px 32px;
+    padding:24px 22px;
 
     background:#fffdf8;
 
@@ -80,8 +80,7 @@ header h1{
 
     text-align:center;
 
-    box-shadow:
-        0 10px 28px rgba(64,42,27,.13);
+    box-shadow:0 8px 22px rgba(64,42,27,.13);
 }
 
 
@@ -246,12 +245,13 @@ h2{
     }
 
     .container{
-        width:calc(100% - 20px);
+    width:calc(100% - 24px);
+    max-width:360px;
 
-        margin:20px auto 42px;
+    margin:20px auto 42px;
 
-        padding:24px 18px;
-    }
+    padding:22px 18px;
+}
 
     h2{
         font-size:24px;
@@ -370,30 +370,35 @@ if(error){
 statusBox.textContent=
 "Создание аккаунта...";
 
-const insert=
+const {
+
+data:account,
+error:insertError
+
+}=
 await supabase
 .from("top21_accounts")
 .insert({
 
 user_id:user.id,
 
-email:
-  user.email,
-      
-status:"Читатель",
+email:user.email,
 
 name:
   user.user_metadata?.name
   || ""
 
-});
+})
+.select("user_id,email,name,status")
+.single();
+      
 
-if(insert.error){
+if(insertError){
 
 spinner.style.display = "none";
 
 statusBox.textContent=
-insert.error.message;
+insertError.message;
 
 return;
 
@@ -401,12 +406,29 @@ return;
 
 localStorage.setItem(
 "userStatus",
-"Читатель"
+account.status
 );
 
+localStorage.setItem(
+"userName",
+account.name || ""
+);
+      
 spinner.style.display = "none";
 
 statusBox.innerHTML = `
+<b>user.id:</b><br>
+${account.user_id}<br><br>
+
+<b>email:</b><br>
+${account.email}<br><br>
+
+<b>name:</b><br>
+${account.name || "(не задано)"}<br><br>
+
+<b>status:</b><br>
+${account.status}<br><br>
+
 <button id="continueButton">
 Авторизация успешна
 </button>
@@ -441,6 +463,9 @@ ${user.id}<br><br>
 <b>email:</b><br>
 ${user.email}<br><br>
 
+<b>name:</b><br>
+${data?.name || "(не задано)"}<br><br>
+
 <b>status:</b><br>
 ${data?.status ?? "(не получен)"}
 `;
@@ -467,7 +492,7 @@ document
 </script>
 
 <div id="service-console">
-user.email| v2.1.1
+проверка аккаунта с новыми параметрами | v2.2.0
 </div>
 
 <div id="build-down">
