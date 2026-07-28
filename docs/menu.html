@@ -1,6 +1,6 @@
 /*
 ========================================
-скрипт | 1.1.0
+без выноса мозга по новой  | 1.1.5
 ========================================
 */
 
@@ -154,8 +154,28 @@
 function getMenuUserStatus() {
 
   return (
-    localStorage.getItem("userStatus")
+    localStorage.getItem(
+      "userStatus"
+    )
     || "Гость"
+  );
+
+}
+
+
+/*
+========================================
+ИМЯ ПОЛЬЗОВАТЕЛЯ
+========================================
+*/
+
+function getMenuUserName() {
+
+  return (
+    localStorage.getItem(
+      "userName"
+    )
+    || ""
   );
 
 }
@@ -191,7 +211,52 @@ function renderMenuUserStatus() {
 
 /*
 ========================================
-ПЕРЕХОД НА ВХОД / РЕГИСТРАЦИЮ
+КНОПКА ПОЛЬЗОВАТЕЛЯ
+========================================
+*/
+
+function renderMenuAuthButton() {
+
+  const authButton =
+    document.getElementById(
+      "headerAuthButton"
+    );
+
+  if (!authButton) {
+    return;
+  }
+
+  const currentStatus =
+    getMenuUserStatus();
+
+  const currentName =
+    getMenuUserName();
+
+  if (currentStatus === "Гость") {
+
+    authButton.textContent =
+      "Вход / Регистрация";
+
+  } else {
+
+    authButton.innerHTML =
+      "Hello"
+      + (
+        currentName
+          ? ", " + currentName
+          : ""
+      )
+      + "<br>"
+      + "Редактировать профиль";
+
+  }
+
+}
+
+
+/*
+========================================
+ПЕРЕХОД НА SIGN / PROFILE
 ========================================
 */
 
@@ -210,15 +275,29 @@ function initializeMenuAuthButton() {
     "click",
     function () {
 
+      const currentStatus =
+        getMenuUserStatus();
+
       const isPoemPage =
         location.pathname.includes(
           "/21/poems/"
         );
 
-      window.location.href =
-        isPoemPage
-          ? "../../sign.html"
-          : "sign.html";
+      if (currentStatus === "Гость") {
+
+        window.location.href =
+          isPoemPage
+            ? "../../sign.html"
+            : "sign.html";
+
+      } else {
+
+        window.location.href =
+          isPoemPage
+            ? "../../profile.html"
+            : "profile.html";
+
+      }
 
     }
   );
@@ -233,6 +312,7 @@ function initializeMenuAuthButton() {
 */
 
 renderMenuUserStatus();
+renderMenuAuthButton();
 initializeMenuAuthButton();
 
 </script>
