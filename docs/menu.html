@@ -1,6 +1,6 @@
 /*
 ========================================
-без выноса мозга по новой  | 1.1.5
+определение по userId | 1.1.6
 ========================================
 */
 
@@ -162,7 +162,18 @@ function getMenuUserStatus() {
 
 }
 
+========================================
+UserID
+========================================
+  
+function getMenuUserId() {
 
+  return localStorage.getItem(
+    "userId"
+  );
+
+}
+  
 /*
 ========================================
 ИМЯ ПОЛЬЗОВАТЕЛЯ
@@ -226,33 +237,21 @@ function renderMenuAuthButton() {
     return;
   }
 
-  const currentStatus =
-    getMenuUserStatus();
-
-  const currentName =
-    getMenuUserName();
-
-  if (currentStatus === "Гость") {
+  if (!getMenuUserId()) {
 
     authButton.textContent =
       "Вход / Регистрация";
 
-  } else {
-
-    authButton.innerHTML =
-      "Hello"
-      + (
-        currentName
-          ? ", " + currentName
-          : ""
-      )
-      + "<br>"
-      + "Редактировать профиль";
+    return;
 
   }
 
-}
+  authButton.innerHTML =
+    "Hello, "
+    + getMenuUserName()
+    + "<br>Редактировать профиль";
 
+}
 
 /*
 ========================================
