@@ -12,46 +12,97 @@
 
 body{
     margin:0;
-    font-family:Arial,sans-serif;
-    background:#f4f6f8;
+
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-family:Georgia,"Times New Roman",serif;
+
+    background:#f4efe7;
+    color:#1f1f1f;
 }
 
 header{
-    background:#2563eb;
-    color:#fff;
-    padding:16px;
-    text-align:center;
+    display:none;
 }
 
 .container{
-    max-width:520px;
-    margin:60px auto;
-    background:#fff;
-    border-radius:10px;
-    padding:30px;
-    box-shadow:0 4px 12px rgba(0,0,0,.1);
+
+    width:min(500px,92vw);
+
+    margin:0;
+
+    background:#fffdf8;
+
+    border:1px solid #d8cbb5;
+    border-radius:14px;
+
+    padding:36px;
+
     text-align:center;
+
+    box-shadow:0 10px 28px rgba(0,0,0,.12);
 }
 
 h2{
-    margin-top:0;
+
+    margin:0 0 20px;
+
+    font-size:30px;
+
+    color:#5b4325;
 }
 
 #status{
-    margin-top:25px;
-    font-size:16px;
-    line-height:1.6;
+
+    margin-top:20px;
+
+    font-size:18px;
+
+    line-height:1.7;
 }
 
 .spinner{
-    width:34px;
-    height:34px;
-    margin:25px auto;
+
+    width:38px;
+    height:38px;
+
+    margin:24px auto;
+
     border:4px solid #ddd;
-    border-top-color:#2563eb;
+    border-top-color:#8b6b46;
+
     border-radius:50%;
+
     animation:spin .8s linear infinite;
 }
+
+#continueButton{
+
+    margin-top:24px;
+
+    padding:12px 28px;
+
+    background:#8b6b46;
+    color:#fff;
+
+    border:none;
+    border-radius:8px;
+
+    font-size:17px;
+    font-family:inherit;
+
+    cursor:pointer;
+}
+
+#continueButton:hover{
+
+    background:#735436;
+}
+
 
 @keyframes spin{
     to{
@@ -93,6 +144,10 @@ from "./supabase-config.js";
 const statusBox =
 document.getElementById("status");
 
+localStorage.removeItem("userId");
+localStorage.removeItem("userName");
+localStorage.removeItem("userStatus");
+      
 (async function(){
 
 const {
@@ -133,16 +188,6 @@ localStorage.setItem(
   user.id
 );
 
-statusBox.innerHTML = `
-<b>user.id:</b><br>
-${user.id}<br><br>
-
-<b>email:</b><br>
-${user.email}
-`;
-
-return;
-
 const {
 
 data,
@@ -170,7 +215,11 @@ await supabase
 
 user_id:user.id,
 
-status:"Читатель"
+status:"Читатель",
+
+name:
+  user.user_metadata?.name
+  || ""
 
 });
 
@@ -188,11 +237,19 @@ localStorage.setItem(
 "Читатель"
 );
 
-setTimeout(function(){
+statusBox.innerHTML = `
+<button id="continueButton">
+Авторизация успешна
+</button>
+`;
 
-location.href="index.html";
+document
+.getElementById("continueButton")
+.onclick = function(){
 
-},300);
+  location.href = "index.html";
+
+};
 
 return;
 
@@ -208,22 +265,38 @@ localStorage.setItem(
   data.name || ""
 );
       
-statusBox.textContent=
-"Статус: "
-+ data.status;
+statusBox.innerHTML = `
+<b>user.id:</b><br>
+${user.id}<br><br>
 
-setTimeout(function(){
+<b>email:</b><br>
+${user.email}<br><br>
 
-location.href="index.html";
+<b>status:</b><br>
+${data?.status ?? "(не получен)"}
+`;
 
-},300);
+statusBox.innerHTML += `
+<br><br>
+<button id="continueButton">
+Авторизация успешна
+</button>
+`;
+
+document
+.getElementById("continueButton")
+.onclick = function(){
+
+  location.href = "index.html";
+
+};
 
 })();
 
 </script>
 
 <div id="service-console">
-чек и лог| v1.0.3
+чек и лог new style & logic | v2.0.0
 </div>
 
 <div id="build-down">
