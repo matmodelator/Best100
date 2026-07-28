@@ -367,11 +367,55 @@ user.id
 
 if(error){
 
-spinner.style.display =
-"none";
+statusBox.textContent=
+"Создание аккаунта...";
 
-statusBox.textContent =
-"Аккаунт не найден.";
+const insert=
+await supabase
+.from("top21_accounts")
+.insert({
+
+user_id:user.id,
+
+status:"Читатель",
+
+name:
+  user.user_metadata?.name
+  || ""
+
+});
+
+if(insert.error){
+
+spinner.style.display = "none";
+
+statusBox.textContent=
+insert.error.message;
+
+return;
+
+}
+
+localStorage.setItem(
+"userStatus",
+"Читатель"
+);
+
+spinner.style.display = "none";
+
+statusBox.innerHTML = `
+<button id="continueButton">
+Авторизация успешна
+</button>
+`;
+
+document
+.getElementById("continueButton")
+.onclick = function(){
+
+  location.href = "index.html";
+
+};
 
 return;
 
@@ -420,7 +464,7 @@ document
 </script>
 
 <div id="service-console">
-чек и лог new style & logic | v2.0.0
+создание аккаунта| v2.1.0
 </div>
 
 <div id="build-down">
