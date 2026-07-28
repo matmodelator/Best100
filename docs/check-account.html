@@ -103,6 +103,16 @@ error:userError
 }=
 await supabase.auth.getUser();
 
+    
+      
+      console.log("USER =", user);
+console.log("USER.ID =", user?.id);
+
+statusBox.innerHTML =
+"user.id = " + user?.id;
+
+
+      
 if(userError || !user){
 
 statusBox.textContent=
@@ -123,8 +133,15 @@ localStorage.setItem(
   user.id
 );
 
-statusBox.textContent=
-"Получение статуса...";
+statusBox.innerHTML = `
+<b>user.id:</b><br>
+${user.id}<br><br>
+
+<b>email:</b><br>
+${user.email}
+`;
+
+return;
 
 const {
 
@@ -206,7 +223,7 @@ location.href="index.html";
 </script>
 
 <div id="service-console">
-Получение статуса| v1.0.2
+чек и лог| v1.0.3
 </div>
 
 <div id="build-down">
