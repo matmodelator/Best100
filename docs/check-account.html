@@ -118,6 +118,11 @@ return;
 
 }
 
+localStorage.setItem(
+  "userId",
+  user.id
+);
+
 statusBox.textContent=
 "Получение статуса...";
 
@@ -201,7 +206,7 @@ location.href="index.html";
 </script>
 
 <div id="service-console">
-возврат name| v1.0.1
+Получение статуса| v1.0.2
 </div>
 
 <div id="build-down">
