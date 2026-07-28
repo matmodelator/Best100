@@ -1,6 +1,6 @@
 /*
 ========================================
-определение по userId | 1.1.6
+переход будет определяться по факту авторизации на Профиль | 1.1.7
 ========================================
 */
 
@@ -284,7 +284,7 @@ function initializeMenuAuthButton() {
           "/21/poems/"
         );
 
-      if (currentStatus === "Гость") {
+      if (!getMenuUserId()) {
 
         window.location.href =
           isPoemPage
