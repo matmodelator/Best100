@@ -69,12 +69,14 @@
 
     <div class="photo">
 
-      <img
-        src="../images/poem1.webp"
-        alt=""
-      >
+  <a id="poetPhotoLink">
+    <img
+      src="../images/poem1.webp"
+      alt=""
+    >
+  </a>
 
-    </div>
+</div>
 
   </div>
 
@@ -644,6 +646,13 @@ await loadComponent(
   "headerContainer",
   "../../header.html"
 );
+
+document
+  .getElementById("poetPhotoLink")
+  .href =
+    "poet"
+    + poemNumber
+    + ".html";
     
     /*
     Пути для страницы стиха.
@@ -824,8 +833,6 @@ async function initializePoemReview() {
   Вкладки и комментарии.
   */
 
-  initializeReviewTabs();
-
   await loadComments();
 
 }
@@ -970,74 +977,6 @@ console.log("commentsList =", commentsList);
 
 }
   
-/*
-========================================
-ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК REVIEW
-========================================
-*/
-
-function initializeReviewTabs() {
-
-  const tabs =
-    document.querySelectorAll(
-      "#reviewPanel [data-review-tab]"
-    );
-
-  const sections =
-    document.querySelectorAll(
-      "#reviewPanel [data-review-section]"
-    );
-
-  tabs.forEach(
-    function (tab) {
-
-      tab.addEventListener(
-        "click",
-        function () {
-
-          const selectedName =
-            tab.dataset.reviewTab;
-
-          tabs.forEach(
-            function (item) {
-
-              const isActive =
-                item === tab;
-
-              item.classList.toggle(
-                "active",
-                isActive
-              );
-
-              item.setAttribute(
-                "aria-selected",
-                String(isActive)
-              );
-
-            }
-          );
-
-          sections.forEach(
-            function (section) {
-
-              section.classList.toggle(
-                "active",
-                section.dataset.reviewSection
-                  === selectedName
-              );
-
-            }
-          );
-
-        }
-      );
-
-    }
-  );
-
-}
-
-
 </script> 
 
 <!-- ========================================
@@ -1045,7 +984,7 @@ function initializeReviewTabs() {
 ======================================== -->
 
 <div id="service-console">
- пути к хидеру | v2.0.1
+минус initializeReviewTabs/ плюс poetPhotoLink | v2.1.1
 </div>
 
 <div
