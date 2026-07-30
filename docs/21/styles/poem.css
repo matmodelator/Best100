@@ -1,6 +1,6 @@
 /*
 ========================================
-фикс подсказки| v1.2.2
+тотальная чистка| v2.2.2
 ========================================
 */
 
@@ -32,54 +32,16 @@ body {
   color: #1f1f1f;
 }
 
-
-/*
-========================================
-ВЕРХНЯЯ ШАПКА — КАК НА INDEX
-========================================
-*/
-
-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-
-  background: #1f2933;
-  color: white;
-
-  padding: 18px;
-}
-
-.header-text {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  text-align: left;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 36px;
-}
-
-header p {
-  margin: 6px 0 0;
-  color: #d1d5db;
-  font-size: 16px;
-}
-
 /*
 ========================================
 КОМПАС-НАВИГАТОР
 ========================================
-*/
+
 
 .compass-nav {
   position: relative;
 
-  width: 120px;     /* ОБЩИЙ РАЗМЕР ЛОГОТИПА */
+  width: 120px;     /* ОБЩИЙ РАЗМЕР ЛОГОТИПА 
   flex: 0 0 auto;
 }
 
@@ -92,13 +54,13 @@ header p {
   pointer-events: none;
   user-select: none;
 }
-
+*/
 
 /*
 ========================================
 ПРОЗРАЧНЫЕ АКТИВНЫЕ ЗОНЫ
 ========================================
-*/
+
 
 .compass-zone {
   position: absolute;
@@ -116,7 +78,7 @@ header p {
   -webkit-tap-highlight-color: transparent;
   appearance: none;
 }
-
+*/
 /*
 ========================================
 РАСПОЛОЖЕНИЕ ПЯТИ ЗОН
@@ -152,311 +114,6 @@ header p {
 
   width: 21%;
   height: 31%;
-}
-
-/*
-========================================
-ПОДСКАЗКА
-========================================
-
-
-.compass-zone::after {
-  content: attr(data-tooltip);
-
-  position: absolute;
-  left: 50%;
-  bottom: calc(100% + 7px);
-
-  transform: translateX(-50%) translateY(3px);
-
-  padding: 6px 9px;
-
-  background: #111827;
-  color: white;
-
-  border: 1px solid #6b7280;
-  border-radius: 6px;
-
-  box-shadow: 0 4px 12px rgba(0, 0, 0, .28);
-
-  font-family: Arial, sans-serif;
-  font-size: 11px;
-  line-height: 1;
-  white-space: nowrap;
-
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-
-  z-index: 100;
-
-  transition:
-    opacity .15s ease,
-    transform .15s ease;
-}
-
-.compass-zone:hover::after,
-.compass-zone:focus-visible::after {
-  opacity: 1;
-  visibility: visible;
-
-  transform: translateX(-50%) translateY(0);
-}
-*/
-
-/*
-========================================
-МАЛЕНЬКИЙ ТРЕУГОЛЬНИК ПОДСКАЗКИ
-========================================
-*/
-
-.compass-zone::before {
-  content: "";
-
-  position: absolute;
-  left: 50%;
-  bottom: calc(100% + 2px);
-
-  transform: translateX(-50%);
-
-  border: 5px solid transparent;
-  border-top-color: #111827;
-
-  opacity: 0;
-  visibility: hidden;
-
-  z-index: 101;
-}
-
-.compass-zone:hover::before,
-.compass-zone:focus-visible::before {
-  opacity: 1;
-  visibility: visible;
-}
-
-/*
-========================================
-НИЖНЕЕ МЕНЮ ПОД HEADER
-========================================
-*/
-
-nav {
-  position: relative;
-
-  background: #111827;
-  padding: 10px 16px;
-
-  text-align: center;
-}
-
-nav .links {
-  display: inline-flex;
-  gap: 28px;
-}
-
-nav .links a {
-  color: white;
-  text-decoration: none;
-
-  margin: 0 14px;
-
-  font-family: Arial, sans-serif;
-}
-
-nav .links a:hover {
-  color: #d1d5db;
-}
-
-
-/*
-========================================
-КНОПКА «МЕНЮ»
-========================================
-*/
-
-.user-btn {
-  position: absolute;
-  right: 16px;
-  top: 50%;
-
-  transform: translateY(-50%);
-
-  padding: 5px 12px;
-
-  background: #374151;
-  color: white;
-
-  border: 1px solid #6b7280;
-  border-radius: 6px;
-
-  cursor: pointer;
-}
-
-.user-btn:hover {
-  background: #4b5563;
-}
-
-
-/*
-========================================
-БОКОВАЯ ПАНЕЛЬ ПОЛЬЗОВАТЕЛЯ
-========================================
-*/
-
-.user-panel {
-  position: fixed;
-  top: 0;
-  right: -280px;
-
-  width: 280px;
-  height: 100vh;
-
-  background: white;
-
-  box-shadow: -4px 0 14px rgba(0, 0, 0, 0.18);
-
-  padding: 20px;
-
-  z-index: 30;
-
-  transition: right 0.25s;
-
-  display: flex;
-  flex-direction: column;
-}
-
-.user-panel.open {
-  right: 0;
-}
-
-
-/*
-========================================
-КНОПКА ЗАКРЫТИЯ ПАНЕЛИ
-========================================
-*/
-
-.close-btn {
-  align-self: flex-end;
-
-  background: none;
-  border: none;
-
-  font-size: 24px;
-  line-height: 1;
-
-  cursor: pointer;
-}
-
-
-/*
-========================================
-СТАТУСЫ ПОЛЬЗОВАТЕЛЯ
-========================================
-*/
-
-.status-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.status {
-  position: relative;
-
-  padding: 8px 12px;
-
-  border-radius: 8px;
-
-  background: #f4efe7;
-
-  cursor: help;
-}
-
-.status.active {
-  background: #7c2d12;
-  color: white;
-}
-
-
-/*
-========================================
-ПОДСКАЗКА У СТАТУСА
-========================================
-*/
-
-.status::after {
-  content: attr(data-tooltip);
-
-  position: absolute;
-  left: 0;
-  top: calc(100% + 6px);
-
-  width: 220px;
-
-  padding: 10px 12px;
-
-  background: #111827;
-  color: white;
-
-  border-radius: 7px;
-
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-
-  font-family: Arial, sans-serif;
-  font-size: 12px;
-  line-height: 1.35;
-
-  opacity: 0;
-  visibility: hidden;
-
-  pointer-events: none;
-
-  z-index: 50;
-
-  transition: opacity 0.15s;
-}
-
-.status:hover::after {
-  opacity: 1;
-  visibility: visible;
-}
-
-
-/*
-========================================
-КНОПКА ВХОД / РЕГИСТРАЦИЯ
-========================================
-*/
-
-.user-actions {
-  margin-top: auto;
-  padding-top: 20px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.auth-btn {
-  width: 100%;
-
-  padding: 14px 16px;
-
-  background: #7c2d12;
-  color: white;
-
-  border: 1px solid #7c2d12;
-  border-radius: 8px;
-
-  font-size: 16px;
-  font-weight: bold;
-
-  cursor: pointer;
-}
-
-.auth-btn:hover {
-  filter: brightness(1.12);
 }
 
 /*
@@ -914,157 +571,6 @@ footer {
   font-size: 11px;
 }
 
-/*
-========================================
-ЛЕВАЯ ПАНЕЛЬ REVIEW
-========================================
-*/
-
-.open-review-button {
-  position: fixed;
-  left: 0;
-  top: 50%;
-
-  transform:
-    translateY(-50%)
-    rotate(-90deg)
-    translateY(-100%);
-
-  transform-origin: left top;
-
-  padding: 7px 14px;
-
-  background: #374151;
-  color: white;
-
-  border: 1px solid #6b7280;
-  border-radius: 0 0 7px 7px;
-
-  font-family: Arial, sans-serif;
-  font-size: 13px;
-
-  cursor: pointer;
-
-  z-index: 80;
-}
-
-.open-review-button:hover {
-  background: #4b5563;
-}
-
-
-/*
-========================================
-САМА ЛЕВАЯ ПАНЕЛЬ
-========================================
-*/
-
-.review-side-panel {
-  position: fixed;
-
-  left: -420px;
-  top: 0;
-
-  width: 420px;
-  max-width: 92vw;
-  height: 100vh;
-
-  padding: 20px;
-
-  background: white;
-  color: #1f1f1f;
-
-  overflow-y: auto;
-
-  box-shadow:
-    4px 0 14px rgba(0, 0, 0, 0.18);
-
-  transition: left 0.25s ease;
-
-  z-index: 1000;
-}
-
-.review-side-panel.open {
-  left: 0;
-}
-
-
-/*
-========================================
-КНОПКА ЗАКРЫТИЯ
-========================================
-*/
-
-.review-close-button {
-  display: block;
-
-  margin: 0 0 10px auto;
-  padding: 0;
-
-  background: none;
-  color: #1f2933;
-
-  border: none;
-
-  font-size: 28px;
-  line-height: 1;
-
-  cursor: pointer;
-}
-
-.review-close-button:hover {
-  color: #7c2d12;
-}
-
-
-/*
-========================================
-ЗАТЕМНЕНИЕ
-========================================
-*/
-
-.review-overlay {
-  position: fixed;
-  inset: 0;
-
-  display: none;
-
-  background:
-    rgba(17, 24, 39, 0.42);
-
-  z-index: 900;
-}
-
-.review-overlay.open {
-  display: block;
-}
-
-
-/*
-========================================
-МОБИЛЬНАЯ ВЕРСИЯ review-side-panel
-========================================
-*/
-
-@media (max-width: 600px) {
-
-  .review-side-panel {
-    left: -92vw;
-
-    width: 92vw;
-  }
-
-  .review-side-panel.open {
-    left: 0;
-  }
-
-  .open-review-button {
-    padding: 6px 10px;
-
-    font-size: 11px;
-  }
-
-}
 
 /*
 ========================================
@@ -1077,26 +583,7 @@ footer {
 
 @media (max-width: 1024px) {
 
-  header {
-    gap: 8px;
-    padding: 4px 10px;
-  }
-
-  .compass-nav {
-  width: 48px;
-}
-
-  header h1 {
-    font-size: 22px;
-    line-height: 1;
-  }
-
-  header p {
-    margin-top: 2px;
-    font-size: 11px;
-    line-height: 1.1;
-  }
-
+ 
    /*
   Отступы страницы от краёв телефона.
   */
@@ -1160,7 +647,7 @@ footer {
   */
 
   .poem {
-    font-size: 9px;
+    font-size: 10px;
     line-height: 1.12;
   }
 
