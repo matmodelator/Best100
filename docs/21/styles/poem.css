@@ -1,6 +1,6 @@
 /*
 ========================================
-review panel | v1.2.0
+фикс ебаных квадратиков| v1.2.1
 ========================================
 */
 
@@ -112,20 +112,10 @@ header p {
 
   cursor: pointer;
   z-index: 5;
+
+  -webkit-tap-highlight-color: transparent;
+  appearance: none;
 }
-
-
-/*
-Лёгкое выделение зоны при наведении.
-Удали background, если подсветка не нужна.
-*/
-
-.compass-zone:hover,
-.compass-zone:focus-visible {
-  background: transparent;
-  outline: none;
-}
-
 
 /*
 ========================================
@@ -136,15 +126,6 @@ header p {
 размера логотипа.
 ========================================
 */
-
-/* Верхняя стрелка */
-.compass-up {
-  left: 38%;
-  top: 0;
-
-  width: 24%;
-  height: 20%;
-}
 
 /* Левая стрелка */
 .compass-left {
@@ -171,15 +152,6 @@ header p {
 
   width: 21%;
   height: 31%;
-}
-
-/* Нижняя стрелка */
-.compass-down {
-  left: 38%;
-  bottom: 0;
-
-  width: 24%;
-  height: 14%;
 }
 
 /*
