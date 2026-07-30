@@ -4,7 +4,7 @@
 
 /*
 ========================================
-чистка Разбор и обсуждение | v1.1.2
+ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК REVIEW | v1.2.2
 ========================================
 */
 
@@ -1531,3 +1531,71 @@
   </section>
 
 </div>
+
+<script>
+
+/*
+========================================
+ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК REVIEW
+========================================
+*/
+
+(function () {
+
+  const reviewRoot =
+    document.getElementById("reviewContainer")
+    || document;
+
+  const tabs =
+    reviewRoot.querySelectorAll(
+      "[data-review-tab]"
+    );
+
+  const sections =
+    reviewRoot.querySelectorAll(
+      "[data-review-section]"
+    );
+
+  tabs.forEach(function (tab) {
+
+    tab.addEventListener(
+      "click",
+      function () {
+
+        const selected =
+          tab.dataset.reviewTab;
+
+        tabs.forEach(function (item) {
+
+          const active =
+            item === tab;
+
+          item.classList.toggle(
+            "active",
+            active
+          );
+
+          item.setAttribute(
+            "aria-selected",
+            String(active)
+          );
+
+        });
+
+        sections.forEach(function (section) {
+
+          section.classList.toggle(
+            "active",
+            section.dataset.reviewSection === selected
+          );
+
+        });
+
+      }
+    );
+
+  });
+
+})();
+
+</script>
