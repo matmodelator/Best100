@@ -4,7 +4,7 @@
 
 /*
 ========================================
-ЗАГРУЗКА ФАЙЛА review*.html | v1.3.2
+fix poem number | v1.3.3
 ========================================
 */
 
@@ -652,21 +652,6 @@
 }
 
 </style>
-
-
-<!-- ========================================
-     КОМПОНЕНТ РАЗБОРА И ОБСУЖДЕНИЯ
-======================================== 
-
-<div
-  id="reviewComponent"
-  class="review-component"
->
-
-  <h2 class="review-component-title">
-    Разбор и обсуждение
-  </h2> 
--->
 
   <!-- ======================================
        ШЕСТЬ ПЕРЕКЛЮЧАТЕЛЕЙ
@@ -1385,10 +1370,6 @@
 
   </section>
 
-</div>
-
-<script>
-
 <script>
 
 /*
@@ -1469,15 +1450,14 @@
     return;
   }
 
-  const poemId =
-    document.body.dataset.poemId
-    || new URLSearchParams(
-      window.location.search
-    ).get("poem")
-    || "1";
+  const match =
+  window.location.pathname.match(/poem(\d+)\.html$/i);
+
+const poemId =
+  match ? match[1] : "1";
 
   const reviewFile =
-  `21/reviews/review${poemId}.html`;
+  `/Best100/docs/21/reviews/review${poemId}.html`;
 
   fetch(reviewFile)
 
