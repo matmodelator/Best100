@@ -4,7 +4,7 @@
 
 /*
 ========================================
-ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК REVIEW | v1.2.2
+ЗАГРУЗКА ФАЙЛА review*.html | v1.3.2
 ========================================
 */
 
@@ -743,184 +743,39 @@
 
   <!-- ======================================
        РАЗБОР ИИ
-
-       Содержимое этого раздела можно
-       позднее загружать из отдельного файла:
-
-       docs/21/reviews/review1.html
+     загружать из отдельного файла:
+        docs/21/reviews/review1.html
        docs/21/reviews/review2.html
        ...
   ======================================= -->
 
-  <section
-    class="review-section active"
-    data-review-section="ai"
+ <!-- ======================================
+     РАЗБОР ИИ
+======================================= -->
+
+<section
+  class="review-section active"
+  data-review-section="ai"
+>
+
+  <h3 class="review-section-title">
+    Разбор ИИ
+  </h3>
+
+  <div class="review-section-description">
+    Анализ стихотворения по основным поэтическим критериям.
+  </div>
+
+  <div
+    id="aiReviewContent"
+    class="review-card"
   >
-
-    <h3 class="review-section-title">
-      Разбор ИИ
-    </h3>
-
-    <div class="review-section-description">
-      Анализ стихотворения по основным поэтическим критериям.
+    <div class="comments-empty">
+      Загрузка разбора...
     </div>
+  </div>
 
-
-    <div
-      id="aiReviewContent"
-      class="review-card"
-    >
-
-      <div class="ai-review-list">
-
-        <div class="ai-review-item">
-
-          <div class="ai-review-head">
-
-            <span class="ai-review-name">
-              Образность
-            </span>
-
-            <span class="ai-review-score">
-              —
-            </span>
-
-          </div>
-
-          <div class="ai-review-comment">
-            Разбор пока не добавлен.
-          </div>
-
-        </div>
-
-
-        <div class="ai-review-item">
-
-          <div class="ai-review-head">
-
-            <span class="ai-review-name">
-              Ритм и музыкальность
-            </span>
-
-            <span class="ai-review-score">
-              —
-            </span>
-
-          </div>
-
-          <div class="ai-review-comment">
-            —
-          </div>
-
-        </div>
-
-
-        <div class="ai-review-item">
-
-          <div class="ai-review-head">
-
-            <span class="ai-review-name">
-              Язык и лексика
-            </span>
-
-            <span class="ai-review-score">
-              —
-            </span>
-
-          </div>
-
-          <div class="ai-review-comment">
-            —
-          </div>
-
-        </div>
-
-
-        <div class="ai-review-item">
-
-          <div class="ai-review-head">
-
-            <span class="ai-review-name">
-              Композиция
-            </span>
-
-            <span class="ai-review-score">
-              —
-            </span>
-
-          </div>
-
-          <div class="ai-review-comment">
-            —
-          </div>
-
-        </div>
-
-
-        <div class="ai-review-item">
-
-          <div class="ai-review-head">
-
-            <span class="ai-review-name">
-              Размер и рифма
-            </span>
-
-            <span class="ai-review-score">
-              —
-            </span>
-
-          </div>
-
-          <div class="ai-review-comment">
-            —
-          </div>
-
-        </div>
-
-
-        <div class="ai-review-item">
-
-          <div class="ai-review-head">
-
-            <span class="ai-review-name">
-              Эмоциональное воздействие
-            </span>
-
-            <span class="ai-review-score">
-              —
-            </span>
-
-          </div>
-
-          <div class="ai-review-comment">
-            —
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="ai-review-total">
-
-        <div class="ai-review-head">
-
-          <span class="ai-review-name">
-            Общая оценка
-          </span>
-
-          <span class="ai-review-score">
-            —
-          </span>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
+</section>
 
   <!-- ======================================
        КРИТИКА
@@ -1534,6 +1389,8 @@
 
 <script>
 
+<script>
+
 /*
 ========================================
 ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК REVIEW
@@ -1595,6 +1452,68 @@
     );
 
   });
+
+
+  /*
+  ========================================
+  ЗАГРУЗКА ФАЙЛА review*.html
+  ========================================
+  */
+
+  const aiReviewContent =
+    reviewRoot.querySelector(
+      "#aiReviewContent"
+    );
+
+  if (!aiReviewContent) {
+    return;
+  }
+
+  const poemId =
+    document.body.dataset.poemId
+    || new URLSearchParams(
+      window.location.search
+    ).get("poem")
+    || "1";
+
+  const reviewFile =
+  `21/reviews/review${poemId}.html`;
+
+  fetch(reviewFile)
+
+    .then(function (response) {
+
+      if (!response.ok) {
+        throw new Error(
+          `HTTP ${response.status}: ${reviewFile}`
+        );
+      }
+
+      return response.text();
+
+    })
+
+    .then(function (html) {
+
+      aiReviewContent.innerHTML =
+        html;
+
+    })
+
+    .catch(function (error) {
+
+      console.error(
+        "Ошибка загрузки разбора ИИ:",
+        error
+      );
+
+      aiReviewContent.innerHTML = `
+        <div class="comments-empty">
+          Разбор пока не добавлен.
+        </div>
+      `;
+
+    });
 
 })();
 
