@@ -4,7 +4,7 @@
 
 /*
 ========================================
-fix way | v1.3.6
+ПЕРЕХОД В comment.html | v1.4.0
 ========================================
 */
 
@@ -1456,6 +1456,31 @@ fix way | v1.3.6
 const poemId =
   match ? match[1] : "1";
 
+/*
+========================================
+ПЕРЕХОД В comment.html
+========================================
+*/
+
+const openCommentPageButton =
+  reviewRoot.querySelector(
+    "#openCommentPageButton"
+  );
+
+if (openCommentPageButton) {
+
+  openCommentPageButton.addEventListener(
+    "click",
+    function () {
+
+      window.location.href =
+        `/Best100/comment.html?poem=${poemId}`;
+
+    }
+  );
+
+}
+  
  const reviewFile =
   `/Best100/21/reviews/review${poemId}.html`;
 
