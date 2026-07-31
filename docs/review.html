@@ -4,7 +4,7 @@
 
 /*
 ========================================
-fix poem number | v1.3.3
+fix fetch | v1.3.4
 ========================================
 */
 
@@ -1459,42 +1459,46 @@ const poemId =
   const reviewFile =
   `/Best100/docs/21/reviews/review${poemId}.html`;
 
-  fetch(reviewFile)
+ fetch(reviewFile)
 
-    .then(function (response) {
+  .then(function (response) {
 
-      if (!response.ok) {
-        throw new Error(
-          `HTTP ${response.status}: ${reviewFile}`
-        );
-      }
-
-      return response.text();
-
-    })
-
-    .then(function (html) {
-
-      aiReviewContent.innerHTML =
-        html;
-
-    })
-
-    .catch(function (error) {
-
-      console.error(
-        "Ошибка загрузки разбора ИИ:",
-        error
-      );
+    if (!response.ok) {
 
       aiReviewContent.innerHTML = `
         <div class="comments-empty">
-          Разбор пока не добавлен.
+          Ошибка ${response.status}<br>
+          ${response.url}
         </div>
       `;
 
-    });
+      return null;
+    }
 
-})();
+    return response.text();
 
+  })
+
+  .then(function (html) {
+
+    if (html === null) {
+      return;
+    }
+
+    aiReviewContent.innerHTML = html;
+
+  })
+
+  .catch(function (error) {
+
+    aiReviewContent.innerHTML = `
+      <div class="comments-empty">
+        Ошибка fetch:<br>
+        ${String(error)}
+        <br><br>
+        ${reviewFile}
+      </div>
+    `;
+
+  });
 </script>
