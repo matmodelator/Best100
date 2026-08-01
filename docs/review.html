@@ -4,7 +4,7 @@
 
 /*
 ========================================
-ПЕРЕХОД В comment.html | v1.4.0
+Подключение к базе через supabase-config.js | v1.5.0
 ========================================
 */
 
@@ -1370,6 +1370,8 @@
 
   </section>
 
+<script src="/Best100/supabase-config.js"></script>
+
 <script>
 
 /*
@@ -1474,17 +1476,156 @@ if (openCommentPageButton) {
     function () {
 
       window.location.href =
-        `/Best100/comment.html?poem=${poemId}`;
+        `/Best100/comment.html?poem_id=${poemId}`;
 
     }
   );
 
 }
-  
- const reviewFile =
+
+
+/*
+========================================
+ЗАГРУЗКА КОММЕНТАРИЕВ ИЗ SUPABASE
+========================================
+*/
+
+const commentsList =
+  reviewRoot.querySelector(
+    "#commentsList"
+  );
+
+function escapeCommentHtml(value) {
+
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+}
+
+
+async function loadComments() {
+
+  if (!commentsList) {
+    return;
+  }
+
+  try {
+
+    const {
+      data,
+      error
+    } = await supabaseClient
+      .from("top21_comments")
+      .select(
+        "authorName, commentText, created_at"
+      )
+      .eq(
+        "poem_id",
+        Number(poemId)
+      )
+      .eq(
+        "status",
+        "approved"
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      );
+
+    if (error) {
+      throw error;
+    }
+
+    if (!data || data.length === 0) {
+
+      commentsList.innerHTML = `
+        <div class="comments-empty">
+          Комментариев пока нет.
+        </div>
+      `;
+
+      return;
+    }
+
+    commentsList.innerHTML =
+      data.map(function (comment) {
+
+        const commentDate =
+          comment.created_at
+            ? new Date(
+                comment.created_at
+              ).toLocaleDateString(
+                "ru-RU"
+              )
+            : "";
+
+        return `
+          <div class="comment-item">
+
+            <div class="comment-head">
+
+              <span class="comment-author">
+                ${escapeCommentHtml(
+                  comment.authorName
+                  || "Читатель"
+                )}
+              </span>
+
+              <span class="comment-date">
+                ${escapeCommentHtml(
+                  commentDate
+                )}
+              </span>
+
+            </div>
+
+            <div class="comment-text">
+              ${escapeCommentHtml(
+                comment.commentText
+              )}
+            </div>
+
+          </div>
+        `;
+
+      }).join("");
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "Ошибка загрузки комментариев:",
+      error
+    );
+
+    commentsList.innerHTML = `
+      <div class="comments-empty">
+        Не удалось загрузить комментарии.
+      </div>
+    `;
+
+  }
+
+}
+
+
+/*
+========================================
+ЗАГРУЗКА ФАЙЛА review*.html
+========================================
+*/
+
+const reviewFile =
   `/Best100/21/reviews/review${poemId}.html`;
 
- fetch(reviewFile)
+fetch(reviewFile)
 
   .then(function (response) {
 
@@ -1510,22 +1651,29 @@ if (openCommentPageButton) {
       return;
     }
 
-    aiReviewContent.innerHTML = html;
+    aiReviewContent.innerHTML =
+      html;
 
   })
 
   .catch(function (error) {
 
+    console.error(
+      "Ошибка загрузки разбора:",
+      error
+    );
+
     aiReviewContent.innerHTML = `
       <div class="comments-empty">
-        Ошибка fetch:<br>
-        ${String(error)}
-        <br><br>
-        ${reviewFile}
+        Не удалось загрузить разбор.
       </div>
     `;
 
   });
+
+
+loadComments();
+
 })();
   
 </script>
