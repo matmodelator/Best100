@@ -1,12 +1,11 @@
+/*
+========================================
+fix supabase | v1.5.1
+========================================
+*/
 
 
 <style>
-
-/*
-========================================
-Подключение к базе через supabase-config.js | v1.5.0
-========================================
-*/
 
 
 /*
@@ -1518,18 +1517,18 @@ async function loadComments() {
     const {
       data,
       error
-    } = await supabaseClient
+    } = await supabase
       .from("top21_comments")
       .select(
-        "authorName, commentText, created_at"
+        "author_name, comment_text, created_at"
       )
       .eq(
         "poem_id",
         Number(poemId)
       )
       .eq(
-        "status",
-        "approved"
+        "is_approved",
+        true
       )
       .order(
         "created_at",
@@ -1572,7 +1571,7 @@ async function loadComments() {
 
               <span class="comment-author">
                 ${escapeCommentHtml(
-                  comment.authorName
+                  comment.author_name
                   || "Читатель"
                 )}
               </span>
@@ -1587,7 +1586,7 @@ async function loadComments() {
 
             <div class="comment-text">
               ${escapeCommentHtml(
-                comment.commentText
+                comment.comment_text
               )}
             </div>
 
@@ -1607,14 +1606,15 @@ async function loadComments() {
 
     commentsList.innerHTML = `
       <div class="comments-empty">
-        Не удалось загрузить комментарии.
+        ${escapeCommentHtml(
+          error.message || String(error)
+        )}
       </div>
     `;
 
   }
 
 }
-
 
 /*
 ========================================
