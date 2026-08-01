@@ -1,6 +1,6 @@
 /*
 ========================================
-fix supabase | v1.5.1
+fix script supabase | v1.5.2
 ========================================
 */
 
@@ -1369,7 +1369,6 @@ fix supabase | v1.5.1
 
   </section>
 
-<script src="/Best100/supabase-config.js"></script>
 
 <script>
 
@@ -1514,11 +1513,17 @@ async function loadComments() {
 
   try {
 
-    const {
-      data,
-      error
-    } = await supabase
-      .from("top21_comments")
+  const { supabase } =
+  await import(
+    "../../supabase-config.js"
+  );
+
+const {
+  data,
+  error
+} = await supabase
+  .from("top21_comments")
+  
       .select(
         "author_name, comment_text, created_at"
       )
