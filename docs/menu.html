@@ -1,6 +1,6 @@
 /*
 ========================================
-переход будет определяться по факту авторизации на Профиль | 1.1.7
+стили подсказок | 1.2.0
 ========================================
 */
 
@@ -37,6 +37,90 @@
   color: white;
 }
 
+/*
+========================================
+ПОДСКАЗКИ СТАТУСОВ
+========================================
+*/
+
+.status::after {
+  content: attr(data-tooltip);
+
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+
+  z-index: 1000;
+
+  width: max-content;
+  max-width: 260px;
+
+  padding: 8px 10px;
+
+  background: #1f2933;
+  color: white;
+
+  border-radius: 6px;
+
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 1.35;
+
+  text-align: left;
+  white-space: normal;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transform:
+    translateX(-50%)
+    translateY(4px);
+
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease,
+    visibility 0.15s ease;
+}
+
+.status::before {
+  content: "";
+
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 2px);
+
+  z-index: 1001;
+
+  border: 6px solid transparent;
+  border-top-color: #1f2933;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transform: translateX(-50%);
+
+  transition:
+    opacity 0.15s ease,
+    visibility 0.15s ease;
+}
+
+.status:hover::after,
+.status:hover::before,
+.status:focus-visible::after,
+.status:focus-visible::before {
+  opacity: 1;
+  visibility: visible;
+}
+
+.status:hover::after,
+.status:focus-visible::after {
+  transform:
+    translateX(-50%)
+    translateY(0);
+}  
 
 /*
 ========================================
