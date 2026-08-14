@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Пейзаж — Рифмы века</title>
+
+  <link
+    rel="stylesheet"
+    href="../styles/poem.css"
+  >
+
+</head>
+
+<body>
+
+
+<!-- ========================================
+     ОБЩИЙ HEADER
+
+     poem1.html:
+     docs/21/poems/poem1.html
+
+     header.html:
+     docs/header.html
+
+     Поэтому путь:
+     ../../header.html
+======================================== -->
+
+<div id="headerContainer"></div>
+ 
+<!-- ========================================
+     ОСНОВНОЙ КОНТЕЙНЕР
+======================================== -->
+
+<main class="container">
+
+
+  <!-- ======================================
+       НАЗВАНИЕ, АВТОР, ГОД И ФОТО
+  ======================================= -->
+
+  <div class="poem-header">
+
+    <div class="poem-heading">
+
+      <h2 class="title">
+        ВАРЕНЬЕ ИЗ КРЫЖОВНИКА
+      </h2>
+
+      <div class="author">
+        Михаил ЩЕРБАКОВ 
+      </div>
+
+      <div class="year">
+        2022
+      </div>
+
+    </div>
+
+
+    <div class="photo">
+
+  <a id="poetPhotoLink">
+    <img
+      src="../images/poem2.webp"
+      alt=""
+    >
+  </a>
+
+</div>
+
+  </div>
+
+
+  <!-- ======================================
+       ФРАГМЕНТ ДЛЯ КАРТОЧКИ НА ГЛАВНОЙ
+  ======================================= -->
+
+  <div class="excerpt">
+Имеешь право дышать спокойно, недаром жил
+  </div>
+
+
+  <!-- ======================================
+       ПОЛНЫЙ ТЕКСТ СТИХОТВОРЕНИЯ
+  ======================================= -->
+
+  <div class="poem">
+Варенье из крыжовника
+
+    
+1.
+
+Вы любите варенье из крыжовника?
+Таким был у неё оттенок глаз,
+Она твердила про отца-полковника
+И что -то там про город Арзамас.
+
+Она любила джаз. И междометия.
+Пьянела быстро- где-то в полчаса
+И длинной-длинной. как тысячелетие,
+Была её янтарная коса.
+
+Тихоня. Недотрога. Королевишна.
+Точь-в-точь, из пастернаковской мечты,
+Она меня с ума сводила бережно,
+Как сводят ленинградские мосты.
+
+Я думал: так бывает только в повести,
+Но оказалось-повести не лгут,
+Перроны нам оказывали почести,
+Гремел зимы разнузданный салют.
+
+Страна пыхтела алой печью доменной,
+Рекорды выдавая на-гора,
+А я тонул. Тонул в реке соломенной,
+Струившейся от шеи до бедра.
+
+Мир сотрясался четырьмя основами,
+Метались черепахи и слоны...
+Мы печь топили шишками сосновыми
+И приходили друг ко другу в сны.
+
+В саду качались вербы неваляшками,
+А по ночам-особенно в метель-
+Она курила быстрыми затяжками,
+А после снова падала в постель.
+
+Земля казалась замершей и вымершей,
+Мы спали, а напротив, у стола
+Судьба сидела терпеливой киллершей
+И пробужденья нашего ждала.
+
+2.
+
+...Она была как номер на трапеции:
+Недолго, но захватывало дух,
+Теперь она-домохозяйка в Швеции,
+Её супруг- католик и главбух.
+
+( Ещё " лопух" напрашивалось явственно,
+Но то неправда- был весьма неглуп!),
+Меня своими потчевал он яствами:
+Салаты, фрикадельки, рыбный суп.
+
+И мискою, вмещавшей два половника,
+Был одарён я в чаепитья час...
+Проклятие! Варенье из крыжовника!
+Таким был у неё оттенок глаз.
+
+Она как будто с той поры не выспалась
+И, словно стужа тронула жнивьё,
+С янтарной желтизной смешалась изморозь
+В соломенной республике её.
+
+Здесь тот же горизонт и та же Балтика
+И ветер лезет пятернёй в лицо,
+Но страсти нет- одна психосоматика
+Пустая, как трамвайное кольцо.
+
+Над пристанью поморники гундосили,
+Мы попрощались быстро, не навзрыд,
+Она сказала: " Прилечу по осени",
+Мы оба знали, что не прилетит.
+
+И, уходя по трапу с посторонними
+И ветра ощущая похвалу,
+Я чувствовал озябшими ладонями
+Сгоревших шишек тёплую смолу...
+  </div>
+
+</main>
+
+
+<!-- ========================================
+     ПАНЕЛЬ ГОЛОСОВАНИЯ
+======================================== -->
+
+<section class="vote-panel">
+
+  <button
+    id="openVoteButton"
+    class="vote-start"
+    type="button"
+    onclick="toggleVotePanel()"
+    disabled
+  >
+    ГОЛОСОВАНИЕ откроется через 3:00. Прочитайте до КОНЦА
+  </button>
+
+
+  <div
+    id="voteDetails"
+    class="vote-details"
+  >
+
+    <div class="vote-question">
+      Должно ли это стихотворение входить в Антологию XXI?
+    </div>
+
+
+    <div class="vote-buttons">
+
+      <button
+        id="voteYes"
+        class="vote-yes"
+        type="button"
+        onclick="sendVote('yes')"
+      >
+        Да
+      </button>
+
+      <button
+        id="voteNo"
+        class="vote-no"
+        type="button"
+        onclick="sendVote('no')"
+      >
+        Нет
+      </button>
+
+    </div>
+
+
+    <div id="voteStatus"></div>
+
+  </div>
+
+</section>
+
+
+<!-- ========================================
+     НОМЕР СТИХОТВОРЕНИЯ
+======================================== -->
+
+<script>
+  const poemNumber = 3;
+</script>
+
+
+<!-- ========================================
+     ТАЙМЕР И ДОСТУП К ГОЛОСОВАНИЮ
+======================================== -->
+
+<script>
+
+const VOTE_DELAY_SECONDS = 3 * 60;
+
+let voteSecondsLeft =
+  VOTE_DELAY_SECONDS;
+
+let voteTimerFinished = false;
+let pageScrolledToEnd = false;
+
+const openVoteButton =
+  document.getElementById("openVoteButton");
+
+const voteDetails =
+  document.getElementById("voteDetails");
+
+
+function updateVoteAvailability() {
+
+  if (
+    voteTimerFinished &&
+    pageScrolledToEnd
+  ) {
+
+    openVoteButton.disabled = false;
+
+    openVoteButton.textContent =
+      "ГОЛОСОВАТЬ";
+
+    return;
+  }
+
+
+  if (
+    voteTimerFinished &&
+    !pageScrolledToEnd
+  ) {
+
+    openVoteButton.textContent =
+      "ДОЙДИТЕ ДО КОНЦА ТЕКСТА";
+
+    return;
+  }
+
+
+  if (
+    !voteTimerFinished &&
+    pageScrolledToEnd
+  ) {
+
+    openVoteButton.textContent =
+      "ОЖИДАЙТЕ ОКОНЧАНИЯ ТАЙМЕРА";
+
+  }
+
+}
+
+
+function updateVoteTimerText() {
+
+  const minutes =
+    Math.floor(voteSecondsLeft / 60);
+
+  const seconds =
+    String(voteSecondsLeft % 60)
+      .padStart(2, "0");
+
+  openVoteButton.textContent =
+    "ГОЛОСОВАНИЕ ЧЕРЕЗ "
+    + minutes
+    + ":"
+    + seconds;
+
+}
+
+
+updateVoteTimerText();
+
+
+const voteTimer =
+  setInterval(function () {
+
+    voteSecondsLeft--;
+
+
+    if (voteSecondsLeft <= 0) {
+
+      voteSecondsLeft = 0;
+      voteTimerFinished = true;
+
+      clearInterval(voteTimer);
+
+      updateVoteAvailability();
+
+      return;
+    }
+
+
+    updateVoteTimerText();
+
+  }, 1000);
+
+
+function checkPageScroll() {
+
+  const currentBottom =
+    window.scrollY
+    + window.innerHeight;
+
+  const pageHeight =
+    document.documentElement.scrollHeight;
+
+
+  if (
+    currentBottom >= pageHeight - 10
+  ) {
+
+    pageScrolledToEnd = true;
+
+    window.removeEventListener(
+      "scroll",
+      checkPageScroll
+    );
+
+    updateVoteAvailability();
+
+  }
+
+}
+
+
+window.addEventListener(
+  "scroll",
+  checkPageScroll
+);
+
+
+checkPageScroll();
+
+
+function toggleVotePanel() {
+
+  if (
+    !voteTimerFinished ||
+    !pageScrolledToEnd
+  ) {
+
+    return;
+  }
+
+
+  const isOpen =
+    voteDetails.classList.toggle("open");
+
+
+  openVoteButton.textContent =
+    isOpen
+      ? "СКРЫТЬ ГОЛОСОВАНИЕ"
+      : "ГОЛОСОВАТЬ";
+
+}
+
+</script>
+
+
+<!-- ========================================
+     SUPABASE И ГОЛОСОВАНИЕ
+======================================== -->
+
+
+<script src="../scripts/vote.js"></script>
+
+
+<!-- ========================================
+     НИЖНЯЯ ПЛАШКА
+======================================== -->
+
+<footer>
+  Рифмы века © 2026
+</footer>
+
+ <script>
+
+/*
+========================================
+ЗАГРУЗКА HTML-КОМПОНЕНТА
+========================================
+*/
+
+async function loadComponent(
+  containerId,
+  componentPath
+) {
+
+  const container =
+    document.getElementById(
+      containerId
+    );
+
+  if (!container) {
+
+    throw new Error(
+      "Контейнер не найден: "
+      + containerId
+    );
+
+  }
+
+  const resolvedPath =
+  componentPath === "menu.html"
+  || componentPath === "review.html"
+    ? "../../" + componentPath
+    : componentPath;
+
+const response =
+  await fetch(
+    resolvedPath,
+    {
+      cache: "no-store"
+    }
+  );
+
+  if (!response.ok) {
+
+    throw new Error(
+      componentPath
+      + ": HTTP "
+      + response.status
+    );
+
+  }
+
+  const componentDocument =
+    new DOMParser().parseFromString(
+      await response.text(),
+      "text/html"
+    );
+
+  const parentComponentUrl =
+  document.currentScript
+    ?.dataset.componentUrl
+  || location.href;
+
+const componentUrl =
+  new URL(
+    resolvedPath,
+    location.href
+  );
+
+  /*
+  Подключаем стили компонента.
+  */
+
+  componentDocument.head
+    .querySelectorAll(
+      'style, link[rel="stylesheet"]'
+    )
+    .forEach(function (sourceStyle) {
+
+      const style =
+        document.importNode(
+          sourceStyle,
+          true
+        );
+
+      if (
+        style.tagName === "LINK"
+        &&
+        style.hasAttribute("href")
+      ) {
+
+        style.href =
+          new URL(
+            style.getAttribute("href"),
+            componentUrl
+          ).href;
+
+      }
+
+      document.head.appendChild(
+        style
+      );
+
+    });
+
+
+  /*
+  Вставляем разметку компонента.
+  */
+
+  container.replaceChildren();
+
+  Array.from(
+    componentDocument.body.childNodes
+  )
+    .forEach(function (node) {
+
+      if (
+        node.nodeType
+          === Node.ELEMENT_NODE
+        &&
+        node.tagName
+          === "SCRIPT"
+      ) {
+
+        return;
+
+      }
+
+      container.appendChild(
+        document.importNode(
+          node,
+          true
+        )
+      );
+
+    });
+
+
+  /*
+  Выполняем внутренние скрипты.
+  */
+
+  const scripts = [
+    ...componentDocument.head
+      .querySelectorAll("script"),
+
+    ...componentDocument.body
+      .querySelectorAll("script")
+  ];
+
+  for (
+    const sourceScript
+    of scripts
+  ) {
+
+    const script =
+      document.createElement(
+        "script"
+      );
+
+script.dataset.componentUrl =
+  componentUrl.href;
+    
+    Array.from(
+      sourceScript.attributes
+    )
+      .forEach(function (attribute) {
+
+        if (attribute.name !== "src") {
+
+          script.setAttribute(
+            attribute.name,
+            attribute.value
+          );
+
+        }
+
+      });
+
+    if (
+      sourceScript.hasAttribute("src")
+    ) {
+
+      script.src =
+        new URL(
+          sourceScript.getAttribute("src"),
+          componentUrl
+        ).href;
+
+      await new Promise(
+        function (resolve, reject) {
+
+          script.onload =
+            resolve;
+
+          script.onerror =
+            reject;
+
+          document.body.appendChild(
+            script
+          );
+
+        }
+      );
+
+    } else {
+
+      script.textContent =
+        sourceScript.textContent;
+
+      document.body.appendChild(
+        script
+      );
+
+    }
+
+  }
+
+  return container;
+
+}
+
+
+</script> 
+
+<!-- ========================================
+     ЗАГРУЗКА ОБЩЕГО HEADER
+======================================== -->
+
+<script>
+
+async function loadHeader() {
+
+  const headerContainer =
+    document.getElementById("headerContainer");
+
+  try {
+
+await loadComponent(
+  "headerContainer",
+  "../../header.html"
+);
+
+document
+  .getElementById("poetPhotoLink")
+  .href =
+    "poet"
+    + poemNumber
+    + ".html";
+    
+    /*
+    Пути для страницы стиха.
+    */
+
+    document
+      .getElementById("headerLogo")
+      .src =
+        "../images/logo.svg";
+
+    document
+      .getElementById("headerHomeLink")
+      .href =
+        "../../index.html";
+
+    document
+      .getElementById("headerTop21Link")
+      .href =
+        "../../index.html#top21";
+
+
+/*
+    Компас на странице стихотворения.
+
+    ← предыдущий стих
+    XXI Антология XXI
+    → следующий стих
+    */
+
+    document
+      .getElementById("compassLeft")
+      .addEventListener(
+        "click",
+        function () {
+
+          const previousNumber =
+            poemNumber <= 1
+              ? 21
+              : poemNumber - 1;
+
+          window.location.href =
+            "poem"
+            + previousNumber
+            + ".html";
+
+        }
+      );
+
+    document
+      .getElementById("compassCenter")
+      .addEventListener(
+        "click",
+        function () {
+
+          window.location.href =
+            "../../index.html#top21";
+
+        }
+      );
+
+    document
+      .getElementById("compassRight")
+      .addEventListener(
+        "click",
+        function () {
+
+          const nextNumber =
+            poemNumber >= 21
+              ? 1
+              : poemNumber + 1;
+
+          window.location.href =
+            "poem"
+            + nextNumber
+            + ".html";
+
+        }
+      );
+
+/*
+========================================
+НАСТРОЙКА REVIEW ТЕКУЩЕГО СТИХА
+========================================
+*/
+
+await initializePoemReview();
+    
+  } catch (error) {
+
+    console.error(
+      "Ошибка загрузки header.html:",
+      error
+    );
+
+    headerContainer.textContent =
+      "Не удалось загрузить верхнюю панель.";
+
+  }
+    }
+
+loadHeader();
+
+</script>
+
+<!-- ========================================
+     НАСТРОЙКА REVIEW ДЛЯ ТЕКУЩЕГО СТИХА
+======================================== -->
+
+<script>
+
+/*
+========================================
+ИНФОРМАЦИЯ О ТЕКУЩЕМ СТИХОТВОРЕНИИ
+========================================
+*/
+
+async function initializePoemReview() {
+
+  /*
+  Переход к форме комментария.
+  */
+
+  const openCommentPageButton =
+    document.getElementById(
+      "openCommentPageButton"
+    );
+
+  if (openCommentPageButton) {
+
+    openCommentPageButton.addEventListener(
+      "click",
+      function () {
+
+        window.location.href =
+          "../../comment.html?poem="
+          + poemNumber;
+
+      }
+    );
+
+  }
+
+
+  /*
+  Индивидуальный разбор стихотворения.
+  */
+
+  const aiReviewContainer =
+    document.getElementById(
+      "aiReviewContent"
+    );
+
+  if (aiReviewContainer) {
+
+    const aiResponse =
+      await fetch(
+        "../reviews/review"
+        + poemNumber
+        + ".html"
+      );
+
+    if (aiResponse.ok) {
+
+      aiReviewContainer.innerHTML =
+        await aiResponse.text();
+
+    } else {
+
+      aiReviewContainer.textContent =
+        "Разбор пока отсутствует.";
+
+    }
+
+  }
+
+
+  /*
+  Вкладки и комментарии.
+  */
+
+  await loadComments();
+
+}
+  
+/*
+========================================
+ЗАГРУЗКА ОДОБРЕННЫХ КОММЕНТАРИЕВ
+========================================
+*/
+
+async function loadComments() {
+
+  const commentsList =
+    document.getElementById(
+      "commentsList"
+    );
+
+console.log("commentsList =", commentsList);
+  
+  if (!commentsList) {
+    return;
+  }
+
+  commentsList.innerHTML =
+    "Загрузка комментариев...";
+
+  try {
+
+    /*
+    Подключаем тот же Supabase-клиент,
+    который используется в comment.html.
+    */
+
+    const { supabase } =
+      await import(
+        "../../supabase-config.js"
+      );
+
+    const { data, error } =
+      await supabase
+        .from("top21_comments")
+     
+        .select(
+          "author_name, comment_text, created_at"
+        )
+        .eq(
+          "poem_id",
+          poemNumber
+        )
+        .eq(
+          "is_approved",
+          true
+        )
+        .order(
+          "created_at",
+          { ascending: false }
+        );
+
+    console.log("Supabase error:", error);
+    console.log("Supabase data:", data);
+
+    if (error) {
+      throw error;
+    }
+
+    if (!data || data.length === 0) {
+
+      commentsList.innerHTML = `
+        <div class="comments-empty">
+          Комментариев пока нет.
+        </div>
+      `;
+
+      return;
+    }
+
+    commentsList.innerHTML =
+      data.map(function (comment) {
+
+        const date =
+          new Date(
+            comment.created_at
+          ).toLocaleDateString(
+            "ru-RU"
+          );
+
+        return `
+<div class="comment-item">
+
+  <div class="comment-head">
+
+    <div class="comment-author"></div>
+
+    <div class="comment-date">
+      ${date}
+    </div>
+
+  </div>
+
+  <div class="comment-text"></div>
+
+</div>
+`;
+
+      }).join("");
+
+    const commentItems =
+      commentsList.querySelectorAll(
+        ".comment-item"
+      );
+
+    commentItems.forEach(
+      function (commentItem, index) {
+
+        commentItem
+          .querySelector(".comment-author")
+          .textContent =
+            data[index].author_name;
+
+        commentItem
+          .querySelector(".comment-text")
+          .textContent =
+            data[index].comment_text;
+
+      }
+    );
+
+  } catch (error) {
+
+    console.error(
+      "Ошибка загрузки комментариев:",
+      error
+    );
+
+    commentsList.innerHTML = `
+      <div class="comments-empty">
+        Не удалось загрузить комментарии.
+      </div>
+    `;
+
+  }
+
+}
+  
+</script> 
+
+<!-- ========================================
+     SERVICE CONSOLE
+======================================== -->
+
+<div id="service-console">
+poemNumber = 3| v2.1.3
+</div>
+
+<div
+  class="row"
+  id="build-down"
+>
+  deploy: --
+</div>
+
+
+<script>
+
+(function () {
+
+  const now =
+    new Date();
+
+  const pad =
+    number =>
+      String(number).padStart(2, "0");
+
+  const date =
+      pad(now.getDate())
+    + "."
+    + pad(now.getMonth() + 1)
+    + "."
+    + now.getFullYear();
+
+  const time =
+      pad(now.getHours())
+    + ":"
+    + pad(now.getMinutes());
+
+  document
+    .getElementById("build-down")
+    .textContent =
+      "deploy: "
+      + date
+      + " "
+      + time;
+
+})();
+
+</script>
+
+</body>
+</html>
